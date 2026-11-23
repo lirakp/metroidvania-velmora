@@ -21,3 +21,19 @@ static func populate(room: Node2D, def: RoomDef) -> void:
 				sp.kind = ent.props.get("kind", "rastort")
 				sp.position = pos
 				room.add_child(sp)
+			"sibling_point":
+				var sp := SiblingPoint.new()
+				sp.point_name = ent.id
+				sp.position = pos
+				room.add_child(sp)
+			"plate":
+				var pl := PressurePlate.new()
+				pl.plate_name = ent.id
+				pl.opens = ent.props.get("opens", "")
+				pl.position = pos
+				room.add_child(pl)
+			"gate":
+				var g := Gate.new()
+				g.gate_name = ent.id
+				g.position = pos
+				room.add_child(g)
