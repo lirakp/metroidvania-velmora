@@ -111,6 +111,14 @@ func tile_at(p: Vector2i) -> int:
 	return tiles[p.y * size.x + p.x]
 
 
+## Tür-Entität (Durchgang in den Hintergrund) nach ID; {} wenn keine.
+func door_by_id(did: String) -> Dictionary:
+	for e in entities:
+		if e.type == "door" and e.id == did:
+			return e
+	return {}
+
+
 func exit_by_id(eid: String) -> Dictionary:
 	for e in exits:
 		if e.id == eid:

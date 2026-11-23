@@ -73,6 +73,16 @@ static func validate_defs(defs: Dictionary) -> Array[String]:
 			var te: Dictionary = defs[e.target_room].exit_by_id(e.target_exit_id)
 			if te.is_empty() or te.target_room != id or te.target_exit_id != e.id:
 				errs.append("%s:%s → %s:%s zeigt nicht zurück" % [id, e.id, e.target_room, e.target_exit_id])
+		for e in d.entities:
+			if e.type != "door":
+				continue
+			var to: PackedStringArray = String(e.props.get("to", "")).split(":")
+			if to.size() != 2 or not defs.has(to[0]):
+				errs.append("%s: Tür %s → Ziel fehlt (%s)" % [id, e.id, e.props.get("to", "")])
+				continue
+			var td: Dictionary = defs[to[0]].door_by_id(to[1])
+			if td.is_empty() or td.props.get("to", "") != "%s:%s" % [id, e.id]:
+				errs.append("%s: Tür %s → %s zeigt nicht zurück" % [id, e.id, e.props.to])
 	return errs
 
 

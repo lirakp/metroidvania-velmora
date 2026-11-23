@@ -11,6 +11,9 @@ var current_def: RoomDef
 var camera: Camera2D
 var _cache := {}
 var _entry_pos := Vector2.ZERO
+var _door_block_until := 0.0
+
+const DOOR_COOLDOWN := 0.5
 
 
 func attach(root: Node2D, p: Player) -> void:
@@ -63,6 +66,22 @@ func go_to(room_id: String, exit_id: String, spawn := "start", at_cell := Vector
 	camera.limit_bottom = def.size.y * RoomBuilder.TILE
 	camera.reset_smoothing()
 	room_changed.emit(def)
+
+
+## Betritt den Raum hinter einer Tür; der Spieler erscheint an der Gegentür.
+func enter_door(room_id: String, door_id: String) -> void:
+	var def := def_of(room_id)
+	var d := def.door_by_id(door_id)
+	go_to(room_id, "", "start", d.pos if not d.is_empty() else Vector2i(-1, -1))
+	block_doors(DOOR_COOLDOWN)
+
+
+func block_doors(seconds: float) -> void:
+	_door_block_until = Time.get_ticks_msec() / 1000.0 + seconds
+
+
+func doors_blocked() -> bool:
+	return Time.get_ticks_msec() / 1000.0 < _door_block_until
 
 
 ## Setzt Tor-Kacheln an gesperrten Ausgängen bzw. entfernt sie wieder.

@@ -85,3 +85,39 @@ func test_state_roundtrip() -> void:
 	assert_eq(GameState.gold, 77)
 	assert_eq(GameState.get_flag("x"), 3)
 	assert_true(GameState.discovered_rooms.has("a"))
+
+
+func test_enter_door_places_player() -> void:
+	var w := _setup()
+	RoomManager.go_to("t_a", "")
+	RoomManager.enter_door("t_i", "aussen")
+	assert_eq(RoomManager.current_def.id, "t_i")
+	assert_eq(RoomManager.player.position, RoomBuilder.cell_to_pos(Vector2i(5, 14)))
+	RoomManager.enter_door("t_a", "haus")
+	assert_eq(RoomManager.current_def.id, "t_a")
+	assert_eq(RoomManager.player.position, RoomBuilder.cell_to_pos(Vector2i(10, 14)))
+	w.queue_free()
+
+
+func test_door_node_built_and_blocked_while_paused() -> void:
+	var w := _setup()
+	RoomManager.go_to("t_a", "")
+	var doors := RoomManager.current.get_children().filter(func(n): return n is Door)
+	assert_eq(doors.size(), 1)
+	GameState.pause_push()
+	assert_false(doors[0].try_enter())
+	GameState.pause_reset()
+	RoomManager.block_doors(0.0)
+	assert_true(doors[0].try_enter())
+	await tree.process_frame
+	assert_eq(RoomManager.current_def.id, "t_i")
+	w.queue_free()
+
+
+func test_door_blocked_right_after_arrival() -> void:
+	var w := _setup()
+	RoomManager.go_to("t_a", "")
+	RoomManager.enter_door("t_i", "aussen")
+	var doors := RoomManager.current.get_children().filter(func(n): return n is Door)
+	assert_false(doors[0].try_enter(), "gleicher Tastendruck darf nicht sofort zurückführen")
+	w.queue_free()

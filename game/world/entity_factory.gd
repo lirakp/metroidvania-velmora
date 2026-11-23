@@ -76,3 +76,9 @@ static func populate(room: Node2D, def: RoomDef) -> void:
 				var l := LightGlow.create(ent.id == "warm", int(ent.props.get("radius", "32")))
 				l.position = pos - Vector2(0, RoomBuilder.TILE / 2.0)
 				room.add_child(l)
+			"door":
+				var door := Door.new()
+				door.door_id = ent.id
+				door.target = ent.props.get("to", "")
+				door.position = pos
+				room.add_child(door)

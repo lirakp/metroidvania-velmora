@@ -42,3 +42,19 @@ func test_buy_map_requires_gold() -> void:
 	assert_true(GameState.buy_map("kornburg", 40))
 	assert_eq(GameState.gold, 5)
 	assert_true(GameState.owned_maps.has("kornburg"))
+
+
+func test_validate_catches_missing_counter_door() -> void:
+	var a := _room("a", "x", "", "..............................")
+	a.entities.append({"type": "door", "id": "haus", "pos": Vector2i(3, 14), "props": {"to": "b:aussen"}})
+	var b := _room("b", "x", "", "..............................")
+	b.entities.append({"type": "door", "id": "aussen", "pos": Vector2i(3, 14), "props": {"to": "a:falsch"}})
+	assert_eq(WorldMap.validate_defs({"a": a, "b": b}).size(), 2)
+	b.entities[0].props.to = "a:haus"
+	assert_eq(WorldMap.validate_defs({"a": a, "b": b}), [])
+
+
+func test_layout_ignores_interiors() -> void:
+	var lay := WorldMap.layout("ta", "res://tests/rooms")
+	assert_true(lay.has("t_a"))
+	assert_false(lay.has("t_i"))
