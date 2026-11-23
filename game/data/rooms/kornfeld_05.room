@@ -21,4 +21,5 @@ exits: L1=kornfeld_04:R2, R2=muehle_01:L1
 ==============================
 ##############################
 ---
+deco baum 25,14
 enemy goblin+goblin 12,14 patrol=3

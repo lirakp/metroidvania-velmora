@@ -18,10 +18,11 @@ static func units(d: RoomDef) -> Vector2i:
 	return Vector2i(ceili(float(d.size.x) / UNIT.x), ceili(float(d.size.y) / UNIT.y))
 
 
-## Raum-ID → Rechteck in Karteneinheiten (Breitensuche ab dem alphabetisch ersten Raum des Gebiets).
+## Raum-ID → Rechteck in Karteneinheiten (Breitensuche ab dem alphabetisch ersten Außenraum des Gebiets).
 static func layout(area: String, dir := "res://data/rooms") -> Dictionary:
 	var defs := load_defs(dir)
-	var ids: Array = defs.keys().filter(func(k): return defs[k].area == area)
+	# Innenräume (ohne Ausgänge) erscheinen nicht auf der Karte; Start ist der erste Außenraum.
+	var ids: Array = defs.keys().filter(func(k): return defs[k].area == area and not defs[k].exits.is_empty())
 	ids.sort()
 	var out := {}
 	if ids.is_empty():

@@ -24,3 +24,4 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
 dialog dungeon_eingang 3,14
 enemy riesenspinne 20,14 patrol=3
+deco kette 12,2

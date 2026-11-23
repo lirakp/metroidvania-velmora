@@ -1,0 +1,30 @@
+id: blutdungeon_kammer
+biome: dungeon_blut
+area: blutdungeon
+dungeon: true
+exits: 
+---
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+BB..........................BB
+BB..........................BB
+BB..........................BB
+BB..........................BB
+BB..........................BB
+BB..........................BB
+BB..........................BB
+BB..........................BB
+BB..........................BB
+BB............----..........BB
+BB..........................BB
+BB..........................BB
+BB..........................BB
+BBSSSSSSSSSSSSSSSSSSSSSSSSSSBB
+BBSSSSSSSSSSSSSSSSSSSSSSSSSSBB
+---
+deco bogen 6,14
+door gang 6,14 to=blutdungeon_07:kammer
+deco kiste 16,10
+pickup map:blutdungeon 16,10
+deco kristall 24,10
+light kalt 24,9 radius=24

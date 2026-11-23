@@ -22,7 +22,12 @@ func _ready() -> void:
 			add_child(w)
 			w.start(false)
 			var room: String = args[1] if args.size() > 1 else "kornburg_gilde"
-			RoomManager.go_to(room, "L1" if RoomManager.def_of(room).exit_by_id("L1") else "")
+			var rd := RoomManager.def_of(room)
+			var doors := rd.entities.filter(func(e): return e.type == "door")
+			if rd.spawns.has("start") or doors.is_empty():
+				RoomManager.go_to(room, "L1" if rd.exit_by_id("L1") else "")
+			else:
+				RoomManager.enter_door(room, doors[0].id)
 			if mode == "dialog":
 				GameState.flags.clear()
 				DialogBox.show_dialog(w, "intro")

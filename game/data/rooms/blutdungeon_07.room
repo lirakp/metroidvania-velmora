@@ -22,4 +22,6 @@ SSSS.........................2
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-enemy ghul+riesenspinne 20,14 patrol=2
+enemy ghul+riesenspinne 18,14 patrol=2
+deco bogen 25,14
+door kammer 25,14 to=blutdungeon_kammer:gang

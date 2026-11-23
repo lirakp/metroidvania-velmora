@@ -18,9 +18,10 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
-1..............A.............2
+1............................2
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-save altar 15,14 kind=rastort
+deco bogen_warm 15,14
+door rast 15,14 to=blutdungeon_rast:gang
 dialog rastort 10,14

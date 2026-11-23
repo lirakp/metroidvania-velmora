@@ -242,21 +242,21 @@ def altar():
 
 
 def light_texture(radius, warm):
-    """Punktraster-Lichtschein auf Transparenz (wird im Spiel über die Szene gelegt)."""
+    """Feines Punktraster auf Transparenz (wird im Spiel über die Szene gelegt, flackert leicht)."""
     c = Canvas(radius * 2, radius * 2)
-    tone_in, tone_out = (WGLUT, WAMBER) if warm else (RED[1], RED[2])
+    bright, mid, faint = (WAMBER, WEMBER, WAMBER) if warm else (RED[2], RED[1], RED[1])
     for y in range(radius * 2):
         for x in range(radius * 2):
             dist = ((x - radius) ** 2 + (y - radius) ** 2) ** 0.5
             if dist >= radius:
                 continue
             inten = (1 - dist / radius) ** 1.3
-            if inten > 0.55 and (x + y) % 2 == 0:
-                c.px(x, y, tone_in if warm else RED[0])
-            elif inten > 0.28 and x % 2 == 0 and y % 2 == 0:
-                c.px(x, y, tone_out)
+            if inten > 0.6 and x % 2 == 0 and y % 2 == 0:
+                c.px(x, y, bright)
+            elif inten > 0.3 and x % 2 == 0 and y % 2 == 0:
+                c.px(x, y, mid)
             elif inten > 0.1 and x % 4 == 0 and y % 4 == (x // 4) % 2 * 2:
-                c.px(x, y, tone_out)
+                c.px(x, y, faint)
     return c
 
 

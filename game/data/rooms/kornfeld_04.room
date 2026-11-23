@@ -21,4 +21,5 @@ exits: L1=kornfeld_03:R2, R2=kornfeld_05:L1
 ==============================
 ##############################
 ---
+deco zaun 4,14
 enemy skelettkrieger 20,14 patrol=3

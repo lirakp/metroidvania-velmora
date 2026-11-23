@@ -70,11 +70,12 @@ static func populate(room: Node2D, def: RoomDef) -> void:
 				sp.set_meta("deco", ent.id)
 				sp.position = pos - Vector2(sp.texture.get_width() / 2.0, sp.texture.get_height())
 				sp.flip_h = ent.props.get("flip", "false") == "true"
-				sp.z_index = 2 if ent.props.get("front", "false") == "true" else -1
+				# Hinter den Figuren, aber vor den Hintergrundebenen; front=true vor den Figuren
+				sp.z_index = 2 if ent.props.get("front", "false") == "true" else 0
 				room.add_child(sp)
 			"light":
 				var l := LightGlow.create(ent.id == "warm", int(ent.props.get("radius", "32")))
-				l.position = pos - Vector2(0, RoomBuilder.TILE / 2.0)
+				l.position = pos - Vector2(0, RoomBuilder.TILE)
 				room.add_child(l)
 			"door":
 				var door := Door.new()

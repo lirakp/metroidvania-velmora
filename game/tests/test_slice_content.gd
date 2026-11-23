@@ -6,7 +6,7 @@ const DOUBLE_JUMP_TILES := 4
 
 func test_all_rooms_parse() -> void:
 	var defs := WorldMap.load_defs("res://data/rooms")
-	assert_true(defs.size() >= 22, "Anzahl Räume: %d" % defs.size())
+	assert_true(defs.size() >= 26, "Anzahl Räume: %d" % defs.size())
 	for id in defs:
 		assert_eq(defs[id].error, "", id)
 
@@ -51,10 +51,13 @@ func test_dungeon_rooms_are_one_way_and_have_boss() -> void:
 
 
 ## Begehbare Kacheln: leer (oder Spawn/Marker) mit festem Boden oder Plattform darunter.
+## Die Figur ist 36 px hoch und braucht 3 Kacheln Kopffreiheit.
 func _standable(d: RoomDef, c: Vector2i) -> bool:
-	var t := d.tile_at(c)
 	var below := d.tile_at(c + Vector2i(0, 1))
-	return (t == 0 or t == 8 or t == 11 or t == 12) and d.tile_at(c - Vector2i(0, 1)) in [0, 8, 11, 12] and (below in RoomDef.SOLID or below == 3)
+	for dy in 3:
+		if not d.tile_at(c - Vector2i(0, dy)) in [0, 3, 8, 11, 12]:
+			return false
+	return d.tile_at(c) != 3 and (below in RoomDef.SOLID or below == 3)
 
 
 func _clear(d: RoomDef, c: Vector2i) -> bool:
@@ -74,12 +77,13 @@ func _reachable(d: RoomDef, start: Vector2i, target: Vector2i, jump: int) -> boo
 				var t := s + Vector2i(dx, dy)
 				if seen.has(t) or not _standable(d, t):
 					continue
-				var top := mini(s.y, t.y) - 1
+				var top := mini(s.y, t.y) - 2
 				var ok := true
 				for y in range(top, s.y + 1):
 					ok = ok and _clear(d, Vector2i(s.x, y))
 				for x in range(mini(s.x, t.x), maxi(s.x, t.x) + 1):
-					ok = ok and _clear(d, Vector2i(x, top))
+					for y in range(top, top + 3):
+						ok = ok and _clear(d, Vector2i(x, y))
 				for y in range(top, t.y + 1):
 					ok = ok and _clear(d, Vector2i(t.x, y))
 				if ok:
@@ -128,9 +132,38 @@ func test_rooms_traversable() -> void:
 	var defs := WorldMap.load_defs("res://data/rooms")
 	for id in defs:
 		var d: RoomDef = defs[id]
-		for a in d.exits:
-			for b in d.exits:
-				if a == b:
+		var points := {}
+		for e in d.exits:
+			points["Ausgang " + e.id] = d.arrival_cell(e.id)
+		for e in d.entities:
+			if e.type in ["door", "save", "npc", "pickup"]:
+				points["%s %s" % [e.type, e.id]] = e.pos
+		if d.spawns.has("start"):
+			points["Start"] = d.spawns.start
+		var jump := DOUBLE_JUMP_TILES if id in ["blutdungeon_06", "blutdungeon_07", "blutdungeon_08", "blutdungeon_09", "blutdungeon_kammer"] else SINGLE_JUMP_TILES
+		var names := points.keys()
+		for a in names:
+			for b in names:
+				if a == b or (b.begins_with("pickup") and id == "kornfeld_06"):
 					continue
-				var jump := DOUBLE_JUMP_TILES if id in ["blutdungeon_06", "blutdungeon_07", "blutdungeon_08", "blutdungeon_09"] else SINGLE_JUMP_TILES
-				assert_true(_reachable(d, d.arrival_cell(a.id), d.arrival_cell(b.id), jump), "%s: %s → %s" % [id, a.id, b.id])
+				assert_true(_reachable(d, points[a], points[b], jump), "%s: %s → %s" % [id, a, b])
+
+
+func test_safe_rooms_have_warm_light() -> void:
+	for id in ["kornburg_gilde", "kartograf_haus", "blutdungeon_rast", "stadt_01", "stadt_02"]:
+		var d := RoomDef.load_room(id)
+		assert_eq(d.error, "", id)
+		assert_true(d.entities.any(func(e): return e.type == "light" and e.id == "warm"), "%s ohne warmes Licht" % id)
+
+
+func test_dungeon_rooms_have_no_warm_light_except_rast() -> void:
+	var defs := WorldMap.load_defs("res://data/rooms")
+	for id in defs:
+		if id.begins_with("blutdungeon") and id != "blutdungeon_rast":
+			assert_false(defs[id].entities.any(func(e): return e.type == "light" and e.id == "warm"), id)
+
+
+func test_interiors_reached_by_doors() -> void:
+	for pair in [["stadt_01", "kornburg_gilde"], ["stadt_02", "kartograf_haus"], ["muehle_01", "muehle_innen"], ["blutdungeon_04", "blutdungeon_rast"], ["blutdungeon_07", "blutdungeon_kammer"]]:
+		var outer := RoomDef.load_room(pair[0])
+		assert_true(outer.entities.any(func(e): return e.type == "door" and String(e.props.get("to", "")).begins_with(pair[1] + ":")), "%s → %s" % pair)

@@ -1,0 +1,29 @@
+id: blutdungeon_rast
+biome: innen_kammer
+area: blutdungeon
+dungeon: true
+exits: 
+---
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+---
+deco bogen 8,14
+door gang 8,14 to=blutdungeon_04:rast
+deco altar 17,14
+save altar 17,14 kind=rastort
+light warm 17,13 radius=48

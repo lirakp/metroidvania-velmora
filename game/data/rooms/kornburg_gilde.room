@@ -1,25 +1,30 @@
 id: kornburg_gilde
-biome: stadt
+biome: innen_gilde
 area: kornburg
-exits: R1=stadt_01:L1
+exits: 
 ---
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-S.............................
-S.............................
-S.............................
-S.............................
-S.............................
-S.............................
-S.............................
-S.............................
-S.............................
-S.............................
-S.............................
-S.............................
-S.............................
-S..@..G......................1
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww......@...................ww
+wwhhhhhhhhhhhhhhhhhhhhhhhhhhww
+wwhhhhhhhhhhhhhhhhhhhhhhhhhhww
 ---
-save schrein 6,14 kind=gilde
-npc gildenmeisterin 12,14 dialog=gilde_rat
+deco schrein 5,14
+save schrein 5,14 kind=gilde
+npc gildenmeisterin 14,14 dialog=gilde_rat
+deco tresen 14,14 front=true
+deco tuer 24,14
+door aussen 24,14 to=stadt_01:gilde
+light warm 21,13 radius=32

@@ -58,3 +58,9 @@ func test_layout_ignores_interiors() -> void:
 	var lay := WorldMap.layout("ta", "res://tests/rooms")
 	assert_true(lay.has("t_a"))
 	assert_false(lay.has("t_i"))
+
+
+func test_layout_real_kornburg_starts_outside() -> void:
+	var lay := WorldMap.layout("kornburg")
+	assert_true(lay.has("stadt_01") and lay.has("kornfeld_08"), "Außenräume auf der Karte")
+	assert_false(lay.has("kornburg_gilde") or lay.has("kartograf_haus") or lay.has("muehle_innen"), "keine Innenräume")

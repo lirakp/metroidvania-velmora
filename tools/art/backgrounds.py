@@ -187,9 +187,9 @@ def innen_gilde():
         near.d.line([(x, 0), (x, 30)], fill=BLACK)
         near.rect(x - 4, 30, x + 4, 40, BLACK)
         near.rect(x - 3, 31, x + 3, 39, WCANDLE)
-    far.glow(fx, fy - 14, 80, 0.85)
-    far.glow(40, 35, 40, 0.7)
-    far.glow(440, 35, 40, 0.7)
+    far.glow(fx, fy - 14, 64, 0.6)
+    far.glow(40, 35, 26, 0.5)
+    far.glow(440, 35, 26, 0.5)
     save_layers("innen_gilde", [far, mid, near])
 
 
@@ -214,7 +214,7 @@ def innen_haus():
     mid.rect(276, 138, 278, 149, GOLD2)
     mid.px(277, 137, WCANDLE)
     mid.px(277, 136, WLIGHT)
-    far.glow(277, 140, 60, 0.85)
+    far.glow(277, 140, 40, 0.55)
     save_layers("innen_haus", [far, mid, Canvas(W, H)])
 
 
@@ -231,7 +231,7 @@ def innen_kammer():
         mid.rect(cx - 1, 180 - ch, cx + 1, 179, GOLD2)
         mid.px(cx, 179 - ch, WCANDLE)
         mid.px(cx, 178 - ch, WLIGHT)
-        far.glow(cx, 175 - ch, 40, 0.8)
+        far.glow(cx, 175 - ch, 26, 0.5)
     save_layers("innen_kammer", [far, mid, Canvas(W, H)])
 
 

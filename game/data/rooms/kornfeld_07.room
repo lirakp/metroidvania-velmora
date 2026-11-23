@@ -21,5 +21,6 @@ exits: L1=kornfeld_06:R2, R2=kornfeld_08:L1
 ==============================
 ##############################
 ---
+deco baum 4,14
 enemy goblin+goblin+gruenschleim 20,14 patrol=3
 enemy skelettkrieger 8,14 patrol=2

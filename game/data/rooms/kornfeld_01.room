@@ -21,5 +21,6 @@ exits: L1=stadt_03:R2, R2=kornfeld_02:L1
 ==============================
 ##############################
 ---
+deco wegweiser 6,14
 dialog tut_schlag 4,14
 enemy goblin 18,14 patrol=3

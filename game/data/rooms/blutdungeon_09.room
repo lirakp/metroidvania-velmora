@@ -24,3 +24,5 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
 dialog boss_intro 8,14
 boss blutwolf_alpha 21,14
+deco kristall 4,10
+light kalt 4,9 radius=32
