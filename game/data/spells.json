@@ -1,0 +1,7 @@
+[
+  {"id": "funke", "name": "Funke", "elements": ["feuer"], "tier": 1, "flow": "C", "cost": 3, "power": 8, "target": "enemy"},
+  {"id": "frosthauch", "name": "Frosthauch", "elements": ["eis"], "tier": 1, "flow": "C", "cost": 3, "power": 8, "target": "enemy"},
+  {"id": "lichtfunke", "name": "Lichtfunke", "elements": ["licht"], "tier": 1, "flow": "C", "cost": 3, "power": 8, "target": "enemy"},
+  {"id": "heilung", "name": "Heilung", "elements": ["licht", "wasser"], "tier": 2, "flow": "beide", "cost": 6, "power": 18, "target": "ally"},
+  {"id": "dampfstoss", "name": "Dampfstoß", "elements": ["feuer", "wasser"], "tier": 2, "flow": "beide", "cost": 8, "power": 16, "target": "enemy"}
+]

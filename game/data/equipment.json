@@ -1,0 +1,9 @@
+[
+  {"id": "kurzschwert", "name": "Kurzschwert", "slot": "waffe", "rank": "D", "bonus": {"atk": 3}, "dmg_type": "schnitt"},
+  {"id": "eichenstab", "name": "Eichenstab", "slot": "waffe", "rank": "D", "bonus": {"atk": 1, "mag": 3}, "dmg_type": "stumpf"},
+  {"id": "streitkolben", "name": "Streitkolben", "slot": "waffe", "rank": "C", "bonus": {"atk": 5}, "dmg_type": "stumpf"},
+  {"id": "rostiger_kriegshammer", "name": "Rostiger Kriegshammer", "slot": "waffe", "rank": "A", "bonus": {"atk": 12}, "dmg_type": "stumpf", "tribute": {"type": "blut", "amount": 4, "when": "turn"}},
+  {"id": "lederharnisch", "name": "Lederharnisch", "slot": "ruestung", "rank": "D", "bonus": {"def": 2}},
+  {"id": "frostkettenhemd", "name": "Frostkettenhemd", "slot": "ruestung", "rank": "A", "bonus": {"def": 8}, "tribute": {"type": "waerme", "amount": 1, "when": "turn"}},
+  {"id": "siegelring_c", "name": "Siegelring (C)", "slot": "ring", "rank": "C", "bonus": {"mag": 2}}
+]
