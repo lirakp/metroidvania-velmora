@@ -37,3 +37,9 @@ static func populate(room: Node2D, def: RoomDef) -> void:
 				g.gate_name = ent.id
 				g.position = pos
 				room.add_child(g)
+			"npc":
+				var n := Npc.new()
+				n.npc_id = ent.id
+				n.props = ent.props
+				n.position = pos
+				room.add_child(n)

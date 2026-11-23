@@ -63,6 +63,14 @@ func clear_dungeon(area: String) -> void:
 	flags.erase("dungeon_locked:" + area)
 
 
+func buy_map(area: String, price: int) -> bool:
+	if gold < price:
+		return false
+	gold -= price
+	owned_maps[area] = true
+	return true
+
+
 func party() -> Array:
 	if get_flag("solo_mode"):
 		return [hero_id]

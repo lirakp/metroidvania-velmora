@@ -138,7 +138,7 @@ def make_tiles():
 
 
 # ---------------------------------------------------------------- Figuren
-def hero_frame(hair, hair_light, weapon, pose, f):
+def hero_frame(hair, hair_light, weapon, pose, f, cloak=None):
     """16x32 Halbelf im dunkelroten Mantel. pose: idle/lauf/sprung/schlag."""
     im = new(16, 32)
     bob = 1 if (pose == "idle" and f == 1) else 0
@@ -154,9 +154,10 @@ def hero_frame(hair, hair_light, weapon, pose, f):
         rect(im, 9 + leg[1], 30, 11 + leg[1], 31, BROWN0)
     # Mantel (gleiches Geschwister-Merkmal)
     y0 = 12 + bob
-    ImageDraw.Draw(im).polygon([(4, y0), (11, y0), (12, 25), (3, 25)], fill=RED1)
-    rect(im, 5, y0 + 1, 10, y0 + 2, RED2)
-    rect(im, 7, y0 + 3, 8, 24, RED0)
+    c_mid, c_light, c_dark = cloak or (RED1, RED2, RED0)
+    ImageDraw.Draw(im).polygon([(4, y0), (11, y0), (12, 25), (3, 25)], fill=c_mid)
+    rect(im, 5, y0 + 1, 10, y0 + 2, c_light)
+    rect(im, 7, y0 + 3, 8, 24, c_dark)
     # Kopf
     hy = 4 + bob
     rect(im, 5, hy, 10, hy + 7, BROWN3)
@@ -164,10 +165,10 @@ def hero_frame(hair, hair_light, weapon, pose, f):
     rect(im, 4, hy, 4, hy + 4, hair)
     px(im, 6, hy - 1, hair_light)
     px(im, 9, hy - 1, hair_light)
-    # spitzes Halbelfenohr
-    px(im, 11, hy + 3, BROWN3)
-    px(im, 12, hy + 2, BROWN3)
-    px(im, 13, hy + 1, BROWN2)
+    if cloak is None:  # spitzes Halbelfenohr nur bei den Geschwistern
+        px(im, 11, hy + 3, BROWN3)
+        px(im, 12, hy + 2, BROWN3)
+        px(im, 13, hy + 1, BROWN2)
     px(im, 9, hy + 4, BLACK)  # Auge
     # Waffe
     if pose == "schlag":
@@ -181,12 +182,12 @@ def hero_frame(hair, hair_light, weapon, pose, f):
     return im
 
 
-def make_hero(name, hair, hair_light, weapon):
+def make_hero(name, hair, hair_light, weapon, cloak=None):
     sheet = new(16 * 4, 32 * 4)
     rows = [("idle", 2), ("lauf", 4), ("sprung", 1), ("schlag", 3)]
     for r, (pose, n) in enumerate(rows):
         for f in range(n):
-            sheet.paste(hero_frame(hair, hair_light, weapon, pose, f), (f * 16, r * 32))
+            sheet.paste(hero_frame(hair, hair_light, weapon, pose, f, cloak), (f * 16, r * 32))
     (ART / "chars").mkdir(parents=True, exist_ok=True)
     sheet.save(ART / "chars" / f"{name}.png")
 
@@ -344,6 +345,9 @@ def main():
     make_tiles()
     make_hero("warschick", BROWN0, BROWN1, (STONE5, BONE))
     make_hero("lira", STONE6, BONE, (BROWN2, GOLD))
+    make_hero("kartograf", STONE5, STONE6, (BROWN1, BONE), (BROWN2, BROWN3, BROWN1))
+    make_hero("gildenmeisterin", INK, SHADOW, (STONE4, BONE), (SLATE1, SLATE2, SLATE0))
+    make_hero("toter_abenteurer", STONE3, STONE4, (STONE3, STONE4), (STONE2, STONE3, STONE1))
     for k in ("goblin", "gruenschleim", "skelettkrieger", "riesenspinne", "ghul", "skelett_bogner", "blutwolf_alpha"):
         make_enemy(k)
     for k in ("kornfeld", "stadt", "dungeon_blut"):
