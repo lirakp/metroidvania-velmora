@@ -100,6 +100,32 @@ def test_warm_colors_only_in_safe_art():
         assert not (colors_of(p) & warm), f"warme Farbe in {p.relative_to(ART)}"
 
 
+DECO_WARM = ("gildenhaus", "kartografhaus", "laterne", "altar", "schrein", "bogen_warm")
+DECO_COLD = ("muehle", "baum", "zaun", "wegweiser", "kristall", "kette", "toter_abenteurer", "bogen", "tuer", "tresen", "kiste")
+
+
+def test_deco_files_and_warmth():
+    _, warm = palettes()
+    for n in DECO_WARM:
+        assert colors_of(ART / f"deco/{n}.png") & warm, f"{n} ohne warmes Licht"
+    for n in DECO_COLD:
+        assert not (colors_of(ART / f"deco/{n}.png") & warm), f"{n} soll kalt sein"
+
+
+def test_house_door_taller_than_figures():
+    """Die Tür im Gildenhaus ist 46 px hoch: unterste 46 Zeilen in der Mitte sind Tür, nicht transparent."""
+    im = Image.open(ART / "deco/gildenhaus.png").convert("RGBA")
+    w, h = im.size
+    assert im.getpixel((w // 2, h - 1))[3] and im.getpixel((w // 2, h - 46))[3]
+
+
+def test_light_textures():
+    for kind in ("warm", "kalt"):
+        for r in (16, 24, 32, 48):
+            im = Image.open(ART / f"light/{kind}_{r}.png")
+            assert im.size == (r * 2, r * 2)
+
+
 if __name__ == "__main__":
     failed = 0
     for name, fn in list(globals().items()):

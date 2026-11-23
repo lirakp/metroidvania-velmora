@@ -90,3 +90,16 @@ func test_backdrop_for_battle() -> void:
 	var b := Backdrop.make("innen_gilde")
 	assert_eq(b.get_child_count(), 3)
 	b.free()
+
+
+func test_deco_and_light_entities_build() -> void:
+	var d := RoomDef.parse(_room("id: a\nbiome: stadt\narea: k", _grid(), "deco gildenhaus 14,14\nlight warm 10,10 radius=32\nlight kalt 20,10 radius=24\n"))
+	var node := RoomBuilder.build(d)
+	EntityFactory.populate(node, d)
+	var decos := node.get_children().filter(func(n): return n is Sprite2D and n.has_meta("deco"))
+	assert_eq(decos.size(), 1)
+	assert_true(decos[0].texture != null)
+	var lights := node.get_children().filter(func(n): return n is LightGlow)
+	assert_eq(lights.size(), 2)
+	assert_eq(lights[0].texture.get_width(), 64)
+	node.free()

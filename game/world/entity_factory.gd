@@ -59,3 +59,20 @@ static func populate(room: Node2D, def: RoomDef) -> void:
 				tr.dialog_id = ent.id
 				tr.position = pos
 				room.add_child(tr)
+			"deco":
+				var tex_path := "res://art/deco/%s.png" % ent.id
+				if not ResourceLoader.exists(tex_path):
+					push_warning("Deko fehlt: " + tex_path)
+					continue
+				var sp := Sprite2D.new()
+				sp.texture = load(tex_path)
+				sp.centered = false
+				sp.set_meta("deco", ent.id)
+				sp.position = pos - Vector2(sp.texture.get_width() / 2.0, sp.texture.get_height())
+				sp.flip_h = ent.props.get("flip", "false") == "true"
+				sp.z_index = 2 if ent.props.get("front", "false") == "true" else -1
+				room.add_child(sp)
+			"light":
+				var l := LightGlow.create(ent.id == "warm", int(ent.props.get("radius", "32")))
+				l.position = pos - Vector2(0, RoomBuilder.TILE / 2.0)
+				room.add_child(l)
