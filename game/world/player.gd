@@ -44,9 +44,10 @@ func _ready() -> void:
 	shape.position = Vector2(0, -13)
 	add_child(shape)
 	strike_box = Area2D.new()
-	strike_box.collision_layer = 0
+	strike_box.collision_layer = 8
 	strike_box.collision_mask = 4
 	strike_box.monitoring = false
+	strike_box.monitorable = false
 	var ss := CollisionShape2D.new()
 	var sr := RectangleShape2D.new()
 	sr.size = Vector2(18, 14)
@@ -55,6 +56,7 @@ func _ready() -> void:
 	add_child(strike_box)
 	_place_strike_box()
 	strike_box.area_entered.connect(func(a: Area2D) -> void: field_strike.emit(a))
+	field_strike.connect(_on_field_strike)
 	set_hero(hero_id)
 
 
@@ -143,7 +145,13 @@ func _tick_strike(delta: float) -> void:
 		_strike_timer -= delta
 		if _strike_timer <= 0.0:
 			strike_box.set_deferred("monitoring", false)
+			strike_box.set_deferred("monitorable", false)
 			_striking = false
+
+
+func _on_field_strike(area: Area2D) -> void:
+	if area.get_parent() is FieldEnemy:
+		BattleLauncher.start(area.get_parent(), "erstschlag")
 
 
 ## Startet den Feldschlag. false während der Abklingzeit.
@@ -153,6 +161,7 @@ func strike() -> bool:
 	_cooldown = STRIKE_COOLDOWN
 	_strike_timer = STRIKE_TIME
 	strike_box.monitoring = true
+	strike_box.monitorable = true
 	_striking = true
 	if _sprite:
 		_sprite.play("schlag")
