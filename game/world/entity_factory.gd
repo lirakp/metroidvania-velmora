@@ -14,3 +14,10 @@ static func populate(room: Node2D, def: RoomDef) -> void:
 				var e := FieldEnemy.create(ent.id.split("+"), int(ent.props.get("patrol", "0")), def.id, i, ent.type == "boss")
 				e.position = pos
 				room.add_child(e)
+			"save":
+				var sp := SaveSpot.new()
+				sp.room_id = def.id
+				sp.cell = ent.pos
+				sp.kind = ent.props.get("kind", "rastort")
+				sp.position = pos
+				room.add_child(sp)

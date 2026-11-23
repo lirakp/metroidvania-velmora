@@ -15,6 +15,10 @@ var discovered_rooms: Dictionary = {}
 var owned_maps: Dictionary = {}
 var room_id := ""
 var hp: Dictionary = {}
+var plaketten := Plaketten.new()
+
+const GUILD_ROOM := "kornburg_gilde"
+const DEATH_TAX := 0.10
 
 
 func _init() -> void:
@@ -34,6 +38,7 @@ func reset() -> void:
 	owned_maps = {}
 	room_id = ""
 	hp = {}
+	plaketten = Plaketten.new()
 
 
 func choose_hero(id: String) -> void:
@@ -80,6 +85,7 @@ func to_dict() -> Dictionary:
 		"hero_id": hero_id, "companion_id": companion_id, "gold": gold, "xp": xp,
 		"abilities": abilities, "flags": flags, "inventory": inventory, "equipped": equipped,
 		"discovered_rooms": discovered_rooms, "owned_maps": owned_maps, "room_id": room_id,
+		"plaketten": plaketten.to_dict(),
 	}
 
 
@@ -96,3 +102,20 @@ func from_dict(d: Dictionary) -> void:
 	discovered_rooms = d.get("discovered_rooms", {})
 	owned_maps = d.get("owned_maps", {})
 	room_id = d.get("room_id", "")
+	plaketten = Plaketten.from_dict(d.get("plaketten", {}))
+
+
+## Tod: Die Gilde bucht 10 % Blutsteuer. Gibt den Rückkehrpunkt zurück ({room, cell}; cell -1,-1 = Startpunkt des Raums).
+func on_death() -> Dictionary:
+	gold -= int(floor(gold * DEATH_TAX))
+	hp.clear()
+	var rp := plaketten.respawn_point()
+	if not rp.is_empty():
+		var def: RoomDef = RoomManager.def_of(rp.room)
+		if def.error != "" or (def.one_way_dungeon and get_flag("dungeon_cleared:" + def.area) == true):
+			rp = {}
+	if rp.is_empty():
+		rp = {"room": GUILD_ROOM, "cell": Vector2i(-1, -1)}
+	if RoomManager.world_root != null and is_instance_valid(RoomManager.world_root):
+		RoomManager.go_to.call_deferred(rp.room, "", "start", rp.cell)
+	return rp

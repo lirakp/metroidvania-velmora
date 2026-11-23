@@ -32,7 +32,7 @@ func def_of(id: String) -> RoomDef:
 
 
 ## Wechselt in room_id. exit_id = Ausgang im Zielraum, an dem der Spieler erscheint; "" = Spawn „start“.
-func go_to(room_id: String, exit_id: String, spawn := "start") -> void:
+func go_to(room_id: String, exit_id: String, spawn := "start", at_cell := Vector2i(-1, -1)) -> void:
 	var def := def_of(room_id)
 	if def.error != "":
 		push_error(def.error)
@@ -51,6 +51,8 @@ func go_to(room_id: String, exit_id: String, spawn := "start") -> void:
 		if exit_locked(def, e):
 			current.get_node("Tiles").set_cell(e.pos, 0, Vector2i(9, 0))
 	var cell: Vector2i = def.arrival_cell(exit_id) if exit_id != "" else def.spawns.get(spawn, def.spawns.get("start", Vector2i(1, 1)))
+	if at_cell.x >= 0:
+		cell = at_cell
 	player.position = RoomBuilder.cell_to_pos(cell)
 	player.velocity = Vector2.ZERO
 	GameState.discovered_rooms[room_id] = true
