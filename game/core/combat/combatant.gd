@@ -26,6 +26,7 @@ var statuses: Dictionary = {}
 var equipment: Array[Dictionary] = []
 var spells: Array = []
 var defending := false
+var max_hp_penalty := 0
 var xp := 0
 var silver := 0
 
