@@ -127,8 +127,14 @@ Ein kleiner, aber vollständiger Ausschnitt, der alle Kernsysteme einmal zeigt:
 
 ## 11. Offene Punkte für das Team
 
-1. **Der Graue Brunnen liegt laut Bibel auf Ascheron** (Grenze zu den Erstarrten Landen), und nur dort kann der König der Ewigkeit endgültig sterben. Das Spiel spielt auf Velmora. Möglichkeiten: (a) Das Finale führt per Fähre nach Ascheron, (b) die Fee lässt den Erinnerungs-Dungeon auf Velmora erscheinen (Dungeons entstehen überall), (c) es gibt einen zweiten Erinnerungs-Dungeon mit diesen Erinnerungen. Mein Vorschlag: (b), es passt zur Regel „Dungeons entstehen überall und zufällig“ und hält das Spiel auf einem Kontinent.
-2. Später (nicht für den Slice nötig): Reihenfolge der großen Story-Schritte bis zum König.
+1. Später (nicht für den Slice nötig): Reihenfolge der großen Story-Schritte bis zum König.
+
+### Entschieden: Der Weg zum Grauen Brunnen **[Team]**
+Der Graue Brunnen (Erinnerungs-Dungeon mit den Erinnerungen des Königs der Ewigkeit) liegt laut Bibel auf Ascheron. Zwei Wege führen hinein:
+- **Fee-Quest erledigt** (die Quest, die das Item zum Wiederbetreten von Dungeons gibt): Die Fee lässt den Erinnerungs-Dungeon auf Velmora erscheinen.
+- **Fee-Quest nicht erledigt:** Man braucht genug Gold für die Überfahrt nach Ascheron. Man wird in einem kleinen Gebiet vor dem Dungeon abgesetzt. Ist die Verlorene Königin dabei (Ende 3), löst das einen seltenen Text aus: Der Ort erinnert sie an ihre Kindheit.
+
+Alle anderen Vorschläge dieses Dokuments sind vom Team angenommen (2026-11-23).
 
 ## 12. Was dem Bauenden überlassen ist
 
