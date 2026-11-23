@@ -85,7 +85,7 @@ func _build() -> void:
 	ground.size = Vector2(480, 74)
 	add_child(ground)
 	for i in state.heroes.size():
-		_add_sprite(state.heroes[i], Vector2(110 - i * 36, 194), 16, 32)
+		_add_sprite(state.heroes[i], Vector2(110 - i * 40, 194), Player.FRAME.x, Player.FRAME.y)
 	for i in state.enemies.size():
 		var e := state.enemies[i]
 		var s := 64 if e.is_boss else 32

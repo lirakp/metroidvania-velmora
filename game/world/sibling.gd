@@ -19,13 +19,13 @@ func _ready() -> void:
 	collision_mask = 1
 	var shape := CollisionShape2D.new()
 	var r := RectangleShape2D.new()
-	r.size = Vector2(10, 26)
+	r.size = Vector2(12, 36)
 	shape.shape = r
-	shape.position = Vector2(0, -13)
+	shape.position = Vector2(0, -18)
 	add_child(shape)
 	_sprite = AnimatedSprite2D.new()
 	_sprite.sprite_frames = Player.make_frames("res://art/chars/%s.png" % GameState.companion_id)
-	_sprite.position = Vector2(0, -16)
+	_sprite.position = Vector2(0, -Player.FRAME.y / 2.0)
 	_sprite.modulate = Color(0.85, 0.85, 0.9)
 	_sprite.play("idle")
 	add_child(_sprite)

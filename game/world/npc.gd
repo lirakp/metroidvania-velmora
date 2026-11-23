@@ -24,13 +24,13 @@ func _ready() -> void:
 	if ResourceLoader.exists(art):
 		var sp := AnimatedSprite2D.new()
 		sp.sprite_frames = Player.make_frames(art)
-		sp.position = Vector2(0, -16)
+		sp.position = Vector2(0, -Player.FRAME.y / 2.0)
 		sp.flip_h = true
 		sp.play("idle")
 		add_child(sp)
 	_hint = Label.new()
 	_hint.text = "[W]"
-	_hint.position = Vector2(-8, -44)
+	_hint.position = Vector2(-8, -52)
 	_hint.visible = false
 	BattleScene._style_label(_hint, Color("d9a441"))
 	add_child(_hint)

@@ -13,6 +13,8 @@ const JUMP_BUFFER := 0.1
 const STRIKE_TIME := 0.25
 const STRIKE_COOLDOWN := 0.4
 const MAX_FALL := 400.0
+## Größe eines Figuren-Frames im Spritesheet.
+const FRAME := Vector2i(24, 40)
 
 ## Für Tests: Eingaben kommen aus in_* statt aus Input.
 var test_control := false
@@ -39,9 +41,9 @@ func _ready() -> void:
 	collision_mask = 1
 	var shape := CollisionShape2D.new()
 	var rect := RectangleShape2D.new()
-	rect.size = Vector2(10, 26)
+	rect.size = Vector2(12, 36)
 	shape.shape = rect
-	shape.position = Vector2(0, -13)
+	shape.position = Vector2(0, -18)
 	add_child(shape)
 	strike_box = Area2D.new()
 	strike_box.collision_layer = 8
@@ -50,7 +52,7 @@ func _ready() -> void:
 	strike_box.monitorable = false
 	var ss := CollisionShape2D.new()
 	var sr := RectangleShape2D.new()
-	sr.size = Vector2(18, 14)
+	sr.size = Vector2(20, 18)
 	ss.shape = sr
 	strike_box.add_child(ss)
 	add_child(strike_box)
@@ -66,7 +68,7 @@ func set_hero(id: String) -> void:
 		_sprite.queue_free()
 	_sprite = AnimatedSprite2D.new()
 	_sprite.sprite_frames = make_frames("res://art/chars/%s.png" % id)
-	_sprite.position = Vector2(0, -16)
+	_sprite.position = Vector2(0, -FRAME.y / 2.0)
 	_sprite.play("idle")
 	add_child(_sprite)
 
@@ -84,13 +86,13 @@ static func make_frames(path: String) -> SpriteFrames:
 		for f in int(rows[r][1]):
 			var at := AtlasTexture.new()
 			at.atlas = tex
-			at.region = Rect2(f * 16, r * 32, 16, 32)
+			at.region = Rect2(f * FRAME.x, r * FRAME.y, FRAME.x, FRAME.y)
 			sf.add_frame(anim, at)
 	return sf
 
 
 func _place_strike_box() -> void:
-	strike_box.position = Vector2(14 * facing, -14)
+	strike_box.position = Vector2(16 * facing, -20)
 
 
 func _read_input() -> Dictionary:
