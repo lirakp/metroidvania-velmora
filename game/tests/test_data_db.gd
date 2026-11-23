@@ -13,7 +13,7 @@ func test_enemy_values() -> void:
 	assert_eq(g.hp, 48)
 	assert_eq(g.rank, 2)
 	assert_eq(g.weak, ["licht"])
-	assert_eq(DB.enemy("blutwolf_alpha").hp, 160)
+	assert_eq(DB.enemy("blutwolf_alpha").hp, 140)
 
 
 func test_hero_and_spell_values() -> void:

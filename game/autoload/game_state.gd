@@ -63,6 +63,16 @@ func clear_dungeon(area: String) -> void:
 	flags.erase("dungeon_locked:" + area)
 
 
+## Legt einen Gegenstand an (ersetzt den im selben Platz).
+func equip(hid: String, item: String) -> void:
+	var h: Dictionary = DB.hero(hid)
+	var current: Array = equipped.get(hid, [h.weapon, h.armor]).duplicate()
+	var slot: String = DB.equipment(item).slot
+	current = current.filter(func(e): return DB.equipment(e).slot != slot)
+	current.append(item)
+	equipped[hid] = current
+
+
 func buy_map(area: String, price: int) -> bool:
 	if gold < price:
 		return false

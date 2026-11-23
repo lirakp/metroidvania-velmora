@@ -91,6 +91,7 @@ func _build() -> void:
 		var s := 64 if e.is_boss else 32
 		_add_sprite(e, Vector2(330 + i * 44, 194), s, s)
 	_ui = CanvasLayer.new()
+	_ui.layer = 11
 	add_child(_ui)
 	_turn_bar = HBoxContainer.new()
 	_turn_bar.position = Vector2(8, 6)

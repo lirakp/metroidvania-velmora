@@ -91,10 +91,16 @@ static func parse(text: String) -> RoomDef:
 			if tok.size() < 3:
 				continue
 			var xy: PackedStringArray = tok[2].split(",")
+			if xy.size() != 2:
+				d.error = "Entität ohne Position: %s" % line
+				return d
 			var props := {}
 			for i in range(3, tok.size()):
 				var kv: PackedStringArray = tok[i].split("=")
-				props[kv[0]] = kv[1] if kv.size() > 1 else "true"
+				if kv.size() > 1:
+					props[kv[0]] = kv[1]
+				else:
+					props[kv[0]] = "true"
 			d.entities.append({"type": tok[0], "id": tok[1], "pos": Vector2i(int(xy[0]), int(xy[1])), "props": props})
 	return d
 

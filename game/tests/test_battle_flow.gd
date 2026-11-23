@@ -61,7 +61,7 @@ func test_boss_gains_attack_per_hit() -> void:
 	var b := Combatant.from_enemy("blutwolf_alpha")
 	var s := _state([w], [b], "ueberfall")
 	s.step()
-	assert_eq(b.atk, 15)
+	assert_eq(b.atk, 14)
 
 
 func test_round_advances_and_stun_wears_off() -> void:

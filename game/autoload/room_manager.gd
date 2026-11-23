@@ -10,6 +10,7 @@ var current: Node2D
 var current_def: RoomDef
 var camera: Camera2D
 var _cache := {}
+var _entry_pos := Vector2.ZERO
 
 
 func attach(root: Node2D, p: Player) -> void:
@@ -47,14 +48,13 @@ func go_to(room_id: String, exit_id: String, spawn := "start", at_cell := Vector
 	world_root.add_child(current)
 	world_root.move_child(current, 0)
 	EntityFactory.populate(current, def)
-	for e in def.exits:
-		if exit_locked(def, e):
-			current.get_node("Tiles").set_cell(e.pos, 0, Vector2i(9, 0))
+	refresh_locks()
 	var cell: Vector2i = def.arrival_cell(exit_id) if exit_id != "" else def.spawns.get(spawn, def.spawns.get("start", Vector2i(1, 1)))
 	if at_cell.x >= 0:
 		cell = at_cell
 	player.position = RoomBuilder.cell_to_pos(cell)
 	player.velocity = Vector2.ZERO
+	_entry_pos = player.position
 	GameState.discovered_rooms[room_id] = true
 	GameState.room_id = room_id
 	camera.limit_left = 0
@@ -63,6 +63,20 @@ func go_to(room_id: String, exit_id: String, spawn := "start", at_cell := Vector
 	camera.limit_bottom = def.size.y * RoomBuilder.TILE
 	camera.reset_smoothing()
 	room_changed.emit(def)
+
+
+## Setzt Tor-Kacheln an gesperrten Ausgängen bzw. entfernt sie wieder.
+func refresh_locks() -> void:
+	if current == null or current_def == null:
+		return
+	var tiles: TileMapLayer = current.get_node("Tiles")
+	for e in current_def.exits:
+		if exit_locked(current_def, e):
+			tiles.set_cell(e.pos, 0, Vector2i(9, 0))
+			tiles.set_cell(e.pos - Vector2i(0, 1), 0, Vector2i(9, 0))
+		else:
+			tiles.erase_cell(e.pos)
+			tiles.erase_cell(e.pos - Vector2i(0, 1))
 
 
 func exit_locked(def: RoomDef, e: Dictionary) -> bool:
@@ -106,5 +120,13 @@ func check_exits() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if not get_tree().paused:
-		check_exits()
+	if get_tree().paused or player == null or not is_instance_valid(player) or current_def == null:
+		return
+	check_exits()
+	var feet := Vector2i(floori(player.position.x / RoomBuilder.TILE), floori((player.position.y - 1) / RoomBuilder.TILE))
+	if current_def.tile_at(feet) == RoomBuilder.HAZARD:
+		player.position = _entry_pos
+		player.velocity = Vector2.ZERO
+		for h in GameState.party():
+			GameState.hp[h] = maxi(1, int(GameState.hp.get(h, DB.hero(h).hp)) - 5)
+		ChoiceMenu.toast(player, "Die Stacheln reißen euch zurück. (−5 LP)")

@@ -7,6 +7,7 @@ static func populate(room: Node2D, def: RoomDef) -> void:
 	for i in def.entities.size():
 		var ent: Dictionary = def.entities[i]
 		var pos := RoomBuilder.cell_to_pos(ent.pos)
+		var flag := "picked:%s:%d" % [def.id, i]
 		match ent.type:
 			"enemy", "boss":
 				if GameState.get_flag("defeated:%s:%d" % [def.id, i]):
@@ -43,3 +44,18 @@ static func populate(room: Node2D, def: RoomDef) -> void:
 				n.props = ent.props
 				n.position = pos
 				room.add_child(n)
+			"pickup":
+				if GameState.get_flag(flag):
+					continue
+				var pk := Pickup.new()
+				pk.kind = ent.id
+				pk.flag = flag
+				pk.position = pos
+				room.add_child(pk)
+			"dialog":
+				if GameState.get_flag("seen:" + ent.id):
+					continue
+				var tr := DialogTrigger.new()
+				tr.dialog_id = ent.id
+				tr.position = pos
+				room.add_child(tr)

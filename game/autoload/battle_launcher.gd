@@ -3,6 +3,7 @@ extends Node
 ## Der Kampfplatz liegt als eigene Ebene über dem pausierten Raum.
 
 signal battle_ended(outcome: String)
+signal boss_defeated(area: String)
 
 const GRACE := 1.0
 
@@ -13,6 +14,7 @@ var last_enemy_ids: Array = []
 var _enemy: FieldEnemy
 var _grace_until := 0.0
 var _layer: CanvasLayer
+var _scene: BattleScene
 
 
 func reset_for_test() -> void:
@@ -48,6 +50,11 @@ func start(enemy: FieldEnemy, opening: String) -> bool:
 	if room and room.has_meta("room_def"):
 		biome = room.get_meta("room_def").biome
 	scene.setup(GameState.party(), enemy.enemy_ids, opening, biome, GameState.party_equipment())
+	for h in scene.state.heroes:
+		if GameState.hp.has(h.id):
+			h.hp = clampi(int(GameState.hp[h.id]), 1, h.max_hp)
+	scene._refresh()
+	_scene = scene
 	scene.battle_finished.connect(finish)
 	get_tree().paused = true
 	return true
@@ -60,8 +67,19 @@ func finish(outcome: String, result: BattleResult) -> void:
 		get_tree().paused = false
 		if is_instance_valid(_layer):
 			_layer.queue_free()
+	if outcome != "niederlage" and is_instance_valid(_scene):
+		for h in _scene.state.heroes:
+			GameState.hp[h.id] = maxi(1, h.hp)
 	match outcome:
 		"sieg":
+			if is_instance_valid(_enemy) and _enemy.is_boss:
+				var area := ""
+				var room := _enemy.get_parent()
+				if room and room.has_meta("room_def"):
+					area = room.get_meta("room_def").area
+				GameState.clear_dungeon(area)
+				RoomManager.refresh_locks()
+				boss_defeated.emit(area)
 			if is_instance_valid(_enemy):
 				GameState.set_flag("defeated:%s:%d" % [_enemy.room_id, _enemy.index])
 				_enemy.queue_free()

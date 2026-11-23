@@ -23,4 +23,4 @@ Durchgangs und muss pro Raum eindeutig sein. Jeder Ausgang braucht im Zielraum e
 
 Entitäten: `enemy <gegner-id[+gegner-id]> x,y patrol=4` · `npc kartograf x,y area=kornburg price=40` ·
 `pickup federfall|plakette|item:<id>|map:<area> x,y` · `sibling_point <name> x,y` · `plate <name> x,y opens=<tor>` ·
-`gate <name> x,y` · `save x,y kind=gilde|rastort` · `boss <gegner-id> x,y` · `dialog <dialog-id> x,y` · `npc <id> x,y dialog=<id>`.
+`gate <name> x,y` · `save <name> x,y kind=gilde|rastort` · `boss <gegner-id> x,y` · `dialog <dialog-id> x,y` · `npc <id> x,y dialog=<id>`.
