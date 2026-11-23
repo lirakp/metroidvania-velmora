@@ -3,8 +3,8 @@ extends RefCounted
 ## Ein Raum aus einer .room-Textdatei (Kopf, Gitter, Entitäten). Siehe res://data/rooms/README.md.
 
 const MIN_SIZE := Vector2i(30, 17)
-const TILE_CHARS := {".": 0, "#": 1, "=": 2, "-": 3, "S": 4, "B": 5, "x": 6, "^": 7, "p": 8, "T": 9, "A": 11, "G": 12}
-const SOLID := [1, 2, 4, 5, 6, 9]
+const TILE_CHARS := {".": 0, "#": 1, "=": 2, "-": 3, "S": 4, "B": 5, "x": 6, "^": 7, "p": 8, "T": 9, "A": 11, "G": 12, "h": 13, "w": 14}
+const SOLID := [1, 2, 4, 5, 6, 9, 13, 14]
 
 var id := ""
 var biome := ""

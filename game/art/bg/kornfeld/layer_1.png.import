@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://df8kpf303rh3h"
-path="res://.godot/imported/kornfeld.png-35483044aa29ac1d0b4b88a02218eafa.ctex"
+uid="uid://fc3vw0eqhusd"
+path="res://.godot/imported/layer_1.png-1d7ca458dcf4d61809dad0edc485f414.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/bg/kornfeld.png"
-dest_files=["res://.godot/imported/kornfeld.png-35483044aa29ac1d0b4b88a02218eafa.ctex"]
+source_file="res://art/bg/kornfeld/layer_1.png"
+dest_files=["res://.godot/imported/layer_1.png-1d7ca458dcf4d61809dad0edc485f414.ctex"]
 
 [params]
 

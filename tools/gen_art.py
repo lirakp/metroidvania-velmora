@@ -8,10 +8,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "art"))
 
+import backgrounds  # noqa: E402
 import chars  # noqa: E402
 import legacy  # noqa: E402
+import tiles  # noqa: E402
 
 if __name__ == "__main__":
     legacy.make_all()
+    tiles.make_all()
+    backgrounds.make_all()
     chars.make_all()
     print("Grafik erzeugt.")

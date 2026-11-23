@@ -29,7 +29,38 @@ def test_palette_sizes():
 
 
 def test_atlas_size():
-    assert Image.open(ART / "tiles.png").size == (16 * 13, 16)
+    assert Image.open(ART / "tiles.png").size == (16 * 15, 16)
+
+
+BIOMES = ("kornfeld", "stadt", "dungeon_blut", "innen_gilde", "innen_haus", "innen_kammer", "innen_muehle")
+
+
+def test_background_layers():
+    for b in BIOMES:
+        for i in range(3):
+            p = ART / f"bg/{b}/layer_{i}.png"
+            assert p.exists(), p
+            assert Image.open(p).size == (480, 270), p
+        assert Image.open(ART / f"bg/{b}/layer_0.png").convert("RGBA").getextrema()[3][0] == 255, f"{b}: Ebene 0 deckend"
+
+
+def test_safe_backgrounds_have_warm_light():
+    _, warm = palettes()
+    for b in ("stadt", "innen_gilde", "innen_haus", "innen_kammer"):
+        cols = set()
+        for i in range(3):
+            cols |= colors_of(ART / f"bg/{b}/layer_{i}.png")
+        assert cols & warm, f"{b} ohne warmes Licht"
+    for b in ("innen_muehle", "kornfeld"):
+        for i in range(3):
+            assert not (colors_of(ART / f"bg/{b}/layer_{i}.png") & warm), f"{b} soll kalt bleiben"
+
+
+def test_dungeon_darker_than_before():
+    im = Image.open(ART / "bg/dungeon_blut/layer_0.png").convert("RGB")
+    cols = im.getcolors(1 << 22)
+    mean = sum(n * (r * 3 + g * 6 + b) / 10 for n, (r, g, b) in cols) / sum(n for n, _ in cols)
+    assert mean < 30, f"mittlere Helligkeit {mean:.1f}"
 
 
 def test_expected_files():
@@ -64,7 +95,7 @@ def test_all_pixels_in_palette():
 
 def test_warm_colors_only_in_safe_art():
     base, warm = palettes()
-    forbidden = list((ART / "enemies").glob("*.png")) + [ART / "tiles.png"] + list(ART.glob("bg/dungeon_*/*.png"))
+    forbidden = list((ART / "enemies").glob("*.png")) + [ART / "tiles.png"] + list(ART.glob("bg/dungeon_*/*.png")) + list(ART.glob("bg/innen_muehle/*.png"))
     for p in forbidden:
         assert not (colors_of(p) & warm), f"warme Farbe in {p.relative_to(ART)}"
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://i062504must7"
-path="res://.godot/imported/dungeon_blut.png-3bc6097804fb5c25091a20b42a65feb4.ctex"
+uid="uid://d3glw5b8t7cml"
+path="res://.godot/imported/layer_0.png-68fd7581587534c965609ab2e5a49d86.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/bg/dungeon_blut.png"
-dest_files=["res://.godot/imported/dungeon_blut.png-3bc6097804fb5c25091a20b42a65feb4.ctex"]
+source_file="res://art/bg/stadt/layer_0.png"
+dest_files=["res://.godot/imported/layer_0.png-68fd7581587534c965609ab2e5a49d86.ctex"]
 
 [params]
 

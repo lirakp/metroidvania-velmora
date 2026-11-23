@@ -342,9 +342,6 @@ def make_plakette():
 
 
 def make_all():
-    make_tiles()
     for k in ("goblin", "gruenschleim", "skelettkrieger", "riesenspinne", "ghul", "skelett_bogner", "blutwolf_alpha"):
         make_enemy(k)
-    for k in ("kornfeld", "stadt", "dungeon_blut"):
-        make_bg(k)
     make_plakette()

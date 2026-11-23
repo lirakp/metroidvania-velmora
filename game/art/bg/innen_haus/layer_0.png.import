@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://eikvpt46jkoy"
-path="res://.godot/imported/stadt.png-f329496d6e5aa9e630a902b3f23a4b42.ctex"
+uid="uid://cikb4v1mxt4y8"
+path="res://.godot/imported/layer_0.png-2c2887775d92edd1b88015bd8354d9c7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/bg/stadt.png"
-dest_files=["res://.godot/imported/stadt.png-f329496d6e5aa9e630a902b3f23a4b42.ctex"]
+source_file="res://art/bg/innen_haus/layer_0.png"
+dest_files=["res://.godot/imported/layer_0.png-2c2887775d92edd1b88015bd8354d9c7.ctex"]
 
 [params]
 

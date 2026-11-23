@@ -68,3 +68,25 @@ func test_builder_creates_collision_tiles() -> void:
 	assert_eq(tiles.get_cell_atlas_coords(Vector2i(3, 16)), Vector2i(1, 0))
 	assert_eq(tiles.get_cell_source_id(Vector2i(3, 3)), -1)
 	node.free()
+
+
+func test_builder_has_three_background_layers() -> void:
+	var d := RoomDef.parse(_room("id: a\nbiome: dungeon_blut\narea: k", _grid()))
+	var node := RoomBuilder.build(d)
+	var layers := node.get_children().filter(func(n): return n is Parallax2D)
+	assert_eq(layers.size(), 3)
+	assert_true(layers[0].scroll_scale.x < layers[2].scroll_scale.x, "ferne Ebene bewegt sich langsamer")
+	node.free()
+
+
+func test_new_tiles_parse() -> void:
+	var d := RoomDef.parse(_room("id: a\nbiome: innen_gilde\narea: k", _grid({14: "hw............................"})))
+	assert_eq(d.tile_at(Vector2i(0, 14)), 13)
+	assert_eq(d.tile_at(Vector2i(1, 14)), 14)
+	assert_true(14 in RoomDef.SOLID and 13 in RoomDef.SOLID)
+
+
+func test_backdrop_for_battle() -> void:
+	var b := Backdrop.make("innen_gilde")
+	assert_eq(b.get_child_count(), 3)
+	b.free()

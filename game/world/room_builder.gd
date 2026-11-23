@@ -19,7 +19,7 @@ static func tileset() -> TileSet:
 	src.texture = load("res://art/tiles.png")
 	src.texture_region_size = Vector2i(TILE, TILE)
 	ts.add_source(src, 0)
-	for i in range(1, 13):
+	for i in range(1, 15):
 		src.create_tile(Vector2i(i, 0))
 		var data := src.get_tile_data(Vector2i(i, 0), 0)
 		if i in RoomDef.SOLID or i == ONE_WAY:
@@ -36,17 +36,7 @@ static func tileset() -> TileSet:
 static func build(def: RoomDef) -> Node2D:
 	var root := Node2D.new()
 	root.name = "Room_" + def.id
-	var bg := Sprite2D.new()
-	bg.name = "Background"
-	var tex_path := "res://art/bg/%s.png" % def.biome
-	if ResourceLoader.exists(tex_path):
-		bg.texture = load(tex_path)
-	bg.centered = false
-	var para := Parallax2D.new()
-	para.scroll_scale = Vector2(0.2, 0.2)
-	para.name = "Parallax"
-	para.add_child(bg)
-	root.add_child(para)
+	Backdrop.add_parallax(root, def.biome)
 	var layer := TileMapLayer.new()
 	layer.name = "Tiles"
 	layer.tile_set = tileset()

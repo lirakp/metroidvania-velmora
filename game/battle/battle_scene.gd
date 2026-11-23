@@ -75,10 +75,7 @@ func spell_entries(c: Combatant) -> Array:
 func _build() -> void:
 	for ch in get_children():
 		ch.queue_free()
-	var bg := Sprite2D.new()
-	bg.texture = load("res://art/bg/%s.png" % background)
-	bg.centered = false
-	add_child(bg)
+	add_child(Backdrop.make(background))
 	var ground := ColorRect.new()
 	ground.color = Color("14161d")
 	ground.position = Vector2(0, 196)
