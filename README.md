@@ -22,16 +22,25 @@ Spielstände liegen unter `%APPDATA%\Godot\app_userdata\Blutmond\save1.json`.
 | Springen (in der Luft erneut: Federfall) | Leertaste | A |
 | Feldschlag (Erstschlag) | J | X |
 | Geschwister schicken / zurückrufen | K | Y |
-| Interagieren (Rastort, Kartograf) | W oder ↑ | Steuerkreuz hoch |
+| Interagieren, Türen betreten (Rastort, Kartograf, Häuser) | W oder ↑ | Steuerkreuz hoch |
 | Karte | M | Select/Back |
 | Menüs | ↑ ↓ Enter, Esc zurück | Steuerkreuz, A, B |
 
 ## Was im Prototyp steckt
 
-- Kornburg (Gildenhalle, Stadt, Kornfelder, Mühle) und ein Blut-Dungeon mit dem Blutwolf-Alpha als Boss
+- Kornburg (Gildenhalle, Kartografenhaus, Stadt, Kornfelder, Mühle) und ein Blut-Dungeon mit Rast-Kammer, geheimer Kammer und dem Blutwolf-Alpha als Boss
 - Rundenkampf auf eigenem Kampfplatz: Erstschlag/Überfall, zwei Manaflüsse der Halbelfen, Tribut der Ausrüstung
 - Seelenplaketten (höchstens 5) als Rückkehrpunkte, Speichern nur an Gildenhalle und Rastort, 10 % Blutsteuer beim Tod
 - Einweg-Dungeons, Karten beim Kartografen, Geschwister-Rätsel mit Druckplatten, Federfall
+
+## Grafik
+
+Die Welt ist düster; nur **sichere Orte** (Gildenhalle, Häuser, Rast-Kammern, Laternen der Stadt) haben warmes Licht.
+Häuser und Öffnungen in Wänden betretet ihr mit **[W]/↑** – dahinter liegt ein eigener Raum.
+
+- Palette: `game/art/palette.json` (32 düstere Grundfarben + 6 warme Lichttöne)
+- Figuren als Pixel-Textraster: `tools/art/rasters/*.txt` (ein Zeichen = ein Pixel)
+- Landschaft, Kacheln, Deko, Licht: `tools/art/*.py`, erzeugt mit `python3 tools/gen_art.py`
 
 ## Selbst bauen (Linux)
 
