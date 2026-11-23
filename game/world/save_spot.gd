@@ -8,6 +8,7 @@ var room_id := ""
 var cell := Vector2i.ZERO
 var kind := "rastort"
 var _player_inside := false
+var _blocked_until := 0.0
 
 
 func _ready() -> void:
@@ -50,7 +51,9 @@ func _msg(t: String) -> void:
 
 
 func _process(_d: float) -> void:
-	if _player_inside and not get_tree().paused and Input.is_action_just_pressed("interagieren"):
+	if _player_inside and not get_tree().paused and Time.get_ticks_msec() / 1000.0 >= _blocked_until and Input.is_action_just_pressed("interagieren"):
 		var title := "Gildenhalle" if kind == "gilde" else "Rastort"
 		var m := ChoiceMenu.open(self, title, options())
-		m.chosen.connect(func(i): choose(KEYS[i]))
+		m.chosen.connect(func(i):
+			_blocked_until = Time.get_ticks_msec() / 1000.0 + 0.35
+			choose(KEYS[i]))

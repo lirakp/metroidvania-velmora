@@ -10,10 +10,12 @@ const OPTIONS := ["Neues Spiel", "Fortsetzen", "Beenden"]
 var _index := 0
 var _labels: Array[Label] = []
 var _can_continue := false
+var save_path := SaveSystem.DEFAULT_PATH
 
 
 func _ready() -> void:
-	_can_continue = SaveSystem.exists()
+	# Auch ein beschädigter Stand macht „Fortsetzen“ wählbar, damit der Fehler gemeldet wird.
+	_can_continue = FileAccess.file_exists(save_path)
 	var bg := Sprite2D.new()
 	bg.texture = load("res://art/bg/stadt.png")
 	bg.centered = false

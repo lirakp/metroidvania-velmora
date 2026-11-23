@@ -6,14 +6,17 @@ signal chosen(index: int)
 
 var title := ""
 var options: Array = []
+## Index, den Esc auswählt (Standard: letzte Option).
+var cancel_index := -1
 var _index := 0
 var _box: VBoxContainer
 
 
-static func open(parent: Node, p_title: String, p_options: Array) -> ChoiceMenu:
+static func open(parent: Node, p_title: String, p_options: Array, p_cancel := -1) -> ChoiceMenu:
 	var m := ChoiceMenu.new()
 	m.title = p_title
 	m.options = p_options
+	m.cancel_index = p_cancel
 	parent.get_tree().root.add_child(m)
 	return m
 
@@ -21,7 +24,7 @@ static func open(parent: Node, p_title: String, p_options: Array) -> ChoiceMenu:
 func _ready() -> void:
 	layer = 20
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	get_tree().paused = true
+	GameState.pause_push()
 	var panel := ColorRect.new()
 	panel.color = Color("0b0c10")
 	panel.position = Vector2(140, 70)
@@ -64,14 +67,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_accept"):
 		close(_index)
 	elif event.is_action_pressed("ui_cancel"):
-		close(options.size() - 1)
+		close(cancel_index if cancel_index >= 0 else options.size() - 1)
 	else:
 		return
 	get_viewport().set_input_as_handled()
 
 
 func close(i: int) -> void:
-	get_tree().paused = false
+	if is_queued_for_deletion():
+		return
+	GameState.pause_pop()
 	chosen.emit(i)
 	queue_free()
 

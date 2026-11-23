@@ -46,6 +46,26 @@ func choose_hero(id: String) -> void:
 	companion_id = "lira" if id == "warschick" else "warschick"
 
 
+# ---------------------------------------------------------------- Pause
+## Jedes Overlay (Dialog, Menü, Karte, Kampf) hält eine Pause; erst wenn alle zu sind, läuft die Welt weiter.
+var _pause_count := 0
+
+
+func pause_push() -> void:
+	_pause_count += 1
+	get_tree().paused = true
+
+
+func pause_pop() -> void:
+	_pause_count = maxi(0, _pause_count - 1)
+	get_tree().paused = _pause_count > 0
+
+
+func pause_reset() -> void:
+	_pause_count = 0
+	get_tree().paused = false
+
+
 func has_ability(n: String) -> bool:
 	return abilities.get(n, false)
 
@@ -123,10 +143,9 @@ func from_dict(d: Dictionary) -> void:
 	plaketten = Plaketten.from_dict(d.get("plaketten", {}))
 
 
-## Tod: Die Gilde bucht 10 % Blutsteuer. Gibt den Rückkehrpunkt zurück ({room, cell}; cell -1,-1 = Startpunkt des Raums).
-func on_death() -> Dictionary:
-	gold -= int(floor(gold * DEATH_TAX))
-	hp.clear()
+## Rückkehrpunkt für Tod und „Fortsetzen“: letzte benutzte Plakette, sonst die Gildenhalle.
+## Plaketten in fehlenden Räumen oder gelösten Dungeons zählen nicht ({room, cell}; cell -1,-1 = Startpunkt).
+func resolve_respawn() -> Dictionary:
 	var rp := plaketten.respawn_point()
 	if not rp.is_empty():
 		var def: RoomDef = RoomManager.def_of(rp.room)
@@ -134,6 +153,14 @@ func on_death() -> Dictionary:
 			rp = {}
 	if rp.is_empty():
 		rp = {"room": GUILD_ROOM, "cell": Vector2i(-1, -1)}
+	return rp
+
+
+## Tod: Die Gilde bucht 10 % Blutsteuer. Gibt den Rückkehrpunkt zurück.
+func on_death() -> Dictionary:
+	gold -= int(floor(gold * DEATH_TAX))
+	hp.clear()
+	var rp := resolve_respawn()
 	if RoomManager.world_root != null and is_instance_valid(RoomManager.world_root):
 		RoomManager.go_to.call_deferred(rp.room, "", "start", rp.cell)
 	return rp

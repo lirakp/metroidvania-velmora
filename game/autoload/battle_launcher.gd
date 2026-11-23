@@ -30,7 +30,7 @@ func _now() -> float:
 
 
 func start(enemy: FieldEnemy, opening: String) -> bool:
-	if busy or _now() < _grace_until or not is_instance_valid(enemy):
+	if busy or _now() < _grace_until or not is_instance_valid(enemy) or get_tree().paused:
 		return false
 	busy = true
 	_enemy = enemy
@@ -56,7 +56,7 @@ func start(enemy: FieldEnemy, opening: String) -> bool:
 	scene._refresh()
 	_scene = scene
 	scene.battle_finished.connect(finish)
-	get_tree().paused = true
+	GameState.pause_push()
 	return true
 
 
@@ -64,7 +64,7 @@ func finish(outcome: String, result: BattleResult) -> void:
 	busy = false
 	_grace_until = _now() + GRACE
 	if not test_mode:
-		get_tree().paused = false
+		GameState.pause_pop()
 		if is_instance_valid(_layer):
 			_layer.queue_free()
 	if outcome != "niederlage" and is_instance_valid(_scene):

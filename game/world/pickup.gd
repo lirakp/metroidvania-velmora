@@ -63,18 +63,22 @@ static func collect(k: String, ctx: Node = null) -> void:
 		var item := k.substr(5)
 		GameState.inventory.append(item)
 		if ctx and ctx.is_inside_tree():
-			_offer_equip(ctx, item)
+			_offer_equip(ctx.get_tree().root, item)
 		return
 	if ctx and ctx.is_inside_tree() and dialog != "":
 		DialogBox.show_dialog(ctx, dialog)
 
 
-static func _offer_equip(ctx: Node, item: String) -> void:
+## root bleibt bestehen, auch wenn das Pickup längst freigegeben ist.
+static func _offer_equip(root: Node, item: String) -> void:
 	var q: Dictionary = DB.equipment(item)
-	var box := DialogBox.show_dialog(ctx, "hammer" if item == "rostiger_kriegshammer" else "")
-	await box.finished
+	if item == "rostiger_kriegshammer":
+		var box := DialogBox.show_dialog(root, "hammer")
+		await box.finished
+	if not is_instance_valid(root) or not root.is_inside_tree():
+		return
 	var names := [DB.hero(GameState.hero_id).name, DB.hero(GameState.companion_id).name, "Nicht anlegen"]
-	var m := ChoiceMenu.open(ctx.get_tree().root, "%s anlegen für:" % q.name, names)
+	var m := ChoiceMenu.open(root, "%s anlegen für:" % q.name, names)
 	var i: int = await m.chosen
 	if i < 2:
 		var hid: String = GameState.hero_id if i == 0 else GameState.companion_id

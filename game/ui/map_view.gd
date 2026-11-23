@@ -22,7 +22,7 @@ static func toggle(parent: Node) -> void:
 func _ready() -> void:
 	layer = 15
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	get_tree().paused = true
+	GameState.pause_push()
 	if GameState.owned_maps.has(area):
 		_layout = WorldMap.layout(area, RoomManager.room_dir)
 	var bg := ColorRect.new()
@@ -79,5 +79,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func close() -> void:
-	get_tree().paused = false
+	if is_queued_for_deletion():
+		return
+	GameState.pause_pop()
 	queue_free()

@@ -6,6 +6,9 @@ var npc_id := ""
 var props: Dictionary = {}
 var _inside := false
 var _hint: Label
+var _blocked_until := 0.0
+
+const COOLDOWN := 0.35
 
 
 func _ready() -> void:
@@ -36,8 +39,17 @@ func _ready() -> void:
 
 
 func _process(_d: float) -> void:
-	if _inside and not get_tree().paused and Input.is_action_just_pressed("interagieren"):
+	if _inside and can_interact() and Input.is_action_just_pressed("interagieren"):
 		interact()
+
+
+## Nach dem Schließen eines Dialogs kurz gesperrt, damit derselbe Tastendruck ihn nicht neu öffnet.
+func can_interact() -> bool:
+	return not get_tree().paused and Time.get_ticks_msec() / 1000.0 >= _blocked_until
+
+
+func _block() -> void:
+	_blocked_until = Time.get_ticks_msec() / 1000.0 + COOLDOWN
 
 
 func interact() -> void:
@@ -49,10 +61,12 @@ func interact() -> void:
 			return
 		var m := ChoiceMenu.open(self, "Karte von %s – %d Silber kaufen?" % [MapView.AREA_NAMES.get(area, area), price], ["Kaufen", "Nein"])
 		m.chosen.connect(func(i):
+			_block()
 			if i == 0:
 				if GameState.buy_map(area, price):
 					ChoiceMenu.toast(self, "Karte gekauft. [M] öffnet sie.")
 				else:
 					ChoiceMenu.toast(self, "„Kein Silber, keine Karte.“"))
 	elif props.has("dialog"):
-		DialogBox.show_dialog(self, props.dialog)
+		var box := DialogBox.show_dialog(self, props.dialog)
+		box.finished.connect(_block)

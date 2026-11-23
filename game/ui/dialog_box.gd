@@ -8,6 +8,7 @@ static var _cache: Dictionary = {}
 
 var lines: Array = []
 var _i := 0
+var _closed := false
 var _speaker: Label
 var _text: Label
 
@@ -40,9 +41,11 @@ func _ready() -> void:
 	layer = 18
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	if lines.is_empty():
-		_close()
+		_closed = true
+		finished.emit.call_deferred()
+		queue_free()
 		return
-	get_tree().paused = true
+	GameState.pause_push()
 	var panel := ColorRect.new()
 	panel.color = Color("0b0c10")
 	panel.position = Vector2(20, 196)
@@ -58,6 +61,11 @@ func _ready() -> void:
 	_speaker.position = Vector2(28, 198)
 	BattleScene._style_label(_speaker, Color("d9a441"))
 	add_child(_speaker)
+	var more := Label.new()
+	more.text = "[Leertaste]"
+	more.position = Vector2(404, 248)
+	BattleScene._style_label(more, Color("6b7384"))
+	add_child(more)
 	_text = Label.new()
 	_text.position = Vector2(28, 210)
 	_text.size = Vector2(424, 46)
@@ -73,7 +81,7 @@ func _show() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept") or event.is_action_pressed("springen") or event.is_action_pressed("interagieren") or event.is_action_pressed("schlagen"):
+	if event.is_action_pressed("ui_accept") or event.is_action_pressed("springen") or event.is_action_pressed("schlagen"):
 		get_viewport().set_input_as_handled()
 		_i += 1
 		if _i >= lines.size():
@@ -83,6 +91,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _close() -> void:
-	get_tree().paused = false
+	if _closed:
+		return
+	_closed = true
+	GameState.pause_pop()
 	finished.emit()
 	queue_free()

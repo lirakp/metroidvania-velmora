@@ -25,11 +25,8 @@ func start(new_game: bool) -> void:
 		RoomManager.go_to("kornburg_gilde", "")
 		DialogBox.show_dialog.call_deferred(self, "intro")
 	else:
-		var rp := GameState.plaketten.respawn_point()
-		if rp.is_empty():
-			RoomManager.go_to(GameState.GUILD_ROOM, "")
-		else:
-			RoomManager.go_to(rp.room, "", "start", rp.cell)
+		var rp := GameState.resolve_respawn()
+		RoomManager.go_to(rp.room, "", "start", rp.cell)
 
 
 func _on_room_changed(_def: RoomDef) -> void:
@@ -48,7 +45,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
-		var m := ChoiceMenu.open(self, "Pause", ["Weiter", "Zum Titel", "Spiel beenden"])
+		var m := ChoiceMenu.open(self, "Pause", ["Weiter", "Zum Titel", "Spiel beenden"], 0)
 		var i: int = await m.chosen
 		if i == 1:
 			to_title.emit()

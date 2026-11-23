@@ -14,7 +14,7 @@ func _swap(n: Node) -> void:
 	for c in get_tree().root.get_children():
 		if c is CanvasLayer and c != self:
 			c.queue_free()
-	get_tree().paused = false
+	GameState.pause_reset()
 	_current = n
 	add_child(n)
 
