@@ -3,4 +3,6 @@
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 "$ROOT/tools/bin/godot" --headless --path "$ROOT/game" --import >/dev/null 2>&1
-"$ROOT/tools/bin/godot" --headless --path "$ROOT/game" res://tests/test_runner.tscn -- "${1:-}"
+"$ROOT/tools/bin/godot" --headless --path "$ROOT/game" res://tests/test_runner.tscn -- "${1:-}" 2>&1 \
+  | grep -v -e "resources still in use" -e "resource.cpp"
+exit "${PIPESTATUS[0]}"
