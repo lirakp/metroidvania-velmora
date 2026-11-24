@@ -13,8 +13,6 @@ const JUMP_BUFFER := 0.1
 const STRIKE_TIME := 0.25
 const STRIKE_COOLDOWN := 0.4
 const MAX_FALL := 400.0
-## Größe eines Figuren-Frames im Spritesheet.
-const FRAME := Vector2i(24, 40)
 
 ## Für Tests: Eingaben kommen aus in_* statt aus Input.
 var test_control := false
@@ -66,29 +64,8 @@ func set_hero(id: String) -> void:
 	hero_id = id
 	if _sprite:
 		_sprite.queue_free()
-	_sprite = AnimatedSprite2D.new()
-	_sprite.sprite_frames = make_frames("res://art/chars/%s.png" % id)
-	_sprite.position = Vector2(0, -FRAME.y / 2.0)
-	_sprite.play("idle")
+	_sprite = CosyArt.character_sprite(DB.hero(id).cosy)
 	add_child(_sprite)
-
-
-static func make_frames(path: String) -> SpriteFrames:
-	var tex: Texture2D = load(path)
-	var sf := SpriteFrames.new()
-	sf.remove_animation("default")
-	var rows := [["idle", 2, 3.0], ["lauf", 4, 10.0], ["sprung", 1, 1.0], ["schlag", 3, 12.0]]
-	for r in rows.size():
-		var anim: String = rows[r][0]
-		sf.add_animation(anim)
-		sf.set_animation_speed(anim, rows[r][2])
-		sf.set_animation_loop(anim, anim != "schlag")
-		for f in int(rows[r][1]):
-			var at := AtlasTexture.new()
-			at.atlas = tex
-			at.region = Rect2(f * FRAME.x, r * FRAME.y, FRAME.x, FRAME.y)
-			sf.add_frame(anim, at)
-	return sf
 
 
 func _place_strike_box() -> void:
@@ -166,7 +143,7 @@ func strike() -> bool:
 	strike_box.monitorable = true
 	_striking = true
 	if _sprite:
-		_sprite.play("schlag")
+		_sprite.play("angriff_vorne")
 	return true
 
 
@@ -176,10 +153,10 @@ func _animate(x: float) -> void:
 	_sprite.flip_h = facing < 0
 	if _striking:
 		return
-	var anim := "idle"
+	var anim := "stehen"
 	if not is_on_floor():
-		anim = "sprung"
+		anim = "sprung_auf" if velocity.y < -40.0 else ("scheitel" if velocity.y < 40.0 else "fallen")
 	elif x != 0.0:
-		anim = "lauf"
+		anim = "rennen"
 	if _sprite.animation != anim:
 		_sprite.play(anim)

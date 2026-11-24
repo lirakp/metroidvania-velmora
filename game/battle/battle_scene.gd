@@ -82,11 +82,12 @@ func _build() -> void:
 	ground.size = Vector2(480, 74)
 	add_child(ground)
 	for i in state.heroes.size():
-		_add_sprite(state.heroes[i], Vector2(110 - i * 40, 194), Player.FRAME.x, Player.FRAME.y)
-	for i in state.enemies.size():
-		var e := state.enemies[i]
-		var s := 64 if e.is_boss else 32
-		_add_sprite(e, Vector2(330 + i * 44, 194), s, s)
+		_add_sprite(state.heroes[i], Vector2(120 - i * 42, 196))
+	var x := 320.0
+	for e in state.enemies:
+		var w := CosyArt.monster_size(e.id).x
+		_add_sprite(e, Vector2(x + w / 2.0, 196))
+		x += w + 8
 	_ui = CanvasLayer.new()
 	_ui.layer = 11
 	add_child(_ui)
@@ -118,17 +119,51 @@ func _build() -> void:
 	_refresh()
 
 
-func _add_sprite(c: Combatant, feet: Vector2, w: int, h: int) -> void:
-	var sp := Sprite2D.new()
-	var folder := "chars" if c.is_hero else "enemies"
-	sp.texture = load("res://art/%s/%s.png" % [folder, c.art])
-	sp.region_enabled = true
-	sp.region_rect = Rect2(0, 0, w, h)
-	sp.centered = false
-	sp.position = feet - Vector2(w / 2.0, h)
-	sp.flip_h = not c.is_hero and false
+func _add_sprite(c: Combatant, feet: Vector2) -> void:
+	var sp: AnimatedSprite2D
+	if c.is_hero:
+		sp = CosyArt.character_sprite(DB.hero(c.id).cosy)
+	else:
+		sp = CosyArt.monster_sprite(c.id)
+		sp.flip_h = true
+	sp.position = feet
+	sp.animation_finished.connect(func(): _back_to_idle(c))
 	add_child(sp)
 	_sprites[c] = sp
+
+
+func sprite_of(c: Combatant) -> AnimatedSprite2D:
+	return _sprites[c]
+
+
+func _anim(c: Combatant, kind: String) -> String:
+	var hero := {"idle": "stehen", "attack": "angriff_vorne", "hurt": "treffer", "death": "tod", "heal": "heilen"}
+	return hero[kind] if c.is_hero else ({"heal": "idle"} as Dictionary).get(kind, kind)
+
+
+func _back_to_idle(c: Combatant) -> void:
+	if c.is_alive():
+		_sprites[c].play(_anim(c, "idle"))
+
+
+## Führt eine Aktion aus und spielt die passenden Animationen (Angriff, Treffer, Tod).
+func play_action(actor: Combatant, action: Callable) -> Array:
+	var before := {}
+	for c in _sprites:
+		before[c] = c.hp
+	var log: Array = action.call()
+	if actor and actor.is_alive() and _sprites.has(actor):
+		_sprites[actor].play(_anim(actor, "attack"))
+	for c in _sprites:
+		if c == actor:
+			continue
+		if c.hp < before[c]:
+			_sprites[c].play(_anim(c, "death" if not c.is_alive() else "hurt"))
+		elif c.hp > before[c]:
+			_sprites[c].play(_anim(c, "heal"))
+	if actor and not actor.is_alive() and _sprites.has(actor):
+		_sprites[actor].play(_anim(actor, "death"))
+	return log
 
 
 static func _style_label(l: Label, color: Color, size := 8) -> void:
@@ -178,8 +213,6 @@ func _refresh() -> void:
 		l.position = Vector2(2, -1)
 		tile.add_child(l)
 		_turn_bar.add_child(tile)
-	for c in _sprites:
-		_sprites[c].modulate = Color(1, 1, 1, 1) if c.is_alive() else Color(1, 1, 1, 0.15)
 	_log_label.text = "\n".join(_log.slice(maxi(0, _log.size() - 3)))
 	_draw_menu()
 
@@ -253,11 +286,12 @@ func _process(delta: float) -> void:
 	if c == null:
 		return
 	if not c.is_hero:
-		_push_log(state.step())
+		_push_log(play_action(c, func(): return state.step()))
 		_wait = ACTION_DELAY
 		_refresh()
 	elif auto:
-		_push_log(state.submit({"action": "attack", "target": _targets()[0]}))
+		var t = _targets()[0]
+		_push_log(play_action(c, func(): return state.submit({"action": "attack", "target": t})))
 		_refresh()
 	elif _mode == "idle":
 		_mode = "menu"
@@ -357,7 +391,8 @@ func _to_target() -> void:
 
 func _do(action: Dictionary) -> void:
 	_mode = "idle"
-	_push_log(state.submit(action))
+	var actor := _actor()
+	_push_log(play_action(actor, func(): return state.submit(action)))
 	_wait = ACTION_DELAY
 	_refresh()
 

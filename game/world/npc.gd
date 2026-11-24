@@ -20,13 +20,10 @@ func _ready() -> void:
 	s.shape = r
 	s.position = Vector2(0, -14)
 	add_child(s)
-	var art := "res://art/chars/%s.png" % props.get("art", npc_id)
-	if ResourceLoader.exists(art):
-		var sp := AnimatedSprite2D.new()
-		sp.sprite_frames = Player.make_frames(art)
-		sp.position = Vector2(0, -Player.FRAME.y / 2.0)
+	var sheet: String = CosyArt.NPC_SHEETS.get(props.get("art", npc_id), "")
+	if sheet != "":
+		var sp := CosyArt.character_sprite(sheet)
 		sp.flip_h = true
-		sp.play("idle")
 		add_child(sp)
 	_hint = Label.new()
 	_hint.text = "[W]"

@@ -1,0 +1,106 @@
+{
+  "cottage": {
+    "x": 17,
+    "y": 42,
+    "w": 11,
+    "h": 19,
+    "bilder": 5,
+    "hinweis": "Overlay-Position im statischen Gebäude; im animierten Gebäude y + 16"
+  },
+  "baeckerei": {
+    "x": 47,
+    "y": 56,
+    "w": 12,
+    "h": 21,
+    "bilder": 5,
+    "hinweis": "Overlay-Position im statischen Gebäude; im animierten Gebäude y + 16"
+  },
+  "taverne": {
+    "x": 41,
+    "y": 64,
+    "w": 14,
+    "h": 23,
+    "bilder": 5,
+    "hinweis": "Overlay-Position im statischen Gebäude; im animierten Gebäude y + 16"
+  },
+  "windmuehle": {
+    "x": 32,
+    "y": 80,
+    "w": 10,
+    "h": 15,
+    "bilder": 5,
+    "hinweis": "Overlay-Position im statischen Gebäude; im animierten Gebäude y + 16"
+  },
+  "gilde_abenteuer": {
+    "x": 46,
+    "y": 87,
+    "w": 18,
+    "h": 24,
+    "bilder": 5,
+    "hinweis": "Overlay-Position im statischen Gebäude; im animierten Gebäude y + 16"
+  },
+  "gilde_handel": {
+    "x": 46,
+    "y": 87,
+    "w": 18,
+    "h": 24,
+    "bilder": 5,
+    "hinweis": "Overlay-Position im statischen Gebäude; im animierten Gebäude y + 16"
+  },
+  "kirche": {
+    "x": 16,
+    "y": 100,
+    "w": 16,
+    "h": 27,
+    "bilder": 5,
+    "hinweis": "Overlay-Position im statischen Gebäude; im animierten Gebäude y + 16"
+  },
+  "laden_alchemie": {
+    "x": 41,
+    "y": 67,
+    "w": 11,
+    "h": 24,
+    "bilder": 5,
+    "hinweis": "Overlay-Position im statischen Gebäude; im animierten Gebäude y + 16"
+  },
+  "laden_dungeon": {
+    "x": 51,
+    "y": 52,
+    "w": 11,
+    "h": 23,
+    "bilder": 5,
+    "hinweis": "Overlay-Position im statischen Gebäude; im animierten Gebäude y + 16"
+  },
+  "laden_magie": {
+    "x": 44,
+    "y": 76,
+    "w": 12,
+    "h": 23,
+    "bilder": 5,
+    "hinweis": "Overlay-Position im statischen Gebäude; im animierten Gebäude y + 16"
+  },
+  "laden_ruestung_waffen": {
+    "x": 54,
+    "y": 54,
+    "w": 11,
+    "h": 23,
+    "bilder": 5,
+    "hinweis": "Overlay-Position im statischen Gebäude; im animierten Gebäude y + 16"
+  },
+  "schmiede_ruestung": {
+    "x": 67,
+    "y": 62,
+    "w": 11,
+    "h": 25,
+    "bilder": 5,
+    "hinweis": "Overlay-Position im statischen Gebäude; im animierten Gebäude y + 16"
+  },
+  "schmiede_waffen": {
+    "x": 31,
+    "y": 62,
+    "w": 11,
+    "h": 25,
+    "bilder": 5,
+    "hinweis": "Overlay-Position im statischen Gebäude; im animierten Gebäude y + 16"
+  }
+}

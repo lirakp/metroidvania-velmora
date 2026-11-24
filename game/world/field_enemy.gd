@@ -12,7 +12,7 @@ var index := 0
 var is_boss := false
 var _origin_x := 0.0
 var _dir := 1.0
-var _sprite: Sprite2D
+var _sprite: AnimatedSprite2D
 
 
 static func create(ids: Array, p_patrol: int, p_room: String, p_index: int, boss := false) -> FieldEnemy:
@@ -29,10 +29,10 @@ func _ready() -> void:
 	collision_layer = 0
 	collision_mask = 1
 	_origin_x = position.x
-	var size := 64 if is_boss else 32
+	var size := CosyArt.monster_size(enemy_ids[0])
 	var body := CollisionShape2D.new()
 	var r := RectangleShape2D.new()
-	r.size = Vector2(12, 14) if not is_boss else Vector2(40, 30)
+	r.size = Vector2(maxf(10.0, size.x * 0.45), maxf(10.0, size.y * 0.6))
 	body.shape = r
 	body.position = Vector2(0, -r.size.y / 2)
 	add_child(body)
@@ -55,11 +55,7 @@ func _ready() -> void:
 	touch.add_child(ts)
 	add_child(touch)
 	touch.body_entered.connect(_on_touch)
-	_sprite = Sprite2D.new()
-	_sprite.texture = load("res://art/enemies/%s.png" % DB.enemy(enemy_ids[0]).art)
-	_sprite.region_enabled = true
-	_sprite.region_rect = Rect2(0, 0, size, size)
-	_sprite.position = Vector2(0, -size / 2.0)
+	_sprite = CosyArt.monster_sprite(enemy_ids[0])
 	add_child(_sprite)
 
 
@@ -79,4 +75,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0.0
 	move_and_slide()
 	if _sprite:
-		_sprite.flip_h = _dir > 0
+		_sprite.flip_h = _dir < 0
+		var anim := "move" if absf(velocity.x) > 0.0 else "idle"
+		if _sprite.animation != anim:
+			_sprite.play(anim)

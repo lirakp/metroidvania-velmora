@@ -23,11 +23,7 @@ func _ready() -> void:
 	shape.shape = r
 	shape.position = Vector2(0, -18)
 	add_child(shape)
-	_sprite = AnimatedSprite2D.new()
-	_sprite.sprite_frames = Player.make_frames("res://art/chars/%s.png" % GameState.companion_id)
-	_sprite.position = Vector2(0, -Player.FRAME.y / 2.0)
-	_sprite.modulate = Color(0.85, 0.85, 0.9)
-	_sprite.play("idle")
+	_sprite = CosyArt.character_sprite(DB.hero(GameState.companion_id).cosy)
 	add_child(_sprite)
 
 
@@ -86,6 +82,6 @@ func _physics_process(delta: float) -> void:
 func _animate() -> void:
 	if velocity.x != 0.0:
 		_sprite.flip_h = velocity.x < 0
-	var anim := "lauf" if absf(velocity.x) > 0.0 and is_on_floor() else ("sprung" if not is_on_floor() else "idle")
+	var anim := "rennen" if absf(velocity.x) > 0.0 and is_on_floor() else ("fallen" if not is_on_floor() else "stehen")
 	if _sprite.animation != anim:
 		_sprite.play(anim)
