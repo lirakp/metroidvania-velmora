@@ -87,3 +87,7 @@ static func populate(room: Node2D, def: RoomDef) -> void:
 				var lamp := Lamp.create(ent.id)
 				lamp.position = pos
 				room.add_child(lamp)
+			"gebaeude":
+				var bld := Building.create(ent.id)
+				bld.position = pos
+				room.add_child(bld)

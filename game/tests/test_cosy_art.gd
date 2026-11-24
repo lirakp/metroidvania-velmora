@@ -48,3 +48,23 @@ func test_lamp_entity_builds_animated_light() -> void:
 	# Lichtpunkt (7, 9) im 14x40-Bild, Füße unten mittig: Lichtkreis 31 px über dem Boden
 	assert_eq(l.glow.position, Vector2(0, -31))
 	room.free()
+
+
+func test_building_scaled_with_door_at_origin() -> void:
+	var b := Building.create("gilde_abenteuer")
+	assert_eq(b.scale, Vector2(2, 2))
+	# Tür in tueren.json: x 46, y 87, w 18, h 24 → Unterkante Türmitte liegt am Ursprung
+	assert_eq(b.sprite.position, Vector2(-(46 + 9), -(87 + 24)))
+	assert_true(b.door_height_px() >= 46, "Tür höher als die Figur (42 px)")
+	b.free()
+
+
+func test_rooms_use_cosy_buildings_with_doors() -> void:
+	for pair in [["stadt_01", "gilde_abenteuer", "gilde"], ["stadt_02", "cottage", "karto"], ["muehle_01", "windmuehle", "muehle"]]:
+		var d := RoomDef.load_room(pair[0])
+		var b := d.entities.filter(func(e): return e.type == "gebaeude" and e.id == pair[1])
+		var door := d.entities.filter(func(e): return e.type == "door" and e.id == pair[2])
+		assert_eq(b.size(), 1, pair[0])
+		assert_eq(door.size(), 1, pair[0])
+		if b.size() == 1 and door.size() == 1:
+			assert_eq(b[0].pos, door[0].pos, "Gebäudetür liegt auf der Tür-Stelle")

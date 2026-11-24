@@ -21,6 +21,6 @@ exits: L1=kornfeld_05:R2, R2=kornfeld_06:L1
 ==============================
 ##############################
 ---
-deco muehle 15,14
+gebaeude windmuehle 15,14
 door muehle 15,14 to=muehle_innen:aussen
 dialog muehle_aussen 9,14

@@ -21,7 +21,7 @@ exits: L1=stadt_01:R2, R2=stadt_03:L1
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 ---
-deco kartografhaus 16,14
+gebaeude cottage 16,14
 door karto 16,14 to=kartograf_haus:aussen
 lampe strassenlaterne 25,14
 dialog tut_karte 10,14
