@@ -8,6 +8,9 @@ static var _cache: Dictionary = {}
 
 var lines: Array = []
 var _i := 0
+var portrait: AnimatedSprite2D
+
+const TEXT_X := 76
 var _closed := false
 var _speaker: Label
 var _text: Label
@@ -46,29 +49,25 @@ func _ready() -> void:
 		queue_free()
 		return
 	GameState.pause_push()
-	var panel := ColorRect.new()
-	panel.color = Color("0b0c10")
-	panel.position = Vector2(20, 196)
-	panel.size = Vector2(440, 64)
-	add_child(panel)
-	var frame := ReferenceRect.new()
-	frame.border_color = Color("4f141c")
-	frame.editor_only = false
-	frame.position = panel.position
-	frame.size = panel.size
+	var frame := UiArt.frame("holz", Vector2(448, 70))
+	frame.position = Vector2(16, 192)
 	add_child(frame)
+	portrait = AnimatedSprite2D.new()
+	portrait.centered = false
+	portrait.position = Vector2(26, 207)
+	add_child(portrait)
 	_speaker = Label.new()
-	_speaker.position = Vector2(28, 198)
+	_speaker.position = Vector2(TEXT_X, 198)
 	BattleScene._style_label(_speaker, Color("d9a441"))
 	add_child(_speaker)
 	var more := Label.new()
 	more.text = "[Leertaste]"
-	more.position = Vector2(404, 248)
+	more.position = Vector2(400, 248)
 	BattleScene._style_label(more, Color("6b7384"))
 	add_child(more)
 	_text = Label.new()
-	_text.position = Vector2(28, 210)
-	_text.size = Vector2(424, 46)
+	_text.position = Vector2(TEXT_X, 210)
+	_text.size = Vector2(450 - TEXT_X, 46)
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	BattleScene._style_label(_text, Color("d6d9de"))
 	add_child(_text)
@@ -78,6 +77,26 @@ func _ready() -> void:
 func _show() -> void:
 	_speaker.text = lines[_i].speaker
 	_text.text = lines[_i].text
+	var sheet := portrait_sheet(lines[_i].speaker)
+	portrait.visible = sheet != ""
+	if sheet != "":
+		portrait.sprite_frames = UiArt.portrait_frames(sheet)
+		portrait.play("spricht")
+		get_tree().create_timer(minf(2.5, 0.05 * lines[_i].text.length())).timeout.connect(func():
+			if is_instance_valid(portrait):
+				portrait.play("still"))
+
+
+## Porträt-Sheet zum Sprecher ("" = kein Porträt, z. B. bei Hinweisen).
+static func portrait_sheet(speaker: String) -> String:
+	for id in DB.heroes:
+		if DB.hero(id).name == speaker:
+			return DB.hero(id).cosy
+	if speaker.begins_with("Gildenmeisterin"):
+		return CosyArt.NPC_SHEETS.gildenmeisterin
+	if speaker.begins_with("Kartograf"):
+		return CosyArt.NPC_SHEETS.kartograf
+	return ""
 
 
 func _unhandled_input(event: InputEvent) -> void:

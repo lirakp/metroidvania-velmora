@@ -95,10 +95,8 @@ func _build() -> void:
 	_turn_bar.position = Vector2(8, 6)
 	_turn_bar.add_theme_constant_override("separation", 3)
 	_ui.add_child(_turn_bar)
-	var panel := ColorRect.new()
-	panel.color = Color("0b0c10")
-	panel.position = Vector2(0, 204)
-	panel.size = Vector2(480, 66)
+	var panel := UiArt.frame("dungeon", Vector2(480, 68))
+	panel.position = Vector2(0, 202)
 	_ui.add_child(panel)
 	_status_box = VBoxContainer.new()
 	_status_box.position = Vector2(6, 206)
@@ -141,6 +139,18 @@ func _anim(c: Combatant, kind: String) -> String:
 	return hero[kind] if c.is_hero else ({"heal": "idle"} as Dictionary).get(kind, kind)
 
 
+func _float_number(c: Combatant, delta_hp: int) -> void:
+	var n := UiArt.number_node(("+" if delta_hp > 0 else "") + str(absi(delta_hp)), "heilung" if delta_hp > 0 else "normal")
+	var sp: AnimatedSprite2D = _sprites[c]
+	n.position = sp.position + Vector2(-6, -52)
+	n.z_index = 5
+	add_child(n)
+	var tw := create_tween()
+	tw.tween_property(n, "position:y", n.position.y - 14, 0.7)
+	tw.parallel().tween_property(n, "modulate:a", 0.0, 0.7).set_delay(0.3)
+	tw.tween_callback(n.queue_free)
+
+
 func _back_to_idle(c: Combatant) -> void:
 	if c.is_alive():
 		_sprites[c].play(_anim(c, "idle"))
@@ -155,6 +165,8 @@ func play_action(actor: Combatant, action: Callable) -> Array:
 	if actor and actor.is_alive() and _sprites.has(actor):
 		_sprites[actor].play(_anim(actor, "attack"))
 	for c in _sprites:
+		if c.hp != before[c]:
+			_float_number(c, c.hp - before[c])
 		if c == actor:
 			continue
 		if c.hp < before[c]:
@@ -304,6 +316,9 @@ func _finish(o: String) -> void:
 	var r := state.result() if o == "sieg" else BattleResult.new()
 	if o == "sieg":
 		_push_log(["Sieg! %d Silber erbeutet." % r.silver])
+		var b := UiArt.banner("dungeon_geloest" if state.enemies.any(func(e): return e.is_boss) else "besiegt")
+		b.position = Vector2(240, 60)
+		_ui.add_child(b)
 	elif o == "niederlage":
 		_push_log(["Eure Plaketten werden schwarz ..."])
 	_mode = "idle"

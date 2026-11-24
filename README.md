@@ -35,6 +35,13 @@ Spielstände liegen unter `%APPDATA%\Godot\app_userdata\Blutmond\save1.json`.
 
 ## Grafik
 
+Figuren, Gegner, Lampen, Kacheln, Hintergründe, Rahmen, Porträts und Banner stammen unverändert aus dem
+Grafik-Repo [lirakp/aniamtion](https://github.com/lirakp/aniamtion). Übernehmen bzw. aktualisieren:
+
+```bash
+python3 tools/import_cosy.py ../aniamtion
+```
+
 Die Welt ist düster; nur **sichere Orte** (Gildenhalle, Häuser, Rast-Kammern, Laternen der Stadt) haben warmes Licht.
 Häuser und Öffnungen in Wänden betretet ihr mit **[W]/↑** – dahinter liegt ein eigener Raum.
 

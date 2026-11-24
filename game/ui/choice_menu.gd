@@ -25,19 +25,12 @@ func _ready() -> void:
 	layer = 20
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	GameState.pause_push()
-	var panel := ColorRect.new()
-	panel.color = Color("0b0c10")
-	panel.position = Vector2(140, 70)
-	panel.size = Vector2(200, 24 + 11 * options.size())
-	add_child(panel)
-	var frame := ReferenceRect.new()
-	frame.border_color = Color("8a6a2a")
-	frame.editor_only = false
-	frame.position = panel.position
-	frame.size = panel.size
+	var size := Vector2(210, 28 + 11 * options.size())
+	var frame := UiArt.frame("holz", size)
+	frame.position = Vector2(135, 66)
 	add_child(frame)
 	_box = VBoxContainer.new()
-	_box.position = panel.position + Vector2(8, 4)
+	_box.position = frame.position + Vector2(12, 6)
 	_box.add_theme_constant_override("separation", -2)
 	add_child(_box)
 	_draw()
