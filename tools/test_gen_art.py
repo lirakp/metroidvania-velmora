@@ -32,7 +32,7 @@ def test_atlas_size():
     assert Image.open(ART / "tiles.png").size == (16 * 15, 16)
 
 
-BIOMES = ("kornfeld", "stadt", "dungeon_blut", "innen_gilde", "innen_haus", "innen_kammer", "innen_muehle")
+BIOMES = ("innen_gilde", "innen_haus", "innen_kammer", "innen_muehle")
 
 
 def test_background_layers():
@@ -46,62 +46,40 @@ def test_background_layers():
 
 def test_safe_backgrounds_have_warm_light():
     _, warm = palettes()
-    for b in ("stadt", "innen_gilde", "innen_haus", "innen_kammer"):
+    for b in ("innen_gilde", "innen_haus", "innen_kammer"):
         cols = set()
         for i in range(3):
             cols |= colors_of(ART / f"bg/{b}/layer_{i}.png")
         assert cols & warm, f"{b} ohne warmes Licht"
-    for b in ("innen_muehle", "kornfeld"):
+    for b in ("innen_muehle",):
         for i in range(3):
             assert not (colors_of(ART / f"bg/{b}/layer_{i}.png") & warm), f"{b} soll kalt bleiben"
 
 
-def test_dungeon_darker_than_before():
-    im = Image.open(ART / "bg/dungeon_blut/layer_0.png").convert("RGB")
-    cols = im.getcolors(1 << 22)
-    mean = sum(n * (r * 3 + g * 6 + b) / 10 for n, (r, g, b) in cols) / sum(n for n, _ in cols)
-    assert mean < 30, f"mittlere Helligkeit {mean:.1f}"
-
-
 def test_expected_files():
-    need = ["chars/warschick.png", "chars/lira.png", "chars/kartograf.png", "chars/gildenmeisterin.png",
-            "ui/plakette.png"]
-    need += [f"enemies/{e}.png" for e in ("goblin", "gruenschleim", "skelettkrieger", "riesenspinne", "ghul",
-                                           "skelett_bogner", "blutwolf_alpha")]
+    need = ["ui/plakette.png", "tiles.png"]
     for rel in need:
         assert (ART / rel).exists(), rel
-
-
-def test_sprite_sizes():
-    for n in ("warschick", "lira", "kartograf", "gildenmeisterin"):
-        assert Image.open(ART / f"chars/{n}.png").size == (24 * 4, 40 * 4), n
-    assert Image.open(ART / "enemies/goblin.png").size == (32 * 2, 32 * 2)
-    assert Image.open(ART / "enemies/blutwolf_alpha.png").size == (64 * 2, 64 * 2)
-
-
-def test_figures_smaller_than_door():
-    """Figuren (ohne Transparenz) sind niedriger als die Tür des Gildenhauses (46 px)."""
-    im = Image.open(ART / "chars/warschick.png").crop((0, 0, 24, 40))
-    box = im.getbbox()
-    assert box[3] - box[1] < 46
 
 
 def test_all_pixels_in_palette():
     base, warm = palettes()
     for p in ART.rglob("*.png"):
+        if "cosy" in p.parts:
+            continue
         extra = colors_of(p) - base - warm
         assert not extra, f"{p.relative_to(ART)}: {sorted(extra)[:3]}"
 
 
 def test_warm_colors_only_in_safe_art():
     base, warm = palettes()
-    forbidden = list((ART / "enemies").glob("*.png")) + [ART / "tiles.png"] + list(ART.glob("bg/dungeon_*/*.png")) + list(ART.glob("bg/innen_muehle/*.png"))
+    forbidden = [ART / "tiles.png"] + list(ART.glob("bg/dungeon_*/*.png")) + list(ART.glob("bg/innen_muehle/*.png"))
     for p in forbidden:
         assert not (colors_of(p) & warm), f"warme Farbe in {p.relative_to(ART)}"
 
 
-DECO_WARM = ("gildenhaus", "kartografhaus", "laterne", "altar", "schrein", "bogen_warm")
-DECO_COLD = ("muehle", "baum", "zaun", "wegweiser", "kristall", "kette", "toter_abenteurer", "bogen", "tuer", "tresen", "kiste")
+DECO_WARM = ("altar", "schrein", "bogen_warm")
+DECO_COLD = ("baum", "zaun", "wegweiser", "kristall", "kette", "toter_abenteurer", "bogen", "tuer", "tresen", "kiste")
 
 
 def test_deco_files_and_warmth():
@@ -112,15 +90,8 @@ def test_deco_files_and_warmth():
         assert not (colors_of(ART / f"deco/{n}.png") & warm), f"{n} soll kalt sein"
 
 
-def test_house_door_taller_than_figures():
-    """Die Tür im Gildenhaus ist 46 px hoch: unterste 46 Zeilen in der Mitte sind Tür, nicht transparent."""
-    im = Image.open(ART / "deco/gildenhaus.png").convert("RGBA")
-    w, h = im.size
-    assert im.getpixel((w // 2, h - 1))[3] and im.getpixel((w // 2, h - 46))[3]
-
-
 def test_light_textures():
-    for kind in ("warm", "kalt"):
+    for kind in ("kalt",):
         for r in (16, 24, 32, 48):
             im = Image.open(ART / f"light/{kind}_{r}.png")
             assert im.size == (r * 2, r * 2)

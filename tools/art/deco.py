@@ -19,93 +19,6 @@ def _box(g, x0, y0, x1, y1, ch):
             g[y][x] = ch
 
 
-def house(roof_dark, roof_light, wall, wall_dot, width=112, roof=46, walls=74, windows=True, sign=None):
-    g = _grid(width, roof + walls)
-    mid = width // 2
-    for y in range(roof):
-        half = 8 + int(y * 1.15)
-        for x in range(width):
-            if abs(x - mid) <= half:
-                ch = "t" if (y % 5 == 0 or (x + (y // 5) * 4) % 8 == 0) else "T"
-                if abs(x - mid) >= half - 1 or y == roof - 1:
-                    ch = "k"
-                g[y][x] = ch
-    for y in range(roof, roof + walls):
-        for x in range(5, width - 5):
-            ch = "p"
-            if (x - 5) % 34 in (0, 1) or y - roof in (0, 1, 28, walls - 1):
-                ch = "f"
-            elif (x * 7 + y * 3) % 23 == 0:
-                ch = "P"
-            g[y][x] = ch
-    dy0 = roof + walls - DOOR_H
-    _box(g, mid - 10, dy0, mid + 9, roof + walls - 1, "k")
-    _box(g, mid - 9, dy0 + 2, mid + 8, roof + walls - 1, "D")
-    _box(g, mid - 9, dy0 + 1, mid + 8, dy0 + 2, "f")
-    for x in range(mid - 9, mid + 9, 4):
-        _box(g, x, dy0 + 3, x, roof + walls - 1, "d")
-    g[dy0 + 24][mid + 5] = "g"
-    if windows:
-        for wx in (14, width - 34):
-            _box(g, wx, roof + 10, wx + 19, roof + 26, "k")
-            _box(g, wx + 1, roof + 11, wx + 18, roof + 25, "L")
-            _box(g, wx + 1, roof + 18, wx + 18, roof + 18, "f")
-            _box(g, wx + 9, roof + 11, wx + 10, roof + 25, "f")
-            _box(g, wx + 1, roof + 11, wx + 6, roof + 14, "C")
-            _box(g, wx - 1, roof + 26, wx + 20, roof + 27, "f")
-    _box(g, width - 30, 2, width - 22, 24, "c")
-    _box(g, width - 31, 0, width - 21, 2, "k")
-    legend = {"k": BLACK, "t": roof_dark, "T": roof_light, "p": wall, "P": wall_dot, "f": BROWN[0], "d": BROWN[0],
-              "D": BROWN[1], "g": GOLD, "L": WAMBER, "C": WCANDLE, "c": ST[1]}
-    pad_top = 60  # Platz für Rauch
-    c = Canvas(width + 40, roof + walls + pad_top)
-    c.raster(["".join(r) for r in g], legend, 20, pad_top)
-    # Rauch aus dem Schornstein
-    for i, (dx, dy, r) in enumerate(((0, 0, 4), (4, -11, 5), (-1, -23, 6), (6, -36, 6), (2, -50, 7))):
-        cx, cy = 20 + width - 26 + dx, pad_top - 4 + dy
-        for y in range(cy - r, cy + r + 1):
-            for x in range(cx - r, cx + r + 1):
-                if (x - cx) ** 2 + (y - cy) ** 2 <= r * r and bayer(x, y) < 0.75 - i * 0.12:
-                    c.px(x, y, ST[3] if i < 2 else ST[2])
-    if windows:
-        for wx in (14, width - 34):
-            c.glow(20 + wx + 10, pad_top + roof + 18, 30, 0.7)
-    if sign:
-        sx, sy = 6, pad_top + roof + 8
-        c.rect(sx + 14, sy - 2, sx + 15, sy + 30, BROWN[0])
-        c.rect(sx, sy, sx + 22, sy + 13, BROWN[1])
-        c.rect(sx + 2, sy + 2, sx + 20, sy + 11, sign)
-        c.rect(sx + 7, sy + 5, sx + 15, sy + 8, GOLD if sign == GOLD0 else ST[6])
-    return c
-
-
-def muehle():
-    c = Canvas(100, 150)
-    c.d.polygon([(30, 149), (38, 50), (62, 50), (70, 149)], fill=ST[1])
-    for y in range(52, 149, 9):
-        c.d.line([(36, y), (66, y)], fill=ST[0])
-    c.d.polygon([(32, 52), (50, 30), (68, 52)], fill=BROWN[0])
-    c.rect(44, 118, 56, 149, BLACK)          # Tür (dunkel, keine Wärme)
-    c.rect(45, 120, 55, 149, BROWN[0])
-    c.rect(46, 80, 53, 90, BLACK)
-    for (x1, y1) in ((10, 8), (92, 14), (8, 78), (92, 84)):  # gebrochene Flügel
-        c.d.line([(50, 46), (x1, y1)], fill=BROWN[0], width=3)
-        c.d.line([(50, 46), (x1, y1)], fill=BROWN[1], width=1)
-    c.d.ellipse([46, 42, 54, 50], fill=BLACK)
-    return c
-
-
-def laterne():
-    c = Canvas(24, 56)
-    c.rect(11, 14, 12, 55, BLACK)
-    c.rect(7, 4, 16, 14, BLACK)
-    c.rect(8, 5, 15, 13, WCANDLE)
-    c.rect(10, 7, 13, 11, WLIGHT)
-    c.rect(6, 3, 17, 3, BLACK)
-    c.rect(9, 53, 14, 55, BLACK)
-    return c
-
-
 def baum():
     c = Canvas(64, 96)
     c.rect(28, 50, 34, 95, BROWN[0])
@@ -260,10 +173,21 @@ def light_texture(radius, warm):
     return c
 
 
+def plakette():
+    """Seelenplakette (Symbol für Pickup und Programm-Icon)."""
+    c = Canvas(16, 16)
+    c.rect(4, 2, 11, 13, ST[3])
+    c.rect(5, 3, 10, 12, ST[4])
+    c.rect(7, 5, 8, 10, BLACK)
+    c.px(9, 6, BLACK)
+    c.px(9, 9, BLACK)
+    c.rect(7, 0, 8, 2, ST[2])
+    c.outline()
+    return c
+
+
 def make_all():
-    house(RED[0], RED[1], ST[3], ST[2], sign=GOLD0).save("deco/gildenhaus.png")
-    house(SLATE[0], SLATE[1], ST[2], ST[1], width=96, roof=40, walls=66, sign=ST[5]).save("deco/kartografhaus.png")
-    builders = {"muehle": muehle, "laterne": laterne, "baum": baum, "zaun": zaun, "wegweiser": wegweiser,
+    builders = {"baum": baum, "zaun": zaun, "wegweiser": wegweiser,
                 "kristall": kristall, "kette": kette, "toter_abenteurer": toter_abenteurer,
                 "tuer": tuer, "schrein": schrein, "tresen": tresen, "kiste": kiste, "altar": altar}
     for name, fn in builders.items():
@@ -271,5 +195,5 @@ def make_all():
     bogen(False).save("deco/bogen.png")
     bogen(True).save("deco/bogen_warm.png")
     for r in (16, 24, 32, 48):
-        light_texture(r, True).save(f"light/warm_{r}.png")
         light_texture(r, False).save(f"light/kalt_{r}.png")
+    plakette().save("ui/plakette.png")

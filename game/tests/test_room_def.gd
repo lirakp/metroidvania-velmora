@@ -93,7 +93,7 @@ func test_backdrop_for_battle() -> void:
 
 
 func test_deco_and_light_entities_build() -> void:
-	var d := RoomDef.parse(_room("id: a\nbiome: stadt\narea: k", _grid(), "deco gildenhaus 14,14\nlight warm 10,10 radius=32\nlight kalt 20,10 radius=24\n"))
+	var d := RoomDef.parse(_room("id: a\nbiome: stadt\narea: k", _grid(), "deco altar 14,14\nlight kalt 10,10 radius=32\nlight kalt 20,10 radius=24\n"))
 	var node := RoomBuilder.build(d)
 	EntityFactory.populate(node, d)
 	var decos := node.get_children().filter(func(n): return n is Sprite2D and n.has_meta("deco"))

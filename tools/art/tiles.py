@@ -7,7 +7,7 @@ ORDER = ["leer", "erde", "gras", "plattform", "dungeon", "blut", "bruechig", "st
 
 def tile(kind):
     c = Canvas(16, 16)
-    r = rng(hash(kind) % 1000)
+    r = rng(sum(ord(ch) for ch in kind))  # fester Wert: gleiche Kacheln bei jedem Lauf
     if kind == "erde":
         for y in range(16):
             for x in range(16):

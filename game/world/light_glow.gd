@@ -1,6 +1,6 @@
 class_name LightGlow
 extends Sprite2D
-## Lichtschein als Punktraster (warm an sicheren Orten, kalt-rot im Dungeon). Flackert leicht.
+## Kalter roter Lichtschein (Dungeon-Kristalle) als Punktraster. Warme Lichter kommen als Lamp aus dem Grafik-Repo.
 
 const SIZES := [16, 24, 32, 48]
 
@@ -16,7 +16,7 @@ static func create(p_warm: bool, p_radius: int) -> LightGlow:
 		if absi(s - p_radius) < absi(best - p_radius):
 			best = s
 	l.radius = best
-	l.texture = load("res://art/light/%s_%d.png" % ["warm" if p_warm else "kalt", best])
+	l.texture = load("res://art/light/kalt_%d.png" % best)
 	return l
 
 

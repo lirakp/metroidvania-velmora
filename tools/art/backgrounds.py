@@ -77,73 +77,6 @@ def pines(seed, base=200):
     return c
 
 
-def kornfeld():
-    near = pines(5)
-    for x in range(0, W, 3):  # Kornhalme am Feldrand
-        h = 4 + (x * 7) % 7
-        near.d.line([(x, 212), (x, 212 - h)], fill=GOLD0 if x % 2 else BROWN[1])
-    save_layers("kornfeld", [night_sky(1), mountains(2), near])
-
-
-def stadt():
-    far = night_sky(11, moon=(380, 40))
-    mid = mountains(12)
-    near = Canvas(W, H)
-    r = rng(13)
-    x = 0
-    while x < W:  # Häuserzeile als Silhouette, einige Fenster warm erleuchtet
-        w = r.randrange(34, 60)
-        h = r.randrange(50, 95)
-        top = 215 - h
-        near.rect(x, top, x + w - 2, H - 1, INK)
-        near.d.polygon([(x - 3, top), (x + w // 2, top - 18), (x + w + 1, top)], fill=INK)
-        for wy in range(top + 10, 205, 16):
-            for wx in range(x + 6, x + w - 10, 14):
-                if r.random() < 0.25:
-                    near.rect(wx, wy, wx + 4, wy + 6, WAMBER)
-                    near.px(wx, wy, WCANDLE)
-                    near.glow(wx + 2, wy + 3, 10, 0.5)
-        x += w
-    near.rect(228, 70, 244, 215, INK)  # Kirchturm
-    near.d.polygon([(224, 70), (236, 36), (248, 70)], fill=INK)
-    near.px(236, 32, GOLD)
-    save_layers("stadt", [far, mid, near])
-
-
-def dungeon_blut():
-    r = rng(21)
-    far = Canvas(W, H, BLACK)
-    for y in range(H):
-        for x in range(W):
-            far.im.putpixel((x, y), BLACK if bayer(x, y) < 0.7 - y / 900 else INK)
-    for row, y in enumerate(range(0, H, 11)):
-        off = 12 if row % 2 else 0
-        for x in range(-24 + off, W, 24):
-            col = INK if r.random() > 0.05 else RED[0]
-            far.rect(max(0, x + 1), y + 1, x + 22, y + 9, col)
-            far.d.line([(max(0, x + 1), y + 1), (x + 22, y + 1)], fill=NIGHT if col == INK else RED[1])
-    mid = Canvas(W, H)
-    for px_ in (40, 180, 330, 450):
-        mid.rect(px_, 0, px_ + 22, H - 1, BLACK)
-        mid.rect(px_ + 2, 0, px_ + 3, H - 1, INK)
-        for y in range(0, H, 16):
-            mid.d.line([(px_, y), (px_ + 22, y)], fill=NIGHT)
-    for x, ln in ((150, 70), (290, 50)):
-        for y in range(0, ln, 4):
-            mid.d.rectangle([x - (y // 4) % 2, y, x + 1 - (y // 4) % 2, y + 2], outline=ST[0])
-    near = Canvas(W, H)
-    for x in (70, 120, 255, 300, 400):
-        ln, y0 = r.randint(20, 70), r.randint(10, 60)
-        near.d.line([(x, y0), (x, y0 + ln)], fill=RED[1])
-        near.px(x, y0 + ln + 1, RED[2])
-    for (x, y) in ((95, 130), (420, 100)):
-        near.d.polygon([(x, y - 10), (x + 4, y), (x, y + 6), (x - 4, y)], fill=RED[3])
-        near.px(x - 1, y - 6, RED[4])
-    for (x, y) in ((95, 130), (420, 100)):  # kalter Schein auf der fernen Wand
-        far.glow(x, y, 20, 0.45, warm=False)
-    save_layers("dungeon_blut", [far, mid, near])
-
-
 def _wood_wall(c, x0, x1, y0, y1):
     for x in range(x0, x1):
         for y in range(y0, y1):
@@ -257,9 +190,6 @@ def innen_muehle():
 
 
 def make_all():
-    kornfeld()
-    stadt()
-    dungeon_blut()
     innen_gilde()
     innen_haus()
     innen_kammer()
