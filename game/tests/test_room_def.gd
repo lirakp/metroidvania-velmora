@@ -73,7 +73,7 @@ func test_builder_creates_collision_tiles() -> void:
 func test_builder_has_three_background_layers() -> void:
 	var d := RoomDef.parse(_room("id: a\nbiome: dungeon_blut\narea: k", _grid()))
 	var node := RoomBuilder.build(d)
-	var layers := node.get_children().filter(func(n): return n is Parallax2D)
+	var layers := node.get_children().filter(func(n): return n is Parallax2D and n.name != "ParallaxHimmel")
 	assert_eq(layers.size(), 3)
 	assert_true(layers[0].scroll_scale.x < layers[2].scroll_scale.x, "ferne Ebene bewegt sich langsamer")
 	node.free()
@@ -103,3 +103,36 @@ func test_deco_and_light_entities_build() -> void:
 	assert_eq(lights.size(), 2)
 	assert_eq(lights[0].texture.get_width(), 64)
 	node.free()
+
+
+func test_wang_index_dual_grid() -> void:
+	var d := RoomDef.parse(_room("id: a\nbiome: kornfeld\narea: k", _grid()))
+	var solid := RoomBuilder.terrain_tiles("kornfeld")
+	# Ecke über der Bodenoberkante: oben Luft, unten Boden → SW + SE = 4 + 8
+	assert_eq(RoomBuilder.wang_index(d, Vector2i(5, 15), solid), 12)
+	# Ecke mitten im Boden → alle vier fest
+	assert_eq(RoomBuilder.wang_index(d, Vector2i(5, 16), solid), 15)
+	# Ecke mitten in der Luft → 0
+	assert_eq(RoomBuilder.wang_index(d, Vector2i(5, 5), solid), 0)
+
+
+func test_builder_layers_terrain_and_hidden_collision() -> void:
+	var d := RoomDef.parse(_room("id: a\nbiome: kornfeld\narea: k", _grid({12: "....---......................."})))
+	var node := RoomBuilder.build(d)
+	assert_false(node.get_node("Tiles").visible, "Kollision unsichtbar")
+	var terrain: TileMapLayer = node.get_node("Terrain")
+	assert_eq(terrain.position, Vector2(-8, -8))
+	assert_eq(terrain.get_cell_atlas_coords(Vector2i(5, 16)), Vector2i(3, 3))
+	var vis: TileMapLayer = node.get_node("Visual")
+	assert_eq(vis.get_cell_source_id(Vector2i(4, 12)), RoomBuilder.SRC_PLATFORM)
+	assert_eq(vis.get_cell_atlas_coords(Vector2i(4, 12)), Vector2i(0, 0), "linkes Ende")
+	assert_eq(vis.get_cell_atlas_coords(Vector2i(5, 12)), Vector2i(1, 0), "Mitte")
+	assert_eq(vis.get_cell_atlas_coords(Vector2i(6, 12)), Vector2i(2, 0), "rechtes Ende")
+	assert_eq(vis.get_cell_source_id(Vector2i(5, 16)), -1, "Boden kommt aus dem Terrain")
+	node.free()
+
+
+func test_backdrop_uses_cosy_parallax() -> void:
+	var b := Backdrop.make("kornfeld")
+	assert_eq(b.get_child_count(), 5, "Himmelfarbe + 4 Ebenen")
+	b.free()

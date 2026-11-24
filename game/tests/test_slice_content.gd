@@ -153,14 +153,14 @@ func test_safe_rooms_have_warm_light() -> void:
 	for id in ["kornburg_gilde", "kartograf_haus", "blutdungeon_rast", "stadt_01", "stadt_02"]:
 		var d := RoomDef.load_room(id)
 		assert_eq(d.error, "", id)
-		assert_true(d.entities.any(func(e): return e.type == "light" and e.id == "warm"), "%s ohne warmes Licht" % id)
+		assert_true(d.entities.any(func(e): return (e.type == "light" and e.id == "warm") or e.type == "lampe"), "%s ohne warmes Licht" % id)
 
 
 func test_dungeon_rooms_have_no_warm_light_except_rast() -> void:
 	var defs := WorldMap.load_defs("res://data/rooms")
 	for id in defs:
 		if id.begins_with("blutdungeon") and id != "blutdungeon_rast":
-			assert_false(defs[id].entities.any(func(e): return e.type == "light" and e.id == "warm"), id)
+			assert_false(defs[id].entities.any(func(e): return (e.type == "light" and e.id == "warm") or e.type == "lampe"), id)
 
 
 func test_interiors_reached_by_doors() -> void:

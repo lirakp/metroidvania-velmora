@@ -23,6 +23,5 @@ SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 ---
 deco gildenhaus 8,14
 door gilde 8,14 to=kornburg_gilde:aussen
-deco laterne 16,14
-light warm 16,12 radius=24
+lampe strassenlaterne 16,14
 dialog tut_bewegung 13,14

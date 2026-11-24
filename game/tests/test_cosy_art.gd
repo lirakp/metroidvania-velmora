@@ -29,3 +29,22 @@ func test_hero_frames_from_metadata() -> void:
 	assert_eq(sf.get_frame_texture("stehen", 0).get_size(), Vector2(48, 48))
 	assert_true(sf.get_animation_loop("stehen"))
 	assert_false(sf.get_animation_loop("angriff_vorne"))
+
+
+func test_lamp_entity_builds_animated_light() -> void:
+	var text := "id: a\nbiome: stadt\narea: k\n---\n"
+	for y in 17:
+		text += ("#" if y >= 15 else ".").repeat(30) + "\n"
+	text += "---\nlampe strassenlaterne 10,14\nlampe standfackel 20,14\n"
+	var d := RoomDef.parse(text)
+	var room := RoomBuilder.build(d)
+	EntityFactory.populate(room, d)
+	var lamps := room.get_children().filter(func(n): return n is Lamp)
+	assert_eq(lamps.size(), 2)
+	var l: Lamp = lamps[0]
+	assert_eq(l.body.sprite_frames.get_frame_count("an"), 8)
+	assert_true(l.glow.material is CanvasItemMaterial)
+	assert_eq(l.glow.material.blend_mode, CanvasItemMaterial.BLEND_MODE_ADD)
+	# Lichtpunkt (7, 9) im 14x40-Bild, Füße unten mittig: Lichtkreis 31 px über dem Boden
+	assert_eq(l.glow.position, Vector2(0, -31))
+	room.free()

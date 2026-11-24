@@ -23,6 +23,5 @@ SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 ---
 deco kartografhaus 16,14
 door karto 16,14 to=kartograf_haus:aussen
-deco laterne 25,14
-light warm 25,12 radius=24
+lampe strassenlaterne 25,14
 dialog tut_karte 10,14

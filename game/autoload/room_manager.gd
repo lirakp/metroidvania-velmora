@@ -88,14 +88,14 @@ func doors_blocked() -> bool:
 func refresh_locks() -> void:
 	if current == null or current_def == null:
 		return
-	var tiles: TileMapLayer = current.get_node("Tiles")
-	for e in current_def.exits:
-		if exit_locked(current_def, e):
-			tiles.set_cell(e.pos, 0, Vector2i(9, 0))
-			tiles.set_cell(e.pos - Vector2i(0, 1), 0, Vector2i(9, 0))
-		else:
-			tiles.erase_cell(e.pos)
-			tiles.erase_cell(e.pos - Vector2i(0, 1))
+	for layer_name in ["Tiles", "Visual"]:
+		var tiles: TileMapLayer = current.get_node(layer_name)
+		for e in current_def.exits:
+			for c in [e.pos, e.pos - Vector2i(0, 1), e.pos - Vector2i(0, 2)]:
+				if exit_locked(current_def, e):
+					tiles.set_cell(c, 0, Vector2i(9, 0))
+				elif current_def.tile_at(c) == 0:
+					tiles.erase_cell(c)
 
 
 func exit_locked(def: RoomDef, e: Dictionary) -> bool:

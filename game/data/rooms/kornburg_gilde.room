@@ -27,4 +27,6 @@ npc gildenmeisterin 14,14 dialog=gilde_rat
 deco tresen 14,14 front=true
 deco tuer 24,14
 door aussen 24,14 to=stadt_01:gilde
-light warm 21,13 radius=32
+lampe lagerfeuer 21,13
+lampe haengelaterne 4,4
+lampe haengelaterne 26,4

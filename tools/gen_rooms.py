@@ -54,7 +54,7 @@ def interior(rid, biome, area, floor="h", wall="w", dungeon=False):
 
 def lamp(r, x):
     """Straßenlaterne mit warmem Schein (nur an sicheren Orten)."""
-    r.ent(f"deco laterne {x},14").ent(f"light warm {x},12 radius=24")
+    r.ent(f"lampe strassenlaterne {x},14")
 
 
 def kornburg():
@@ -65,7 +65,7 @@ def kornburg():
     r.ent("deco schrein 5,14").ent("save schrein 5,14 kind=gilde")
     r.ent("npc gildenmeisterin 14,14 dialog=gilde_rat").ent("deco tresen 14,14 front=true")
     r.ent("deco tuer 24,14").ent("door aussen 24,14 to=stadt_01:gilde")
-    r.ent("light warm 21,13 radius=32")
+    r.ent("lampe lagerfeuer 21,13").ent("lampe haengelaterne 4,4").ent("lampe haengelaterne 26,4")
     rooms.append(r)
     # Stadt
     r = Room("stadt_01", "stadt", "kornburg", ground="S", fill="S")
@@ -86,7 +86,7 @@ def kornburg():
     r = interior("kartograf_haus", "innen_haus", "kornburg")
     r.ent("npc kartograf 14,14 area=kornburg price=40")
     r.ent("deco tuer 25,14").ent("door aussen 25,14 to=stadt_02:karto")
-    r.ent("light warm 17,9 radius=16")
+    r.ent("lampe haengelaterne 17,5")
     rooms.append(r)
     r = Room("stadt_03", "stadt", "kornburg", ground="S", fill="S")
     r.box(14, 15, 14, 14, "S")
@@ -182,7 +182,7 @@ def dungeon():
     rooms.append(r)
     r = interior("blutdungeon_rast", "innen_kammer", "blutdungeon", floor="S", wall="S", dungeon=True)
     r.ent("deco bogen 8,14").ent("door gang 8,14 to=blutdungeon_04:rast")
-    r.ent("deco altar 17,14").ent("save altar 17,14 kind=rastort").ent("light warm 17,13 radius=48")
+    r.ent("deco altar 17,14").ent("save altar 17,14 kind=rastort").ent("lampe standfackel 12,14").ent("lampe standfackel 22,14")
     rooms.append(r)
     r = d(5)
     r.box(14, 18, 13, 13, "-")
