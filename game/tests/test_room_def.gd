@@ -134,5 +134,5 @@ func test_builder_layers_terrain_and_hidden_collision() -> void:
 
 func test_backdrop_uses_cosy_parallax() -> void:
 	var b := Backdrop.make("kornfeld")
-	assert_eq(b.get_child_count(), 5, "Himmelfarbe + 4 Ebenen")
+	assert_eq(b.get_child_count(), 6, "Himmelfarbe + 4 Ebenen + Blutmond")
 	b.free()

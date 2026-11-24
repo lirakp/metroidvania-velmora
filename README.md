@@ -45,6 +45,8 @@ python3 tools/import_cosy.py ../aniamtion
 Die Welt ist düster; nur **sichere Orte** (Gildenhalle, Häuser, Rast-Kammern, Laternen der Stadt) haben warmes Licht.
 Häuser und Öffnungen in Wänden betretet ihr mit **[W]/↑** – dahinter liegt ein eigener Raum.
 
+- Stimmung: `game/data/stimmung.json` – Farbtönung pro Gebiet (Abdunkeln) und Stärke der warmen Lichter.
+  Die Grafikdateien bleiben dabei unverändert; der rote Blutmond wird im Spiel über den Mond des Himmels gelegt.
 - Palette: `game/art/palette.json` (32 düstere Grundfarben + 6 warme Lichttöne)
 - Figuren als Pixel-Textraster: `tools/art/rasters/*.txt` (ein Zeichen = ein Pixel)
 - Landschaft, Kacheln, Deko, Licht: `tools/art/*.py`, erzeugt mit `python3 tools/gen_art.py`

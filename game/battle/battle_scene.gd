@@ -76,6 +76,9 @@ func _build() -> void:
 	for ch in get_children():
 		ch.queue_free()
 	add_child(Backdrop.make(background))
+	var tint := Stimmung.tint_node(background)
+	if tint:
+		add_child(tint)
 	var ground := ColorRect.new()
 	ground.color = Color("14161d")
 	ground.position = Vector2(0, 196)

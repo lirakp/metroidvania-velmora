@@ -25,6 +25,9 @@ static func create(p_kind: String) -> Building:
 	b.sprite.position = -Vector2(b.door.x + b.door.w / 2.0, b.door.y + b.door.h)
 	b.add_child(b.sprite)
 	b._add_door_anim()
+	var light := Stimmung.light("gebaeude")
+	light.position = b.sprite.position + b.sprite.texture.get_size() * Vector2(0.5, 0.6)
+	b.add_child(light)
 	return b
 
 

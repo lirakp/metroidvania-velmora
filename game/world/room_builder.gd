@@ -121,6 +121,9 @@ static func build(def: RoomDef) -> Node2D:
 					terrain.set_cell(Vector2i(x, y), src, Vector2i(idx % 4, idx / 4))
 		root.add_child(terrain)
 	root.add_child(visual)
+	var tint := Stimmung.tint_node(def.biome)
+	if tint:
+		root.add_child(tint)
 	root.set_meta("room_def", def)
 	return root
 

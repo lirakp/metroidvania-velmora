@@ -189,7 +189,29 @@ def innen_muehle():
     save_layers("innen_muehle", [far, mid, Canvas(W, H)])
 
 
+def blutmond():
+    """Roter Mond (29x29) – wird im Spiel über den gelben Mond des Grafik-Repos gelegt."""
+    c = Canvas(29, 29)
+    mx = my = 14
+    mr = 13
+    for y in range(29):
+        for x in range(29):
+            dist = ((x - mx) ** 2 + (y - my) ** 2) ** 0.5
+            if dist <= mr:
+                col = RED[3]
+                if ((x - mx - 5) ** 2 + (y - my + 2) ** 2) ** 0.5 > mr + 1:
+                    col = RED[2]
+                for cx, cy, cr in ((-4, -4, 3), (4, 4, 2), (-1, 6, 1)):
+                    if (x - mx - cx) ** 2 + (y - my - cy) ** 2 <= cr * cr:
+                        col = RED[2]
+                if dist > mr - 1:
+                    col = RED[1]
+                c.px(x, y, col)
+    c.save("bg/blutmond.png")
+
+
 def make_all():
+    blutmond()
     innen_gilde()
     innen_haus()
     innen_kammer()

@@ -37,6 +37,9 @@ func _build() -> void:
 	glow.z_index = 3
 	glow.play("an")
 	add_child(glow)
+	var light := Stimmung.light("lampe")
+	light.position = glow.position
+	add_child(light)
 
 
 static func _strip(rel: String, w: int, h: int, n: int, fps: float) -> SpriteFrames:
