@@ -68,3 +68,37 @@ func test_rooms_use_cosy_buildings_with_doors() -> void:
 		assert_eq(door.size(), 1, pair[0])
 		if b.size() == 1 and door.size() == 1:
 			assert_eq(b[0].pos, door[0].pos, "Gebäudetür liegt auf der Tür-Stelle")
+
+
+func test_building_door_opens() -> void:
+	var b := Building.create("cottage")
+	assert_eq(b.door_anim.sprite_frames.get_frame_count("auf"), 5)
+	assert_eq(b.door_anim.position, b.sprite.position + Vector2(17, 42))
+	assert_eq(b.door_anim.frame, 0)
+	b.open_door()
+	assert_eq(b.door_anim.animation, "auf")
+	assert_true(b.door_anim.is_playing())
+	b.free()
+
+
+func test_door_waits_for_building_door() -> void:
+	var tree: SceneTree = Engine.get_main_loop()
+	GameState.reset()
+	RoomManager.room_dir = "res://data/rooms"
+	var world := Node2D.new()
+	tree.root.add_child(world)
+	var p: Player = load("res://world/player.tscn").instantiate()
+	p.test_control = true
+	RoomManager.attach(world, p)
+	RoomManager.go_to("stadt_02", "L1")
+	RoomManager.block_doors(0.0)
+	var door: Door = RoomManager.current.get_children().filter(func(n): return n is Door)[0]
+	var bld: Building = RoomManager.current.get_children().filter(func(n): return n is Building)[0]
+	assert_true(door.try_enter())
+	assert_eq(bld.door_anim.animation, "auf")
+	await tree.process_frame
+	assert_eq(RoomManager.current_def.id, "stadt_02", "Raumwechsel erst nach dem Öffnen")
+	await tree.create_timer(0.5).timeout
+	assert_eq(RoomManager.current_def.id, "kartograf_haus")
+	world.queue_free()
+	RoomManager.room_dir = "res://data/rooms"

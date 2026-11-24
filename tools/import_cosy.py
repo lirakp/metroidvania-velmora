@@ -20,7 +20,8 @@ FILES = [
     "monster/sprites/monster.json",
     # Gebäude bei Nacht + Türen
     "buildings/gilde_abenteuer_nacht.png", "buildings/cottage_nacht.png", "buildings/windmuehle_nacht.png",
-    "buildings/doors/tueren.json",
+    "buildings/doors/tueren.json", "buildings/doors/gilde_abenteuer_nacht_tuer_overlay.png",
+    "buildings/doors/cottage_nacht_tuer_overlay.png", "buildings/doors/windmuehle_nacht_tuer_overlay.png",
     # Licht
     "objects/licht/licht.json", "objects/licht/strassenlaterne_anim.png", "objects/licht/strassenlaterne_lichtkreis.png",
     "objects/licht/wandfackel_anim.png", "objects/licht/wandfackel_lichtkreis.png",

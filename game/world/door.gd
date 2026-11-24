@@ -39,5 +39,19 @@ func try_enter() -> bool:
 	var to := target.split(":")
 	if to.size() != 2:
 		return false
-	RoomManager.enter_door.call_deferred(to[0], to[1])
+	var bld := _building()
+	if bld:
+		RoomManager.block_doors(bld.door_open_time() + 0.5)
+		bld.open_door()
+		get_tree().create_timer(bld.door_open_time() + 0.05).timeout.connect(func(): RoomManager.enter_door(to[0], to[1]))
+	else:
+		RoomManager.enter_door.call_deferred(to[0], to[1])
 	return true
+
+
+## Gebäude, dessen Tür an dieser Stelle liegt (Ursprung = Türmitte unten).
+func _building() -> Building:
+	for n in get_parent().get_children():
+		if n is Building and n.position.distance_to(position) < 4.0:
+			return n
+	return null
