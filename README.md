@@ -8,7 +8,10 @@ Ihr spielt die Halbelfen-Geschwister **Warschick** oder **Lira**, das andere Ges
 
 ## Herunterladen und spielen (Windows)
 
-1. Unter **Releases** die Datei `Blutmond-windows.zip` herunterladen.
+**[⬇ Blutmond für Windows herunterladen (ZIP)](https://github.com/lirakp/metroidvania-velmora/releases/latest/download/Blutmond-windows.zip)**
+· alle Versionen unter [Releases](https://github.com/lirakp/metroidvania-velmora/releases)
+
+1. Die Datei `Blutmond-windows.zip` herunterladen (Link oben).
 2. Entpacken, `Blutmond.exe` starten (`Blutmond.pck` muss daneben liegen).
 3. Windows warnt evtl. vor einer unbekannten App: „Weitere Informationen“ → „Trotzdem ausführen“.
 
