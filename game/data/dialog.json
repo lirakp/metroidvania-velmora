@@ -70,11 +70,15 @@
   "tut_befehl": [
     {
       "speaker": "{geschwister}",
-      "text": "Zwei Platten, ein Tor. Schick mich auf die andere, {held}."
+      "text": "Zwei Platten, ein Tor. Auf jede Platte muss einer von uns."
     },
     {
       "speaker": "Hinweis",
-      "text": "Stellt euch an ein goldenes Zeichen und drückt [K]: {geschwister} geht dorthin. Nochmal [K] ruft zurück."
+      "text": "Geh zur rechten Platte mit dem goldenen Zeichen und drück [K]: {geschwister} bleibt dort stehen."
+    },
+    {
+      "speaker": "Hinweis",
+      "text": "Dann stell dich selbst auf die linke Platte. Das Tor öffnet sich und bleibt offen. Mit [K] holst du {geschwister} wieder zu dir."
     }
   ],
   "toter_abenteurer": [

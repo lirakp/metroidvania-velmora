@@ -108,3 +108,47 @@ func test_solo_mode_no_sibling_in_battle() -> void:
 	assert_eq(GameState.party(), [GameState.hero_id])
 	GameState.reset()
 	w.world.queue_free()
+
+
+func test_gate_stays_open_once_both_plates_pressed() -> void:
+	var w := _world()
+	var a := PressurePlate.new()
+	a.plate_name = "a"
+	a.opens = "tor1"
+	a.position = Vector2(200, 208)
+	var b := PressurePlate.new()
+	b.plate_name = "b"
+	b.opens = "tor1"
+	b.position = Vector2(400, 208)
+	var g := Gate.new()
+	g.gate_name = "tor1"
+	g.flag = "tor_offen:testraum:tor1"
+	g.position = Vector2(600, 200)
+	for n in [a, b, g]:
+		w.world.add_child(n)
+	w.sibling.mode = "stay"
+	w.sibling.stay_x = 400.0
+	w.sibling.position = Vector2(400, 199)
+	await _frames(6)
+	assert_true(g.is_open, "beide Platten belegt")
+	w.player.position = Vector2(700, 199)
+	await _frames(6)
+	assert_false(a.active)
+	assert_true(g.is_open, "Tor bleibt offen, wenn man die Platte verlässt")
+	assert_true(GameState.get_flag("tor_offen:testraum:tor1"), "gemerkt für später")
+	w.world.queue_free()
+
+
+func test_gate_open_from_flag() -> void:
+	GameState.reset()
+	GameState.set_flag("tor_offen:testraum:tor1")
+	var g := Gate.new()
+	g.gate_name = "tor1"
+	g.flag = "tor_offen:testraum:tor1"
+	var root := Node2D.new()
+	root.add_child(g)
+	tree.root.add_child(root)
+	await _frames(2)
+	assert_true(g.is_open)
+	root.queue_free()
+	GameState.reset()

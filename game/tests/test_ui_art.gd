@@ -53,3 +53,10 @@ func test_victory_banner() -> void:
 		await tree.process_frame
 	assert_true(scene.find_child("Banner", true, false) != null)
 	scene.queue_free()
+
+
+func test_text_rendered_at_screen_resolution() -> void:
+	# Schrift wird in Bildschirmauflösung gezeichnet (scharf), Pixelgrafik ganzzahlig hochskaliert.
+	assert_eq(ProjectSettings.get_setting("display/window/stretch/mode"), "canvas_items")
+	assert_eq(ProjectSettings.get_setting("display/window/stretch/scale_mode"), "integer")
+	assert_eq(ProjectSettings.get_setting("rendering/textures/canvas_textures/default_texture_filter"), 0, "Pixelgrafik ohne Weichzeichnen")
