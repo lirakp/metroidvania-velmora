@@ -54,6 +54,12 @@ Häuser und Öffnungen in Wänden betretet ihr mit **[W]/↑** – dahinter lieg
 - Figuren als Pixel-Textraster: `tools/art/rasters/*.txt` (ein Zeichen = ein Pixel)
 - Landschaft, Kacheln, Deko, Licht: `tools/art/*.py`, erzeugt mit `python3 tools/gen_art.py`
 
+## Neue Version veröffentlichen
+
+Auf GitHub unter **Actions → „Release bauen“ → Run workflow** eine Version eintragen (z. B. `v0.2.0`).
+Der Workflow testet und baut das Spiel und legt `Blutmond-windows.zip` in ein neues Release – der Download-Link
+oben zeigt danach automatisch darauf. Release-Notizen: `docs/releases/<version>.md` (optional).
+
 ## Selbst bauen (Linux)
 
 ```bash

@@ -1,0 +1,60 @@
+# Baut Blutmond für Windows und legt die ZIP in ein GitHub-Release.
+#
+# Auslösen:
+#  1. Actions → „Release bauen“ → „Run workflow“ → Version eintragen (z. B. v0.1.0).
+#     Legt das Release an; Notizen aus docs/releases/<version>.md, falls vorhanden.
+#  2. Oder auf GitHub ein Release von Hand veröffentlichen → die ZIP wird automatisch angehängt.
+#
+# Der Download-Link in der README zeigt immer auf das neueste Release:
+# https://github.com/lirakp/metroidvania-velmora/releases/latest/download/Blutmond-windows.zip
+name: Release bauen
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version (z. B. v0.1.0)"
+        required: true
+        default: "v0.1.0"
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.event.inputs.version || github.event.release.tag_name }}
+  cancel-in-progress: false
+
+jobs:
+  windows:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Godot 4.3 und Exportvorlagen laden
+        run: bash tools/setup_godot.sh
+
+      - name: Tests
+        run: tools/run_tests.sh
+
+      - name: Windows-Version bauen
+        run: bash tools/build_windows.sh
+
+      - name: Release anlegen (per Knopf)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ github.event.inputs.version }}
+        run: |
+          NOTES="docs/releases/${VERSION}.md"
+          if [ -f "$NOTES" ]; then NOTE_ARGS=(--notes-file "$NOTES"); else NOTE_ARGS=(--generate-notes); fi
+          gh release create "$VERSION" build/Blutmond-windows.zip \
+            --target "$GITHUB_SHA" --title "Blutmond $VERSION" "${NOTE_ARGS[@]}"
+
+      - name: ZIP an veröffentlichtes Release hängen
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.release.tag_name }}" build/Blutmond-windows.zip --clobber
