@@ -1,8 +1,11 @@
 class_name Gate
 extends StaticBody2D
-## Tor: offen, wenn alle Platten, die es öffnen, gleichzeitig aktiv sind.
+## Tor: öffnet sich, sobald alle zugehörigen Platten gleichzeitig belegt sind, und bleibt dann offen
+## (sonst könnte man nie hindurch, weil man dafür die eigene Platte verlassen muss).
+## Der offene Zustand wird über `flag` im Spielstand gemerkt.
 
 var gate_name := ""
+var flag := ""
 var is_open := false
 var _shape: CollisionShape2D
 var _sprite: Sprite2D
@@ -28,10 +31,16 @@ func _ready() -> void:
 
 
 func refresh() -> void:
+	if is_open:
+		return
 	var plates := get_tree().get_nodes_in_group("plates").filter(func(p): return p.opens == gate_name)
 	var open := not plates.is_empty() and plates.all(func(p): return p.active)
-	if open == is_open:
+	if flag != "" and GameState.get_flag(flag):
+		open = true
+	if not open:
 		return
+	if flag != "":
+		GameState.set_flag(flag)
 	is_open = open
 	_shape.set_deferred("disabled", open)
 	_sprite.visible = not open
