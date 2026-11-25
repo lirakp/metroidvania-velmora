@@ -1,0 +1,29 @@
+id: muehle_innen
+biome: innen_muehle
+area: kornburg
+exits: 
+---
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS..........................SS
+SS##########################SS
+SS##########################SS
+---
+deco tuer 5,14
+door aussen 5,14 to=muehle_01:muehle
+deco toter_abenteurer 16,14
+npc toter_abenteurer 16,14 dialog=toter_abenteurer art=keine
+pickup plakette 19,14
+deco kiste 23,14

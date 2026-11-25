@@ -1,0 +1,27 @@
+id: kartograf_haus
+biome: innen_haus
+area: kornburg
+exits: 
+---
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+wwhhhhhhhhhhhhhhhhhhhhhhhhhhww
+wwhhhhhhhhhhhhhhhhhhhhhhhhhhww
+---
+npc kartograf 14,14 area=kornburg price=40
+deco tuer 25,14
+door aussen 25,14 to=stadt_02:karto
+lampe haengelaterne 17,5

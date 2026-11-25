@@ -1,0 +1,281 @@
+{
+ "schrift_3x5": {
+  "hoehe": 5,
+  "zeichen": {
+   "A": [
+    0,
+    3
+   ],
+   "B": [
+    6,
+    3
+   ],
+   "C": [
+    12,
+    3
+   ],
+   "D": [
+    18,
+    3
+   ],
+   "E": [
+    24,
+    3
+   ],
+   "F": [
+    30,
+    3
+   ],
+   "G": [
+    36,
+    3
+   ],
+   "H": [
+    42,
+    3
+   ],
+   "I": [
+    48,
+    3
+   ],
+   "J": [
+    54,
+    3
+   ],
+   "K": [
+    60,
+    3
+   ],
+   "L": [
+    66,
+    3
+   ],
+   "M": [
+    72,
+    5
+   ],
+   "N": [
+    78,
+    4
+   ],
+   "O": [
+    84,
+    3
+   ],
+   "P": [
+    90,
+    3
+   ],
+   "Q": [
+    96,
+    4
+   ],
+   "R": [
+    102,
+    3
+   ],
+   "S": [
+    108,
+    3
+   ],
+   "T": [
+    114,
+    3
+   ],
+   "U": [
+    120,
+    3
+   ],
+   "V": [
+    126,
+    3
+   ],
+   "W": [
+    132,
+    5
+   ],
+   "X": [
+    138,
+    3
+   ],
+   "Y": [
+    144,
+    3
+   ],
+   "Z": [
+    150,
+    3
+   ],
+   "Ä": [
+    156,
+    3
+   ],
+   "Ö": [
+    162,
+    3
+   ],
+   "Ü": [
+    168,
+    3
+   ],
+   "0": [
+    174,
+    3
+   ],
+   "1": [
+    180,
+    3
+   ],
+   "2": [
+    186,
+    3
+   ],
+   "3": [
+    192,
+    3
+   ],
+   "4": [
+    198,
+    3
+   ],
+   "5": [
+    204,
+    3
+   ],
+   "6": [
+    210,
+    3
+   ],
+   "7": [
+    216,
+    3
+   ],
+   "8": [
+    222,
+    3
+   ],
+   "9": [
+    228,
+    3
+   ],
+   "+": [
+    234,
+    3
+   ],
+   "-": [
+    240,
+    3
+   ],
+   "!": [
+    246,
+    1
+   ],
+   "?": [
+    252,
+    3
+   ],
+   ".": [
+    258,
+    1
+   ],
+   ",": [
+    264,
+    1
+   ],
+   ":": [
+    270,
+    1
+   ],
+   " ": [
+    276,
+    2
+   ],
+   "/": [
+    282,
+    3
+   ]
+  },
+  "hinweis": "[x, breite] je Zeichen, 1 px Abstand"
+ },
+ "herz_zustaende": [
+  "voll",
+  "halb",
+  "leer"
+ ],
+ "herz_verlust": {
+  "bilder": 6
+ },
+ "herz_heilen": {
+  "bilder": 5
+ },
+ "mana_fuellstand": {
+  "stufen": 9,
+  "hinweis": "0/8 bis 8/8"
+ },
+ "mana_blubbern": {
+  "bilder": 4,
+  "schleife": true
+ },
+ "mana_rang": [
+  "D",
+  "C",
+  "B",
+  "A",
+  "S",
+  "SS"
+ ],
+ "zahlen": {
+  "zeichen": "0123456789+-!",
+  "stile": [
+   "normal",
+   "kritisch",
+   "heilung",
+   "mana",
+   "gift",
+   "block"
+  ],
+  "hinweis": "zahl_aufsteigen_* = Beispiel-Ablauf (8 Bilder)"
+ },
+ "rahmen": {
+  "groesse": 24,
+  "ecken": 8,
+  "stile": [
+   "holz",
+   "pergament",
+   "dungeon",
+   "magie"
+  ],
+  "hinweis": "9-Slice: Ecken 8 px, Mitte dehnen"
+ },
+ "knopf": {
+  "zustaende": [
+   "normal",
+   "hover",
+   "gedrueckt",
+   "aus"
+  ],
+  "hinweis": "9-Slice, Ecken 3 px"
+ },
+ "inventar_slot": [
+  "leer",
+  "rang_D",
+  "rang_C",
+  "rang_B",
+  "rang_A",
+  "rang_S",
+  "rang_SS",
+  "ausgewaehlt"
+ ],
+ "banner_stufe_auf": {
+  "bilder": 10
+ },
+ "banner_auftrag_erledigt": {
+  "bilder": 10
+ },
+ "banner_besiegt": {
+  "bilder": 10
+ },
+ "banner_dungeon_geloest": {
+  "bilder": 10
+ }
+}

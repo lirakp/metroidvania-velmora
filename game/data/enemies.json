@@ -1,0 +1,9 @@
+[
+  {"id": "goblin", "name": "Goblin", "rank": "D", "hp": 22, "atk": 6, "def": 2, "tempo": 7, "weak": [], "resist": [], "dmg_type": "schnitt", "xp": 4, "silver": 6, "art": "goblin", "cosy": "Goblin"},
+  {"id": "gruenschleim", "name": "Grünschleim", "rank": "D", "hp": 18, "atk": 4, "def": 1, "tempo": 3, "weak": ["feuer"], "resist": [], "dmg_type": "stumpf", "xp": 3, "silver": 4, "art": "gruenschleim", "cosy": "Grünschleim"},
+  {"id": "skelettkrieger", "name": "Skelettkrieger", "rank": "D", "hp": 26, "atk": 7, "def": 4, "tempo": 5, "weak": ["licht", "stumpf"], "resist": [], "dmg_type": "schnitt", "xp": 5, "silver": 8, "art": "skelettkrieger", "cosy": "Skelettkrieger"},
+  {"id": "riesenspinne", "name": "Riesenspinne", "rank": "C", "hp": 40, "atk": 10, "def": 4, "tempo": 9, "weak": ["feuer"], "resist": [], "dmg_type": "stich", "xp": 10, "silver": 12, "art": "riesenspinne", "cosy": "Riesenspinne"},
+  {"id": "ghul", "name": "Ghul", "rank": "C", "hp": 48, "atk": 11, "def": 5, "tempo": 6, "weak": ["licht"], "resist": [], "dmg_type": "schnitt", "xp": 12, "silver": 14, "art": "ghul", "cosy": "Ghul"},
+  {"id": "skelett_bogner", "name": "Skelett-Bogenschütze", "rank": "C", "hp": 34, "atk": 12, "def": 3, "tempo": 8, "weak": ["stumpf"], "resist": [], "dmg_type": "stich", "xp": 10, "silver": 12, "art": "skelett_bogner", "cosy": "Skelett-Bogenschütze"},
+  {"id": "blutwolf_alpha", "name": "Blutwolf-Alpha", "rank": "B", "hp": 140, "atk": 13, "def": 6, "tempo": 10, "weak": ["feuer"], "resist": [], "dmg_type": "schnitt", "xp": 80, "silver": 100, "art": "blutwolf_alpha", "boss": true, "cosy": "Blutwolf"}
+]

@@ -1,0 +1,6 @@
+tools/bin/
+build/
+.godot/
+game/.godot/
+.superpowers/
+__pycache__/

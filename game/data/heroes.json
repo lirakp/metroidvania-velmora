@@ -1,0 +1,4 @@
+[
+  {"id": "warschick", "name": "Warschick", "hp": 60, "atk": 9, "def": 5, "tempo": 8, "mana_c": 20, "mana_s": 40, "rank_c": 2, "rank_s": 5, "spells": ["funke", "frosthauch", "lichtfunke", "heilung", "dampfstoss"], "weapon": "kurzschwert", "armor": "lederharnisch", "style": "glutpirscher", "art": "warschick", "cosy": "elf_ruestung"},
+  {"id": "lira", "name": "Lira", "hp": 48, "atk": 6, "def": 4, "tempo": 9, "mana_c": 20, "mana_s": 60, "rank_c": 2, "rank_s": 5, "spells": ["funke", "frosthauch", "lichtfunke", "heilung", "dampfstoss"], "weapon": "eichenstab", "armor": "lederharnisch", "style": "hydroforelle", "art": "lira", "cosy": "elf_tunika"}
+]

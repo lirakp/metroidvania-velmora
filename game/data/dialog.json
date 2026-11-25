@@ -1,0 +1,180 @@
+{
+  "intro": [
+    {
+      "speaker": "Gildenmeisterin Hadra",
+      "text": "Zwei neue Plaketten. Eisen, Rang D. Frischfleisch."
+    },
+    {
+      "speaker": "Gildenmeisterin Hadra",
+      "text": "Seit drei Monden geht der Blutmond nicht mehr unter. Jeder Dungeon da draußen ist jetzt ein Blut-Dungeon."
+    },
+    {
+      "speaker": "Gildenmeisterin Hadra",
+      "text": "Im Süden hat man den Dämonenkönig gesehen. Wo er auftaucht, ist sein Herr nicht weit."
+    },
+    {
+      "speaker": "{geschwister}",
+      "text": "Der König der Ewigkeit. Du hast es auch gehört, {held}."
+    },
+    {
+      "speaker": "{held}",
+      "text": "Dann fangen wir klein an. Irgendwo muss man ja anfangen, einen König zu töten."
+    },
+    {
+      "speaker": "Gildenmeisterin Hadra",
+      "text": "Hinter der alten Mühle hat sich ein Dungeon geöffnet. Haltet die Frist, bis ein echter Trupp kommt. Oder löst ihn, wenn ihr lebensmüde seid."
+    },
+    {
+      "speaker": "Gildenmeisterin Hadra",
+      "text": "Und wenn ihr sterbt, bucht die Gilde ihre Blutsteuer. Wir sind sehr pünktlich."
+    },
+    {
+      "speaker": "Hinweis",
+      "text": "Legt eure zweite Seelenplakette am Gildenschrein links ab [W]. Durch die Tür rechts geht es nach draußen [W]."
+    }
+  ],
+  "gilde_rat": [
+    {
+      "speaker": "Gildenmeisterin Hadra",
+      "text": "Plakette ablegen, speichern, rasten: alles am Schrein. Und bringt mir Monsterkerne, keine Ausreden."
+    }
+  ],
+  "tut_bewegung": [
+    {
+      "speaker": "Hinweis",
+      "text": "[A]/[D] laufen, [Leertaste] springen. Länger halten springt höher."
+    }
+  ],
+  "tut_karte": [
+    {
+      "speaker": "Hinweis",
+      "text": "Ohne Karte bleibt [M] leer. Der Kartograf verkauft Karten von Kornburg."
+    }
+  ],
+  "stadttor": [
+    {
+      "speaker": "{geschwister}",
+      "text": "Hinter dem Tor beginnen die Kornfelder. Früher golden. Jetzt rot, wie alles unter diesem Mond."
+    }
+  ],
+  "tut_schlag": [
+    {
+      "speaker": "Hinweis",
+      "text": "[J] schlägt. Trefft ihr einen Gegner zuerst, beginnt der Kampf mit Erstschlag: Er setzt die erste Runde aus."
+    },
+    {
+      "speaker": "Hinweis",
+      "text": "Berührt euch ein Gegner zuerst, ist es ein Überfall: Er handelt zuerst."
+    }
+  ],
+  "tut_befehl": [
+    {
+      "speaker": "{geschwister}",
+      "text": "Zwei Platten, ein Tor. Schick mich auf die andere, {held}."
+    },
+    {
+      "speaker": "Hinweis",
+      "text": "Stellt euch an ein goldenes Zeichen und drückt [K]: {geschwister} geht dorthin. Nochmal [K] ruft zurück."
+    }
+  ],
+  "toter_abenteurer": [
+    {
+      "speaker": "{held}",
+      "text": "Ein Abenteurer. Seine Plakette ist schwarz geworden."
+    },
+    {
+      "speaker": "{geschwister}",
+      "text": "Die Gilde hat seine Blutsteuer sicher schon gebucht."
+    }
+  ],
+  "dungeon_tor": [
+    {
+      "speaker": "{geschwister}",
+      "text": "Der Dungeon pulsiert wie ein Herz. Wer hineingeht, kommt nur durch den Sieg wieder heraus."
+    }
+  ],
+  "dungeon_eingang": [
+    {
+      "speaker": "{held}",
+      "text": "Der Eingang ist weg."
+    },
+    {
+      "speaker": "{geschwister}",
+      "text": "Einweg-Schwelle. Endboss oder Tod. Ich hätte gern den Endboss."
+    }
+  ],
+  "rastort": [
+    {
+      "speaker": "{held}",
+      "text": "Da hinten – Kerzenlicht. Mitten in diesem Loch."
+    },
+    {
+      "speaker": "Hinweis",
+      "text": "Öffnungen in der Wand führen in Räume dahinter: [W] betritt sie. Am Altar könnt ihr eine Plakette ablegen, speichern und rasten."
+    }
+  ],
+  "federfall": [
+    {
+      "speaker": "Hinweis",
+      "text": "Ihr findet die Aufzeichnungen eines Windfalken-Nestlings: Federfall."
+    },
+    {
+      "speaker": "Hinweis",
+      "text": "In der Luft erneut [Leertaste]: Ein Windstoß unter den Füßen trägt euch höher."
+    }
+  ],
+  "federfall_wand": [
+    {
+      "speaker": "{geschwister}",
+      "text": "Zu hoch. Ohne Wind unter den Füßen kommen wir da nicht hoch."
+    }
+  ],
+  "boss_intro": [
+    {
+      "speaker": "{held}",
+      "text": "Ein Blutwolf. Größer als ein Pferd."
+    },
+    {
+      "speaker": "{geschwister}",
+      "text": "Er wird mit jedem Biss stärker. Lass ihn nicht oft beißen."
+    }
+  ],
+  "boss_sieg": [
+    {
+      "speaker": "{geschwister}",
+      "text": "Ein Blut-Dungeon von hundert. Der Mond wird nicht blasser."
+    },
+    {
+      "speaker": "{held}",
+      "text": "Dann eben der nächste. Und dann der König."
+    },
+    {
+      "speaker": "Hinweis",
+      "text": "Ende des Prototyps – ihr könnt frei weiter erkunden."
+    }
+  ],
+  "hammer": [
+    {
+      "speaker": "Hinweis",
+      "text": "Rostiger Kriegshammer, Rang A. Stark, aber er will Blut: 4 LP zu Beginn jedes Zuges."
+    }
+  ],
+  "plakette": [
+    {
+      "speaker": "Hinweis",
+      "text": "Ihr nehmt die Plakette an euch. Ein weiterer Rückkehrpunkt ist möglich."
+    }
+  ],
+  "karte_gefunden": [
+    {
+      "speaker": "Hinweis",
+      "text": "Eine Karte des Dungeons, mit Blut gezeichnet. [M] öffnet sie."
+    }
+  ],
+  "muehle_aussen": [
+    {
+      "speaker": "{geschwister}",
+      "text": "Die alte Mühle. Die Tür steht offen, und drinnen riecht es nach altem Blut."
+    }
+  ]
+}

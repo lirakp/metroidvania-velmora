@@ -1,0 +1,47 @@
+{
+ "groesse": 40,
+ "zeilen_ausdruecke": [
+  "neutral",
+  "freude",
+  "wut",
+  "traurig",
+  "ueberrascht",
+  "verlegen"
+ ],
+ "spalten_frames": [
+  "zu",
+  "spricht",
+  "blinzeln"
+ ],
+ "hinweis": "Beim Sprechen zwischen \"zu\" und \"spricht\" wechseln (ca. 8 fps); alle 2–4 s kurz \"blinzeln\".",
+ "dateien": [
+  "mensch_tunika.png",
+  "mensch_ruestung.png",
+  "zwerg_tunika.png",
+  "zwerg_ruestung.png",
+  "elf_tunika.png",
+  "elf_ruestung.png",
+  "dunkelelf_tunika.png",
+  "dunkelelf_ruestung.png",
+  "wolf_tunika.png",
+  "wolf_ruestung.png",
+  "hund_tunika.png",
+  "hund_ruestung.png",
+  "hase_tunika.png",
+  "hase_ruestung.png",
+  "katze_tunika.png",
+  "katze_ruestung.png",
+  "fuchs_tunika.png",
+  "fuchs_ruestung.png",
+  "echse_tunika.png",
+  "echse_ruestung.png",
+  "drache_tunika.png",
+  "drache_ruestung.png",
+  "hyaene_tunika.png",
+  "hyaene_ruestung.png",
+  "frosch_tunika.png",
+  "frosch_ruestung.png",
+  "eule_tunika.png",
+  "eule_ruestung.png"
+ ]
+}

@@ -1,0 +1,88 @@
+{
+ "kachelgroesse": 16,
+ "terrain_autotiling": "Wang-Ecken, Index = NW*1 + NE*2 + SW*4 + SE*8, Bit = fest; 4x4-Feld in Index-Reihenfolge. Oberkante (Gras/Moos/Schnee/Dornen/Blut/Glyphen), Seitenrand und Unterseite ergeben sich automatisch.",
+ "gebiete": [
+  "wiese",
+  "fels",
+  "schnee",
+  "dungeon_physisch",
+  "dungeon_dorn",
+  "dungeon_blut",
+  "dungeon_erinnerung"
+ ],
+ "einzeln": {
+  "rueckwand_<gebiet>": [
+   "normal",
+   "risse",
+   "nische",
+   "kette"
+  ],
+  "schraege_<gebiet>": [
+   "aufwaerts",
+   "abwaerts",
+   "fuellung"
+  ],
+  "plattformen": [
+   "holz_links",
+   "holz_mitte",
+   "holz_rechts",
+   "stein_links",
+   "stein_mitte",
+   "stein_rechts",
+   "wolke",
+   "ast"
+  ],
+  "leiter": [
+   "leiter",
+   "seil",
+   "kette"
+  ],
+  "stacheln": [
+   "stahl",
+   "knochen",
+   "dornen",
+   "kristall"
+  ]
+ },
+ "parallax": {
+  "dorf_tag": [
+   "0_himmel",
+   "1_berge",
+   "2_huegel",
+   "3_wald"
+  ],
+  "dorf_nacht": [
+   "0_himmel",
+   "1_berge",
+   "2_huegel",
+   "3_wald"
+  ],
+  "hoehle": [
+   "0_fern",
+   "1_felsen",
+   "2_stalaktiten",
+   "3_kristalle"
+  ],
+  "dungeon_physisch": [
+   "0_hintergrund",
+   "1_boegen",
+   "2_saeulen"
+  ],
+  "dungeon_dorn": [
+   "0_hintergrund",
+   "1_boegen",
+   "2_saeulen"
+  ],
+  "dungeon_blut": [
+   "0_hintergrund",
+   "1_boegen",
+   "2_saeulen"
+  ],
+  "dungeon_erinnerung": [
+   "0_hintergrund",
+   "1_boegen",
+   "2_saeulen"
+  ]
+ },
+ "parallax_hinweis": "Ebenen von hinten (0) nach vorn; empfohlene Scroll-Faktoren: 0, 0.2, 0.4, 0.65 (bzw. 0, 0.3, 0.6 bei drei Ebenen). 320x180, waagrecht kachelbar."
+}
