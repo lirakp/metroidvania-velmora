@@ -1,7 +1,7 @@
 class_name Npc
 extends Area2D
 ## Figur in der Welt: Kartograf (verkauft Gebietskarten) oder Gesprächspartner (Dialog).
-## Mit props.arbeit=<job> ein Dorfbewohner, der vor seinem Haus arbeitet.
+## Mit props.arbeit=<job> ein Dorfbewohner, der vor seinem Haus arbeitet; mit props.laden=<id> ein Händler.
 
 var npc_id := ""
 var props: Dictionary = {}
@@ -72,6 +72,20 @@ func interact() -> void:
 					ChoiceMenu.toast(self, "Karte gekauft. [M] öffnet sie.")
 				else:
 					ChoiceMenu.toast(self, "„Kein Silber, keine Karte.“"))
+	elif props.has("laden") and props.has("dialog"):
+		var m := ChoiceMenu.open(self, Shop.data(props.laden).owner, ["Handeln", "Reden", "Zurück"], 2)
+		m.chosen.connect(func(i):
+			_block()
+			if i == 0:
+				_open_shop()
+			elif i == 1:
+				DialogBox.show_dialog(self, props.dialog).finished.connect(_block))
+	elif props.has("laden"):
+		_open_shop()
 	elif props.has("dialog"):
 		var box := DialogBox.show_dialog(self, props.dialog)
 		box.finished.connect(_block)
+
+
+func _open_shop() -> void:
+	ShopMenu.open(self, props.laden).closed.connect(_block)

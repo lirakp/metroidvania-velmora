@@ -1,0 +1,7 @@
+{
+  "baeckerei": {"name": "Bäckerei", "owner": "Bäcker Jonte", "gruss": "„Frisch aus dem Ofen. Na ja. Aus dem Ofen.“", "sells": ["brot", "apfel"], "buys": ["weizen", "beeren_rot", "blaubeeren"], "rate": 1.0, "bake": true},
+  "alchemie": {"name": "Alchemie", "owner": "Alchemistin Veska", "gruss": "„Nichts anfassen, was blubbert.“", "sells": ["heil_klein", "mana_klein"], "buys": ["heilkraut", "pilz", "leuchtpilz", "manablume", "beeren_rot", "blaubeeren"], "rate": 1.0},
+  "waffen": {"name": "Waffenschmiede", "owner": "Schmied Borin", "gruss": "„Ehrlicher Stahl bis Rang C. Den Rest holt ihr euch selbst.“", "sells": ["kurzschwert", "eichenstab", "streitkolben", "lederharnisch", "siegelring_c"], "buys": [], "buys_equipment": true, "rate": 1.0},
+  "markt": {"name": "Marktstand", "owner": "Händlerin Szissa", "gruss": "„Ich kaufe alles, was ihr findet. Zu meinem Preis.“", "sells": [], "buys": "sammelbar", "rate": 0.7},
+  "gilde": {"name": "Gilde", "owner": "Gildenmeisterin Hadra", "gruss": "„Monsterkerne. Zum vollen Wert, ausnahmsweise.“", "sells": [], "buys": ["monsterkern_D", "monsterkern_C"], "rate": 1.0}
+}
