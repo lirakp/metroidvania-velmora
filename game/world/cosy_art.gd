@@ -142,3 +142,32 @@ static func work_sprite(job: String) -> AnimatedSprite2D:
 	sp.position = Vector2(-float(m.figur_offset[0]) - 6.0, -float(m.zelle[1])) * WORK_SCALE
 	sp.play("arbeit")
 	return sp
+
+
+## 16×16-Icon eines Gegenstands (Vorrat oder Ausrüstung). Quelle steht im Feld „icon“:
+## "sammeln:<name>" (welt/sammeln/icons_sammeln.png) oder "icons:<gruppe>:<name>" (icons/<gruppe>.png).
+static func item_icon(id: String) -> AtlasTexture:
+	var key := "i:" + id
+	if _frames_cache.has(key):
+		return _frames_cache[key]
+	var src := ""
+	if DB.items.has(id):
+		src = DB.item(id).get("icon", "")
+	elif DB.equip.has(id):
+		src = DB.equip[id].get("icon", "")
+	var parts := src.split(":")
+	var at := AtlasTexture.new()
+	var index := -1
+	if parts.size() == 2 and parts[0] == "sammeln":
+		at.atlas = load(BASE + "welt/sammeln/icons_sammeln.png")
+		index = int(meta("welt/sammeln/sammeln.json").items[parts[1]].icon_index)
+	elif parts.size() == 3 and parts[0] == "icons":
+		at.atlas = load(BASE + "icons/%s.png" % parts[1])
+		index = (meta("icons/icons.json").gruppen[parts[1]] as Array).find(parts[2])
+	if index < 0:
+		push_warning("Icon fehlt: " + id)
+		return null
+	var size := int(meta("icons/icons.json").groesse)
+	at.region = Rect2(index * size, 0, size, size)
+	_frames_cache[key] = at
+	return at

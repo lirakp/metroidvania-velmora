@@ -17,6 +17,8 @@ DORF_TUEREN = ["baeckerei", "taverne", "schmiede_waffen", "schmiede_ruestung", "
 DORF_GEBAEUDE = DORF_TUEREN + ["schmiede", "marktstand", "brunnen", "scheune"]
 DORF_ARBEIT = ["schmied", "baecker", "holzfaeller", "bauer", "kehrer", "wirt", "fischer", "haendler", "wache", "gaertner"]
 
+SAMMELN = ["weizen", "apfel", "beeren_rot", "blaubeeren", "pilz", "leuchtpilz", "heilkraut", "manablume"]
+
 FILES = [
     # Spielfigur und Figuren (48er Zellen, 17 Animationen)
     "characters/held/held.json", "characters/held/elf_tunika.png", "characters/held/elf_ruestung.png",
@@ -31,6 +33,10 @@ FILES = [
     *[f"buildings/{b}_nacht.png" for b in DORF_GEBAEUDE],
     *[f"buildings/doors/{b}_nacht_tuer_overlay.png" for b in DORF_TUEREN],
     "characters/arbeit/arbeit.json", *[f"characters/arbeit/{j}.png" for j in DORF_ARBEIT],
+    # Gegenstands-Icons und Sammelstellen (Ernte-/Nachwachs-Animation)
+    "icons/icons.json", *[f"icons/{g}.png" for g in ("essen_kraeuter", "traenke", "beute", "waffen", "ruestung")],
+    "welt/sammeln/sammeln.json", "welt/sammeln/icons_sammeln.png",
+    *[f"welt/sammeln/{a}.png" for a in SAMMELN],
     # Licht
     "objects/licht/licht.json", "objects/licht/strassenlaterne_anim.png", "objects/licht/strassenlaterne_lichtkreis.png",
     "objects/licht/wandfackel_anim.png", "objects/licht/wandfackel_lichtkreis.png",

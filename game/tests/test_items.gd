@@ -42,3 +42,21 @@ func test_items_saved_and_old_save_loads() -> void:
 	assert_eq(GameState.item_count("brot"), 3)
 	GameState.from_dict({})
 	assert_eq(GameState.items, {})
+
+
+func test_every_item_and_equipment_has_icon() -> void:
+	for id in DB.items.keys() + DB.equip.keys():
+		var t := CosyArt.item_icon(id)
+		assert_true(t != null, "Icon fehlt: " + id)
+		if t:
+			assert_eq(t.get_size(), Vector2(16, 16), id)
+
+
+func test_icon_regions_follow_metadata() -> void:
+	# brot ist das 1. Icon in essen_kraeuter, weizen hat icon_index 3 im Sammel-Streifen
+	var brot: AtlasTexture = CosyArt.item_icon("brot")
+	assert_eq(brot.region, Rect2(0, 0, 16, 16))
+	var weizen: AtlasTexture = CosyArt.item_icon("weizen")
+	assert_eq(weizen.region, Rect2(48, 0, 16, 16))
+	var schwert: AtlasTexture = CosyArt.item_icon("kurzschwert")
+	assert_eq(schwert.region, Rect2(0, 0, 16, 16))
