@@ -314,11 +314,22 @@ func _process(delta: float) -> void:
 		_refresh()
 
 
+## Siegmeldung mit Silber und Beute, z. B. „Sieg! 12 Silber erbeutet. Monsterkern (D) ×1.“
+static func victory_text(r: BattleResult) -> String:
+	var t := "Sieg! %d Silber erbeutet." % r.silver
+	var counts := {}
+	for d in r.drops:
+		counts[d] = counts.get(d, 0) + 1
+	for d in counts:
+		t += " %s ×%d." % [DB.item(d).name if DB.items.has(d) else d, counts[d]]
+	return t
+
+
 func _finish(o: String) -> void:
 	_finished = true
 	var r := state.result() if o == "sieg" else BattleResult.new()
 	if o == "sieg":
-		_push_log(["Sieg! %d Silber erbeutet." % r.silver])
+		_push_log([victory_text(r)])
 		var b := UiArt.banner("dungeon_geloest" if state.enemies.any(func(e): return e.is_boss) else "besiegt")
 		b.position = Vector2(240, 60)
 		_ui.add_child(b)

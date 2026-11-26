@@ -4,6 +4,8 @@ extends Node
 
 signal battle_ended(outcome: String)
 signal boss_defeated(area: String)
+## Nach jedem Sieg: IDs der besiegten Gegner (für Jagd-Aufträge).
+signal enemies_defeated(ids: Array)
 
 const GRACE := 1.0
 
@@ -85,6 +87,9 @@ func finish(outcome: String, result: BattleResult) -> void:
 				_enemy.queue_free()
 			GameState.gold += result.silver
 			GameState.xp += result.xp
+			for d in result.drops:
+				GameState.add_item(d)
+			enemies_defeated.emit(last_enemy_ids.duplicate())
 		"niederlage":
 			if GameState.has_method("on_death"):
 				GameState.on_death()

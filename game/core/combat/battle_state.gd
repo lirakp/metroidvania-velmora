@@ -219,9 +219,18 @@ func outcome() -> String:
 	return "laeuft"
 
 
+const CORE_DROP_CHANCE := 0.5
+
+
+## Belohnung: EP, Silber und Monsterkerne (normale Gegner 50 %, Bosse immer; Rang D → D-Kern, darüber C-Kern).
 func result() -> BattleResult:
 	var r := BattleResult.new()
 	for e in enemies:
 		r.xp += e.xp
 		r.silver += e.silver
+		if not DB.enemies.has(e.id):
+			continue
+		var core := "monsterkern_D" if int(DB.enemy(e.id).rank) <= 1 else "monsterkern_C"
+		if e.is_boss or rng.randf() < CORE_DROP_CHANCE:
+			r.drops.append(core)
 	return r
