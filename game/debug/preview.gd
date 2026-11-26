@@ -1,6 +1,6 @@
 extends Node
 ## Vorschau für Screenshots: godot ... res://debug/preview.tscn -- <modus> [raum]
-## modus: title | select | room <id> | map <id>
+## modus: title | select | room <id> | map <id> | shop <raum> <laden>
 
 
 func _ready() -> void:
@@ -28,6 +28,13 @@ func _ready() -> void:
 				RoomManager.go_to(room, "L1" if rd.exit_by_id("L1") else "")
 			else:
 				RoomManager.enter_door(room, doors[0].id)
+			if mode == "shop":
+				GameState.add_item("weizen", 4)
+				GameState.add_item("beeren_rot", 2)
+				GameState.add_item("brot", 1)
+				var sm := ShopMenu.open(w, args[2] if args.size() > 2 else "baeckerei")
+				sm._level = "kaufen"
+				sm._redraw()
 			if mode == "dialog":
 				GameState.flags.clear()
 				DialogBox.show_dialog(w, "intro")

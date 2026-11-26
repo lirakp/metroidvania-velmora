@@ -99,6 +99,8 @@ func _redraw() -> void:
 	var msg := _label(_message, Vector2(0, 14), Color("d6d9de"))
 	msg.size = Vector2(276, 24)
 	msg.autowrap_mode = TextServer.AUTOWRAP_WORD
+	var hint := {"kopf": "[W] wählen · [Esc] schließen", "kaufen": "[W] kaufen · [Esc] zurück", "verkaufen": "[W] verkaufen · [Esc] zurück"}
+	_label(hint[_level], Vector2(0, 168), Color("8b93a3"))
 	var y := 44
 	var entries := _entries()
 	if _level == "kopf":

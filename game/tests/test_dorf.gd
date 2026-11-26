@@ -76,3 +76,43 @@ func test_village_rooms_are_warm() -> void:
 	for id in DORF:
 		var d := RoomDef.load_room(id)
 		assert_true(d.entities.any(func(e): return e.type == "lampe"), id + " ohne Laterne")
+
+
+const SHOPS := [["dorf_02", "laden_baeckerei", "baeckerei"], ["dorf_03", "laden_alchemie", "alchemie"], ["dorf_01", "laden_waffen", "waffen"]]
+
+
+func test_shops_enterable() -> void:
+	for s in SHOPS:
+		var outer := RoomDef.load_room(s[0])
+		var inner := RoomDef.load_room(s[1])
+		assert_eq(inner.error, "", s[1])
+		var door_out := outer.entities.filter(func(e): return e.type == "door" and String(e.props.get("to", "")).begins_with(s[1] + ":"))
+		assert_eq(door_out.size(), 1, "%s → %s" % [s[0], s[1]])
+		if door_out.size() != 1:
+			continue
+		var inner_door_id: String = String(door_out[0].props.to).split(":")[1]
+		var back := inner.entities.filter(func(e): return e.type == "door" and e.id == inner_door_id)
+		assert_eq(back.size(), 1, s[1] + " ohne Rücktür")
+		if back.size() == 1:
+			assert_eq(back[0].props.to, "%s:%s" % [s[0], door_out[0].id])
+		# Die Dorf-Tür steht genau an der Gebäudetür
+		var bld := outer.entities.filter(func(e): return e.type == "gebaeude" and e.pos == door_out[0].pos)
+		assert_eq(bld.size(), 1, s[0] + ": Tür nicht am Gebäude")
+		assert_true(inner.entities.any(func(e): return e.type == "npc" and e.props.get("laden", "") == s[2]), s[1] + " ohne Händler")
+		assert_true(inner.entities.any(func(e): return e.type == "lampe"), s[1] + " ohne warmes Licht")
+
+
+func test_traders_outside() -> void:
+	var markt := RoomDef.load_room("dorf_02").entities.filter(func(e): return e.type == "npc" and e.id == "haendler")
+	assert_eq(markt[0].props.get("laden", ""), "markt")
+	var hadra := RoomDef.load_room("kornburg_gilde").entities.filter(func(e): return e.type == "npc" and e.id == "gildenmeisterin")
+	assert_eq(hadra[0].props.get("laden", ""), "gilde")
+	var smith := RoomDef.load_room("dorf_01").entities.filter(func(e): return e.type == "npc" and e.props.get("arbeit", "") == "schmied")
+	assert_eq(smith[0].id, "geselle")
+
+
+func test_shop_owner_sprites_exist() -> void:
+	for key in ["borin", "veska"]:
+		var sheet: String = CosyArt.NPC_SHEETS.get(key, "")
+		assert_true(sheet != "", key)
+		assert_true(ResourceLoader.exists(CosyArt.BASE + "characters/held/%s.png" % sheet), sheet)

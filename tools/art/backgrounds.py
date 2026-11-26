@@ -151,6 +151,108 @@ def innen_haus():
     save_layers("innen_haus", [far, mid, Canvas(W, H)])
 
 
+def _stone_wall(c, x0, x1, y0, y1, dark, line):
+    c.rect(x0, y0, x1 - 1, y1 - 1, dark)
+    for row, y in enumerate(range(y0, y1, 12)):
+        c.d.line([(x0, y), (x1 - 1, y)], fill=line)
+        off = 10 if row % 2 else 0
+        for x in range(x0 - 20 + off, x1, 20):
+            c.d.line([(x, y), (x, min(y1 - 1, y + 11))], fill=line)
+
+
+def _shelf(c, x0, x1, y, cols, seed):
+    """Brett mit Waren (cols: Farben); je Fach kleine Gegenstände."""
+    r = rng(seed)
+    c.rect(x0, y + 18, x1, y + 20, BROWN[0])
+    c.rect(x0, y + 21, x1, y + 21, BLACK)
+    x = x0 + 3
+    while x < x1 - 8:
+        w = r.choice((5, 6, 8))
+        h = r.choice((8, 10, 12, 14))
+        col = r.choice(cols)
+        c.rect(x, y + 18 - h, x + w - 1, y + 17, col)
+        c.px(x + 1, y + 18 - h, ST[6])
+        x += w + r.choice((1, 2, 3))
+
+
+def innen_baeckerei():
+    far = Canvas(W, H, BLACK)
+    _wood_wall(far, 0, W, 0, H)
+    mid = Canvas(W, H)
+    # Gemauerter Backofen mit Glut
+    ox, oy = 340, 240
+    mid.rect(ox - 56, 96, ox + 56, oy, ST[2])
+    _stone_wall(mid, ox - 56, ox + 57, 96, oy, ST[2], ST[1])
+    mid.d.ellipse([ox - 60, 60, ox + 60, 132], fill=ST[2])
+    mid.d.chord([ox - 30, 168, ox + 30, 232], 180, 360, fill=BLACK)
+    mid.rect(ox - 30, 200, ox + 30, oy - 8, BLACK)
+    mid.d.polygon([(ox - 20, oy - 8), (ox - 8, oy - 26), (ox, oy - 14), (ox + 10, oy - 28), (ox + 20, oy - 8)], fill=WGLUT)
+    mid.d.polygon([(ox - 10, oy - 8), (ox, oy - 18), (ox + 10, oy - 8)], fill=WAMBER)
+    mid.rect(ox - 60, oy - 6, ox + 60, oy, ST[1])
+    far.glow(ox, oy - 20, 80, 0.6)
+    # Regale mit Brotlaiben
+    for y in (70, 110, 150):
+        mid.rect(60, y + 18, 200, y + 20, BROWN[0])
+        for i in range(6):
+            bx = 66 + i * 22
+            mid.d.ellipse([bx, y + 6, bx + 18, y + 18], fill=BROWN[2] if (i + y) % 3 else GOLD0)
+            mid.d.line([(bx + 5, y + 9), (bx + 8, y + 12)], fill=BROWN[3])
+            mid.d.line([(bx + 10, y + 9), (bx + 13, y + 12)], fill=BROWN[3])
+    # Mehlsäcke
+    for sx in (220, 244):
+        mid.d.rounded_rectangle([sx, 214, sx + 20, 240], 6, fill=ST[5])
+        mid.d.line([(sx + 4, 218), (sx + 16, 218)], fill=ST[3])
+    save_layers("innen_baeckerei", [far, mid, Canvas(W, H)])
+
+
+def innen_alchemie():
+    far = Canvas(W, H, BLACK)
+    _stone_wall(far, 0, W, 0, H, INK, BLACK)
+    mid = Canvas(W, H)
+    # Regale voller Flaschen
+    bottles = (RED[3], MOSS[3], SLATE[3], GOLD0, MOSS[2], RED[2])
+    for i, y in enumerate((60, 100, 140)):
+        _shelf(mid, 40, 190, y, bottles, 30 + i)
+        _shelf(mid, 300, 440, y, bottles, 40 + i)
+    # Kessel mit grünem Schein
+    kx, ky = 240, 238
+    mid.d.ellipse([kx - 26, ky - 34, kx + 26, ky + 4], fill=BLACK)
+    mid.d.ellipse([kx - 22, ky - 36, kx + 22, ky - 26], fill=MOSS[3])
+    for bx, by in ((kx - 8, ky - 44), (kx + 6, ky - 52), (kx - 2, ky - 60)):
+        mid.d.ellipse([bx - 2, by - 2, bx + 2, by + 2], outline=MOSS[4])
+    far.glow(kx, ky - 30, 60, 0.45)
+    # Getrocknete Kräuter unter der Decke
+    for x in range(60, 440, 26):
+        mid.d.line([(x, 0), (x, 24)], fill=BROWN[0])
+        mid.d.polygon([(x - 5, 24), (x + 5, 24), (x + 2, 38), (x - 2, 38)], fill=MOSS[1] if x % 4 else MOSS[2])
+    save_layers("innen_alchemie", [far, mid, Canvas(W, H)])
+
+
+def innen_schmiede():
+    far = Canvas(W, H, BLACK)
+    _stone_wall(far, 0, W, 0, H, ST[1], ST[0])
+    mid = Canvas(W, H)
+    # Esse mit Feuer
+    fx, fy = 360, 240
+    mid.rect(fx - 44, 40, fx + 44, fy, ST[2])
+    _stone_wall(mid, fx - 44, fx + 45, 120, fy, ST[2], ST[1])
+    mid.d.polygon([(fx - 30, 40), (fx + 30, 40), (fx + 44, 120), (fx - 44, 120)], fill=ST[1])
+    mid.rect(fx - 26, 178, fx + 26, fy - 6, BLACK)
+    mid.d.polygon([(fx - 18, fy - 6), (fx - 6, fy - 30), (fx, fy - 16), (fx + 8, fy - 34), (fx + 18, fy - 6)], fill=WGLUT)
+    mid.d.polygon([(fx - 8, fy - 6), (fx, fy - 20), (fx + 8, fy - 6)], fill=WCANDLE)
+    far.glow(fx, fy - 20, 90, 0.65)
+    # Waffenwand: Schwerter, Äxte, Schilde
+    for i, x in enumerate(range(50, 250, 28)):
+        mid.rect(x + 6, 70, x + 8, 150, ST[5])
+        mid.rect(x + 2, 146, x + 12, 148, BROWN[2])
+        mid.rect(x + 6, 149, x + 8, 160, BROWN[1])
+        mid.px(x + 7, 69, ST[6])
+    for sx in (80, 150, 220):
+        mid.d.ellipse([sx - 14, 170, sx + 14, 198], fill=SLATE[1], outline=BROWN[1])
+        mid.d.ellipse([sx - 4, 180, sx + 4, 188], fill=GOLD0)
+    save_layers("innen_schmiede", [far, mid, Canvas(W, H)])
+
+
 def innen_kammer():
     far = Canvas(W, H, BLACK)
     for row, y in enumerate(range(0, H, 11)):
@@ -216,3 +318,6 @@ def make_all():
     innen_haus()
     innen_kammer()
     innen_muehle()
+    innen_baeckerei()
+    innen_alchemie()
+    innen_schmiede()

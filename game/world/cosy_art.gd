@@ -103,7 +103,7 @@ static func monster_sprite(enemy_id: String) -> AnimatedSprite2D:
 	return sp
 
 
-const NPC_SHEETS := {"kartograf": "mensch_tunika", "gildenmeisterin": "zwerg_tunika"}
+const NPC_SHEETS := {"kartograf": "mensch_tunika", "gildenmeisterin": "zwerg_tunika", "borin": "zwerg_ruestung", "veska": "eule_tunika"}
 
 
 ## Arbeitsschleife eines Dorfbewohners (characters/arbeit, 8 Bilder in einer Reihe).

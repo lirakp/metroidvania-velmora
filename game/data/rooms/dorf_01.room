@@ -23,7 +23,8 @@ SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 ---
 gebaeude schmiede 6,14
 gebaeude schmiede_waffen 20,14
-npc schmied 15,14 arbeit=schmied dialog=dorf_schmied
+door waffen 20,14 to=laden_waffen:aussen
+npc geselle 15,14 arbeit=schmied dialog=dorf_geselle
 npc wache 28,14 arbeit=wache dialog=dorf_wache
 lampe strassenlaterne 12,14
 dialog dorf_ankunft 26,14

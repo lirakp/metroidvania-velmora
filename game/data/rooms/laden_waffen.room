@@ -1,0 +1,28 @@
+id: laden_waffen
+biome: innen_schmiede
+area: kornburg
+exits: 
+---
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+wwhhhhhhhhhhhhhhhhhhhhhhhhhhww
+wwhhhhhhhhhhhhhhhhhhhhhhhhhhww
+---
+npc borin 13,14 art=borin dialog=dorf_schmied laden=waffen
+deco tuer 4,14
+door aussen 4,14 to=dorf_01:waffen
+lampe wandfackel 8,8
+lampe wandfackel 18,8

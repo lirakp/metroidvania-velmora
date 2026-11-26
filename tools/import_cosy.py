@@ -23,6 +23,7 @@ FILES = [
     # Spielfigur und Figuren (48er Zellen, 17 Animationen)
     "characters/held/held.json", "characters/held/elf_tunika.png", "characters/held/elf_ruestung.png",
     "characters/held/mensch_tunika.png", "characters/held/mensch_ruestung.png", "characters/held/zwerg_tunika.png",
+    "characters/held/zwerg_ruestung.png", "characters/held/eule_tunika.png",
     # Gegner-Metadaten (Bilder siehe unten)
     "monster/sprites/monster.json",
     # Gebäude bei Nacht + Türen

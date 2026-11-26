@@ -1,0 +1,27 @@
+id: laden_baeckerei
+biome: innen_baeckerei
+area: kornburg
+exits: 
+---
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+wwhhhhhhhhhhhhhhhhhhhhhhhhhhww
+wwhhhhhhhhhhhhhhhhhhhhhhhhhhww
+---
+npc baecker 12,14 arbeit=baecker dialog=dorf_baecker laden=baeckerei
+deco tuer 25,14
+door aussen 25,14 to=dorf_02:baeckerei
+lampe haengelaterne 8,5

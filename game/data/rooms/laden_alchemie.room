@@ -1,0 +1,28 @@
+id: laden_alchemie
+biome: innen_alchemie
+area: kornburg
+exits: 
+---
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+ww..........................ww
+wwhhhhhhhhhhhhhhhhhhhhhhhhhhww
+wwhhhhhhhhhhhhhhhhhhhhhhhhhhww
+---
+npc veska 19,14 art=veska dialog=laden_veska laden=alchemie
+deco tuer 4,14
+door aussen 4,14 to=dorf_03:alchemie
+lampe haengelaterne 12,5
+lampe haengelaterne 24,5

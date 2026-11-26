@@ -69,7 +69,8 @@ def dorf():
     r = Room("dorf_01", "stadt", "kornburg", ground="S", fill="S")
     r.exit("L1", "dorf_02", "R2").exit("R2", "stadt_01", "L1")
     r.ent("gebaeude schmiede 6,14").ent("gebaeude schmiede_waffen 20,14")
-    villager(r, "schmied", "schmied", 15)
+    r.ent("door waffen 20,14 to=laden_waffen:aussen")
+    villager(r, "geselle", "schmied", 15)
     villager(r, "wache", "wache", 28)
     lamp(r, 12)
     r.ent("dialog dorf_ankunft 26,14")
@@ -78,9 +79,9 @@ def dorf():
     r = Room("dorf_02", "stadt", "kornburg", ground="S", fill="S")
     r.exit("L1", "dorf_03", "R2").exit("R2", "dorf_01", "L1")
     r.ent("gebaeude brunnen 4,14").ent("gebaeude marktstand 11,14").ent("gebaeude baeckerei 22,14")
-    villager(r, "haendler", "haendler", 8)
+    r.ent("door baeckerei 22,14 to=laden_baeckerei:aussen")
+    r.ent("npc haendler 8,14 arbeit=haendler dialog=dorf_haendler laden=markt")
     villager(r, "kehrer", "kehrer", 14)
-    villager(r, "baecker", "baecker", 26)
     lamp(r, 1)
     rooms.append(r)
     # Westende: Alchemie und Taverne, dahinter die Stadtmauer
@@ -88,10 +89,33 @@ def dorf():
     r.box(0, 0, 0, 14, "S")
     r.exit("R2", "dorf_02", "L1")
     r.ent("gebaeude laden_alchemie 7,14").ent("gebaeude taverne 19,14")
+    r.ent("door alchemie 7,14 to=laden_alchemie:aussen")
     villager(r, "gaertner", "gaertner", 10)
     villager(r, "wirt", "wirt", 23)
     villager(r, "holzfaeller", "holzfaeller", 27)
     lamp(r, 13)
+    rooms.append(r)
+    rooms += laeden()
+    return rooms
+
+
+def laeden():
+    """Betretbare Läden im Unterdorf: Händler hinter dem Tresen oder bei der Arbeit, Tür zurück ins Dorf."""
+    rooms = []
+    r = interior("laden_baeckerei", "innen_baeckerei", "kornburg")
+    r.ent("npc baecker 12,14 arbeit=baecker dialog=dorf_baecker laden=baeckerei")
+    r.ent("deco tuer 25,14").ent("door aussen 25,14 to=dorf_02:baeckerei")
+    r.ent("lampe haengelaterne 8,5")
+    rooms.append(r)
+    r = interior("laden_alchemie", "innen_alchemie", "kornburg")
+    r.ent("npc veska 19,14 art=veska dialog=laden_veska laden=alchemie")
+    r.ent("deco tuer 4,14").ent("door aussen 4,14 to=dorf_03:alchemie")
+    r.ent("lampe haengelaterne 12,5").ent("lampe haengelaterne 24,5")
+    rooms.append(r)
+    r = interior("laden_waffen", "innen_schmiede", "kornburg")
+    r.ent("npc borin 13,14 art=borin dialog=dorf_schmied laden=waffen")
+    r.ent("deco tuer 4,14").ent("door aussen 4,14 to=dorf_01:waffen")
+    r.ent("lampe wandfackel 8,8").ent("lampe wandfackel 18,8")
     rooms.append(r)
     return rooms
 
@@ -103,7 +127,7 @@ def kornburg():
     r.g[14][8] = "@"
     r.ent("deco schrein 5,14").ent("save schrein 5,14 kind=gilde")
     r.ent("auftragsbrett brett 9,14")
-    r.ent("npc gildenmeisterin 14,14 dialog=gilde_rat").ent("deco tresen 14,14 front=true")
+    r.ent("npc gildenmeisterin 14,14 dialog=gilde_rat laden=gilde").ent("deco tresen 14,14 front=true")
     r.ent("deco tuer 24,14").ent("door aussen 24,14 to=stadt_01:gilde")
     r.ent("lampe lagerfeuer 21,13").ent("lampe haengelaterne 4,4").ent("lampe haengelaterne 26,4")
     rooms.append(r)

@@ -23,6 +23,7 @@ SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 ---
 gebaeude laden_alchemie 7,14
 gebaeude taverne 19,14
+door alchemie 7,14 to=laden_alchemie:aussen
 npc gaertner 10,14 arbeit=gaertner dialog=dorf_gaertner
 npc wirt 23,14 arbeit=wirt dialog=dorf_wirt
 npc holzfaeller 27,14 arbeit=holzfaeller dialog=dorf_holzfaeller

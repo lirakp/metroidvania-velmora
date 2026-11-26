@@ -24,7 +24,7 @@ SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 gebaeude brunnen 4,14
 gebaeude marktstand 11,14
 gebaeude baeckerei 22,14
-npc haendler 8,14 arbeit=haendler dialog=dorf_haendler
+door baeckerei 22,14 to=laden_baeckerei:aussen
+npc haendler 8,14 arbeit=haendler dialog=dorf_haendler laden=markt
 npc kehrer 14,14 arbeit=kehrer dialog=dorf_kehrer
-npc baecker 26,14 arbeit=baecker dialog=dorf_baecker
 lampe strassenlaterne 1,14

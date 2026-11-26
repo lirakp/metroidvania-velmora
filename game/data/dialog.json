@@ -292,5 +292,25 @@
       "speaker": "Holzfäller Grau",
       "text": "Rate, was davon am meisten geht."
     }
+  ],
+  "laden_veska": [
+    {
+      "speaker": "Alchemistin Veska",
+      "text": "Heiltränke aus Heilkraut, Manatränke aus Pilzen. Bringt mir beides, ich zahle ehrlich."
+    },
+    {
+      "speaker": "Alchemistin Veska",
+      "text": "Gegen den Blutmond habe ich nichts. Wer etwas dagegen braut, wird reich. Oder verbrannt."
+    }
+  ],
+  "dorf_geselle": [
+    {
+      "speaker": "Geselle Tamm",
+      "text": "Meister Borin steht jetzt drinnen hinter dem Tresen. Ich mache draußen die Arbeit."
+    },
+    {
+      "speaker": "Geselle Tamm",
+      "text": "Er nennt das Ausbildung. Ich nenne es Hämmern."
+    }
   ]
 }

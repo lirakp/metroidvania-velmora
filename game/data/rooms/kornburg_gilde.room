@@ -24,7 +24,7 @@ wwhhhhhhhhhhhhhhhhhhhhhhhhhhww
 deco schrein 5,14
 save schrein 5,14 kind=gilde
 auftragsbrett brett 9,14
-npc gildenmeisterin 14,14 dialog=gilde_rat
+npc gildenmeisterin 14,14 dialog=gilde_rat laden=gilde
 deco tresen 14,14 front=true
 deco tuer 24,14
 door aussen 24,14 to=stadt_01:gilde
