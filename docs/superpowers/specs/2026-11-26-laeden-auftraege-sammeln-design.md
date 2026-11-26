@@ -127,6 +127,13 @@ wie beim Kartografen; Gebäudetür im Dorf öffnet sich wie bei der Gilde.
   einmal „nachwachsen“ und steht wieder voll da.
 - Verteilung: je Kornfeld 1–2 Weizenstellen, je Waldraum 2–4 Stellen.
 
+## Gegner kehren beim Rasten zurück (Entscheidung des Nutzers: A)
+
+- Rasten an einem Schrein oder Rastort löscht die Merker `defeated:<raum>:<i>` aller normalen Gegner in Räumen,
+  die nicht zu einem Dungeon gehören. Bosse und Dungeon-Gegner bleiben besiegt.
+- Damit bleiben Jagd- und Kern-Aufträge dauerhaft erfüllbar; alte Spielstände bekommen ihre Kornfeld-Gegner nach
+  dem nächsten Rasten zurück.
+
 ## Gegenstand im Kampf und im Pausenmenü
 
 - Kampf: „Gegenstand“ wird freigeschaltet, sobald es einen benutzbaren Vorrat gibt. Liste mit Anzahl, dann
