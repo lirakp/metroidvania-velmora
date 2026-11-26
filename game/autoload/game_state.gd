@@ -10,6 +10,8 @@ var xp := 0
 var abilities: Dictionary = {}
 var flags: Dictionary = {}
 var inventory: Array = []
+## Vorrat: stapelbare Gegenstände (id → Anzahl); Ausrüstung liegt in inventory.
+var items: Dictionary = {}
 var equipped: Dictionary = {}
 var discovered_rooms: Dictionary = {}
 var owned_maps: Dictionary = {}
@@ -33,12 +35,33 @@ func reset() -> void:
 	abilities = {}
 	flags = {}
 	inventory = []
+	items = {}
 	equipped = {}
 	discovered_rooms = {}
 	owned_maps = {}
 	room_id = ""
 	hp = {}
 	plaketten = Plaketten.new()
+
+
+func add_item(id: String, n := 1) -> void:
+	items[id] = item_count(id) + n
+
+
+## Nimmt n Stück aus dem Vorrat; bei zu wenig bleibt alles, wie es ist.
+func remove_item(id: String, n := 1) -> bool:
+	var have := item_count(id)
+	if have < n:
+		return false
+	if have == n:
+		items.erase(id)
+	else:
+		items[id] = have - n
+	return true
+
+
+func item_count(id: String) -> int:
+	return int(items.get(id, 0))
 
 
 func choose_hero(id: String) -> void:
@@ -121,7 +144,7 @@ static func money_text(silver: int) -> String:
 func to_dict() -> Dictionary:
 	return {
 		"hero_id": hero_id, "companion_id": companion_id, "gold": gold, "xp": xp,
-		"abilities": abilities, "flags": flags, "inventory": inventory, "equipped": equipped,
+		"abilities": abilities, "flags": flags, "inventory": inventory, "items": items, "equipped": equipped,
 		"discovered_rooms": discovered_rooms, "owned_maps": owned_maps, "room_id": room_id,
 		"plaketten": plaketten.to_dict(),
 	}
@@ -136,6 +159,9 @@ func from_dict(d: Dictionary) -> void:
 	abilities = d.get("abilities", {})
 	flags = d.get("flags", {})
 	inventory = d.get("inventory", [])
+	items = {}
+	for k in d.get("items", {}):
+		items[k] = int(d.items[k])
 	equipped = d.get("equipped", {})
 	discovered_rooms = d.get("discovered_rooms", {})
 	owned_maps = d.get("owned_maps", {})

@@ -1,0 +1,15 @@
+[
+  {"id": "weizen", "name": "Weizen", "icon": "sammeln:weizen", "sell": 1, "buy": 0, "effect": {}, "battle_only": false},
+  {"id": "beeren_rot", "name": "Waldbeeren", "icon": "sammeln:beeren_rot", "sell": 2, "buy": 0, "effect": {"hp": 8}, "battle_only": false},
+  {"id": "blaubeeren", "name": "Blaubeeren", "icon": "sammeln:blaubeeren", "sell": 2, "buy": 0, "effect": {"hp": 8}, "battle_only": false},
+  {"id": "pilz", "name": "Waldpilz", "icon": "sammeln:pilz", "sell": 2, "buy": 0, "effect": {"mana": 5}, "battle_only": true},
+  {"id": "leuchtpilz", "name": "Leuchtpilz", "icon": "sammeln:leuchtpilz", "sell": 6, "buy": 0, "effect": {"mana": 15}, "battle_only": true},
+  {"id": "manablume", "name": "Manablume", "icon": "sammeln:manablume", "sell": 5, "buy": 0, "effect": {"mana": 10}, "battle_only": true},
+  {"id": "heilkraut", "name": "Heilkraut", "icon": "sammeln:heilkraut", "sell": 4, "buy": 0, "effect": {"hp": 15}, "battle_only": false},
+  {"id": "apfel", "name": "Apfel", "icon": "sammeln:apfel", "sell": 2, "buy": 4, "effect": {"hp": 10}, "battle_only": false},
+  {"id": "brot", "name": "Brot", "icon": "icons:essen_kraeuter:brot", "sell": 5, "buy": 12, "effect": {"hp": 30}, "battle_only": false},
+  {"id": "heil_klein", "name": "Kleiner Heiltrank", "icon": "icons:traenke:heil_klein", "sell": 12, "buy": 30, "effect": {"hp": 50}, "battle_only": false},
+  {"id": "mana_klein", "name": "Kleiner Manatrank", "icon": "icons:traenke:mana_klein", "sell": 12, "buy": 30, "effect": {"mana": 25}, "battle_only": true},
+  {"id": "monsterkern_D", "name": "Monsterkern (D)", "icon": "icons:beute:monsterkern_D", "sell": 15, "buy": 0, "effect": {}, "battle_only": false},
+  {"id": "monsterkern_C", "name": "Monsterkern (C)", "icon": "icons:beute:monsterkern_C", "sell": 35, "buy": 0, "effect": {}, "battle_only": false}
+]

@@ -10,6 +10,7 @@ var enemies: Dictionary = {}
 var heroes: Dictionary = {}
 var spells: Dictionary = {}
 var equip: Dictionary = {}
+var items: Dictionary = {}
 
 
 func _init() -> void:
@@ -21,6 +22,10 @@ func load_all() -> void:
 	heroes = _load("res://data/heroes.json", false)
 	spells = _load("res://data/spells.json", false)
 	equip = _load("res://data/equipment.json", true)
+	items = _load("res://data/items.json", false)
+	for it in items.values():
+		for k in it.effect.keys():
+			it.effect[k] = int(it.effect[k])
 
 
 func _load(path: String, has_rank: bool) -> Dictionary:
@@ -84,3 +89,8 @@ func validate() -> Array[String]:
 			if not equip.has(h[slot]):
 				errs.append("Held %s: unbekannte Ausrüstung %s" % [h.id, h[slot]])
 	return errs
+
+
+## Stapelbarer Gegenstand (Vorrat, Ware, Beute) aus res://data/items.json.
+func item(id: String) -> Dictionary:
+	return items[id]
