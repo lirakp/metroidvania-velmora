@@ -41,7 +41,7 @@ func choose(key: String) -> void:
 			GameState.plaketten.use(room_id)
 			_msg("Gespeichert." if SaveSystem.save(GameState.to_dict()) else "Speichern fehlgeschlagen!")
 		"rasten":
-			GameState.hp.clear()
+			GameState.rest()
 			_msg("Ihr rastet. Wunden und Mana sind erneuert.")
 
 

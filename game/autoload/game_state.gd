@@ -19,6 +19,9 @@ var room_id := ""
 var hp: Dictionary = {}
 var plaketten := Plaketten.new()
 
+## Nach dem Rasten (Aufträge neu würfeln, Anzeigen auffrischen).
+signal rested
+
 const GUILD_ROOM := "kornburg_gilde"
 const DEATH_TAX := 0.10
 
@@ -99,6 +102,31 @@ func set_flag(k: String, v: Variant = true) -> void:
 
 func get_flag(k: String) -> Variant:
 	return flags.get(k, null)
+
+
+## Rasten an Schrein oder Rastort: Wunden heilen, Sammelstellen wachsen nach, normale Gegner außerhalb
+## der Dungeons kehren zurück. Dungeon-Gegner und Bosse bleiben besiegt.
+func rest() -> void:
+	hp.clear()
+	for k in flags.keys():
+		if k.begins_with("geerntet:") or (k.begins_with("defeated:") and _field_enemy(k)):
+			flags.erase(k)
+	rested.emit()
+
+
+## true für den Merker „defeated:<raum>:<i>“ eines normalen Gegners in einem Raum außerhalb eines Dungeons.
+func _field_enemy(flag: String) -> bool:
+	var parts := flag.split(":")
+	if parts.size() != 3:
+		return false
+	var path := "res://data/rooms/%s.room" % parts[1]
+	if not FileAccess.file_exists(path):
+		return false
+	var d := RoomDef.load_file(path)
+	var i := int(parts[2])
+	if d.error != "" or d.one_way_dungeon or i < 0 or i >= d.entities.size():
+		return false
+	return d.entities[i].type == "enemy"
 
 
 func clear_dungeon(area: String) -> void:
