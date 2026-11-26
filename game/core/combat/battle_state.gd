@@ -160,7 +160,7 @@ func step() -> Array[String]:
 
 
 ## Führt die Aktion des Helden aus, der am Zug ist.
-## action: {action: "attack"|"technik"|"cast"|"defend", target?: Combatant, spell?: String}
+## action: {action: "attack"|"technik"|"cast"|"defend"|"item", target?: Combatant, spell?: String, item?: String}
 func submit(action: Dictionary) -> Array[String]:
 	var c := current_actor()
 	if c == null or not c.is_hero:
@@ -186,6 +186,16 @@ func submit(action: Dictionary) -> Array[String]:
 		"defend":
 			defend(c)
 			log.append("%s verteidigt." % c.name)
+		"item":
+			var t: Combatant = action.target
+			var it: Dictionary = DB.item(action.item)
+			var amount := Consumables.apply_battle(action.item, t)
+			var unit := "LP" if it.effect.has("hp") else "Mana"
+			var verb := "trinkt" if String(it.icon).begins_with("icons:traenke") else "isst"
+			if t == c:
+				log.append("%s %s %s: +%d %s." % [c.name, verb, it.name, amount, unit])
+			else:
+				log.append("%s gibt %s %s: +%d %s." % [c.name, t.name, it.name, amount, unit])
 	# Review Focus 3: Tribut tötet den Helden nicht im Siegeszug
 	if outcome() == "sieg" and c.hp <= 0:
 		c.hp = 1

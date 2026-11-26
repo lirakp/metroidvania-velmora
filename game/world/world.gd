@@ -45,9 +45,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
-		var m := ChoiceMenu.open(self, "Pause", ["Weiter", "Zum Titel", "Spiel beenden"], 0)
+		var m := ChoiceMenu.open(self, "Pause", ["Weiter", "Vorräte", "Zum Titel", "Spiel beenden"], 0)
 		var i: int = await m.chosen
 		if i == 1:
-			to_title.emit()
+			SuppliesMenu.open(self)
 		elif i == 2:
+			to_title.emit()
+		elif i == 3:
 			get_tree().quit()

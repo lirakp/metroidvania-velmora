@@ -20,9 +20,10 @@ var _status_box: VBoxContainer
 var _sprites := {}
 var _wait := 0.0
 var _finished := false
-var _mode := "idle"  # idle | menu | spells | target
+var _mode := "idle"  # idle | menu | spells | items | target
 var _menu_index := 0
 var _spell_index := 0
+var _item_index := 0
 var _target_index := 0
 var _pending: Dictionary = {}
 var _log: Array[String] = []
@@ -244,6 +245,8 @@ func _draw_menu() -> void:
 			_add_entries(entries, _menu_index)
 		"spells":
 			_add_entries(spell_entries(_actor()), _spell_index)
+		"items":
+			_add_entries(item_entries(), _item_index)
 		"target":
 			var targets := _targets()
 			for t in targets:
@@ -262,10 +265,18 @@ func _add_entries(entries: Array, selected: int) -> void:
 		_menu_box.add_child(l)
 
 
+## Vorräte für das Kampfmenü: {id, label „Brot ×3“, enabled}.
+func item_entries() -> Array:
+	var out := []
+	for id in Consumables.usable(true):
+		out.append({"id": id, "label": "%s ×%d" % [DB.item(id).name, GameState.item_count(id)], "enabled": true})
+	return out
+
+
 func _menu_enabled(i: int) -> bool:
 	match MENU[i]:
 		"Gegenstand":
-			return false
+			return not Consumables.usable(true).is_empty()
 		"Fliehen":
 			return can_flee()
 	return true
@@ -351,6 +362,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			count = MENU.size()
 		"spells":
 			count = _actor().spells.size()
+		"items":
+			count = item_entries().size()
 		"target":
 			count = _targets().size()
 	if event.is_action_pressed("ui_down"):
@@ -373,6 +386,8 @@ func _move(d: int, count: int) -> void:
 			_menu_index = posmod(_menu_index + d, count)
 		"spells":
 			_spell_index = posmod(_spell_index + d, count)
+		"items":
+			_item_index = posmod(_item_index + d, count)
 		"target":
 			_target_index = posmod(_target_index + d, count)
 	_refresh()
@@ -394,6 +409,10 @@ func _accept() -> void:
 					_mode = "spells"
 					_spell_index = 0
 					_refresh()
+				"Gegenstand":
+					_mode = "items"
+					_item_index = 0
+					_refresh()
 				"Verteidigen":
 					_do({"action": "defend"})
 				"Fliehen":
@@ -405,6 +424,10 @@ func _accept() -> void:
 			if not e.enabled:
 				return
 			_pending = {"action": "cast", "spell": e.id, "target_kind": e.target}
+			_to_target()
+		"items":
+			var it: Dictionary = item_entries()[_item_index]
+			_pending = {"action": "item", "item": it.id, "target_kind": "ally"}
 			_to_target()
 		"target":
 			var a := _pending.duplicate()
