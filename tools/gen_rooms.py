@@ -102,6 +102,7 @@ def kornburg():
     r = interior("kornburg_gilde", "innen_gilde", "kornburg")
     r.g[14][8] = "@"
     r.ent("deco schrein 5,14").ent("save schrein 5,14 kind=gilde")
+    r.ent("auftragsbrett brett 9,14")
     r.ent("npc gildenmeisterin 14,14 dialog=gilde_rat").ent("deco tresen 14,14 front=true")
     r.ent("deco tuer 24,14").ent("door aussen 24,14 to=stadt_01:gilde")
     r.ent("lampe lagerfeuer 21,13").ent("lampe haengelaterne 4,4").ent("lampe haengelaterne 26,4")

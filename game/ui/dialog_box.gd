@@ -34,8 +34,13 @@ static func lines_for(id: String) -> Array:
 
 
 static func show_dialog(parent: Node, id: String) -> DialogBox:
+	return show_lines(parent, lines_for(id))
+
+
+## Zeigt frei zusammengestellte Zeilen [{speaker, text}] (z. B. Auftragstexte).
+static func show_lines(parent: Node, p_lines: Array) -> DialogBox:
 	var box := DialogBox.new()
-	box.lines = lines_for(id)
+	box.lines = p_lines
 	parent.get_tree().root.add_child(box)
 	return box
 

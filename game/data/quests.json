@@ -1,0 +1,11 @@
+[
+  {"id": "weizen_jonte", "kind": "liefern", "giver": "Bäcker Jonte", "item": "weizen", "need": 5, "kurz": "5 Weizen für Jonte", "text": "Bäcker Jonte: „Fünf Bündel Weizen, dann gibt es morgen Brot. Oder was hier als Morgen durchgeht.“"},
+  {"id": "heilkraut_ilwen", "kind": "liefern", "giver": "Gärtnerin Ilwen", "item": "heilkraut", "need": 3, "kurz": "3 Heilkraut für Ilwen", "text": "Gärtnerin Ilwen: „Im Wald wächst Heilkraut, das noch nicht rot ist. Bringt mir drei Büschel.“"},
+  {"id": "pilze_veska", "kind": "liefern", "giver": "Alchemistin Veska", "item": "pilz", "need": 4, "kurz": "4 Pilze für Veska", "text": "Alchemistin Veska: „Vier Waldpilze. Die mit den Flecken. Nein, die anderen.“"},
+  {"id": "beeren_fennick", "kind": "liefern", "giver": "Wirt Fennick", "item": "beeren_rot", "need": 6, "kurz": "6 Beeren für Fennick", "text": "Wirt Fennick: „Sechs Handvoll Waldbeeren für Beerenwein. Wenn die Taverne wieder aufmacht, will ich vorbereitet sein.“"},
+  {"id": "brot_rufus", "kind": "liefern", "giver": "Wache Rufus", "item": "brot", "need": 2, "kurz": "2 Brote für Rufus", "text": "Wache Rufus: „Zwei Brote. Wer wacht, hat Hunger. Wer döst, auch.“"},
+  {"id": "jagd_goblin", "kind": "jagen", "giver": "Gilde", "enemy": "goblin", "need": 3, "kurz": "3 Goblins besiegen", "text": "Gildenauftrag: Goblins plündern die Kornfelder. Besiegt drei. Lohn abzüglich Blutsteuer."},
+  {"id": "jagd_schleim", "kind": "jagen", "giver": "Gilde", "enemy": "gruenschleim", "need": 2, "kurz": "2 Grünschleime besiegen", "text": "Gildenauftrag: Grünschleime verstopfen die Bewässerungsgräben. Besiegt zwei. Lohn abzüglich Blutsteuer."},
+  {"id": "jagd_spinne", "kind": "jagen", "giver": "Gilde", "enemy": "riesenspinne", "need": 2, "kurz": "2 Riesenspinnen besiegen", "text": "Gildenauftrag: Riesenspinnen im Wald hinter dem Portal. Besiegt zwei. Lohn abzüglich Blutsteuer."},
+  {"id": "kerne", "kind": "kerne", "giver": "Gilde", "item": "monsterkern_D", "need": 3, "kurz": "3 Monsterkerne abgeben", "text": "Gildenauftrag: Hadra will drei Monsterkerne (D oder besser). Lohn abzüglich Blutsteuer."}
+]

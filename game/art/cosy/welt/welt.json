@@ -1,0 +1,520 @@
+{
+ "lore": {
+  "dungeon_huelle_ruhig": {
+   "titel": "Dungeon-Hülle: ruhig",
+   "bilder": 8,
+   "bild": [
+    48,
+    56
+   ]
+  },
+  "dungeon_huelle_unruhig": {
+   "titel": "Dungeon-Hülle: unruhig",
+   "bilder": 8,
+   "bild": [
+    48,
+    56
+   ]
+  },
+  "dungeon_huelle_kritisch": {
+   "titel": "Dungeon-Hülle: kritisch",
+   "bilder": 8,
+   "bild": [
+    48,
+    56
+   ]
+  },
+  "dungeon_huelle_ausbruch": {
+   "titel": "Dungeon-Hülle: ausbruch",
+   "bilder": 8,
+   "bild": [
+    48,
+    56
+   ]
+  },
+  "fristhalter_eintritt": {
+   "titel": "Fristhalter tritt ein",
+   "bilder": 8,
+   "bild": [
+    48,
+    56
+   ]
+  },
+  "teleportpost_senden": {
+   "titel": "Teleport-Post: senden",
+   "bilder": 8,
+   "bild": [
+    32,
+    40
+   ]
+  },
+  "teleportpost_empfangen": {
+   "titel": "Teleport-Post: empfangen",
+   "bilder": 8,
+   "bild": [
+    32,
+    40
+   ]
+  },
+  "mana_waesche": {
+   "titel": "Wäsche mit Mana trocknen",
+   "bilder": 8,
+   "bild": [
+    56,
+    36
+   ]
+  },
+  "kind_mana_aura": {
+   "titel": "Kind mit Mana-Aura",
+   "bilder": 6,
+   "bild": [
+    26,
+    26
+   ]
+  },
+  "kirchen_ritual": {
+   "titel": "Kirchenritual (Mana-Entzug)",
+   "bilder": 8,
+   "bild": [
+    48,
+    40
+   ]
+  },
+  "manastau_druck": {
+   "titel": "Manastau: druck",
+   "bilder": 4,
+   "bild": [
+    40,
+    40
+   ]
+  },
+  "manastau_schwaeche": {
+   "titel": "Manastau: schwaeche",
+   "bilder": 6,
+   "bild": [
+    40,
+    40
+   ]
+  },
+  "manastau_manafieber": {
+   "titel": "Manastau: manafieber",
+   "bilder": 6,
+   "bild": [
+    40,
+    40
+   ]
+  },
+  "manastau_entladung": {
+   "titel": "Manastau: entladung",
+   "bilder": 8,
+   "bild": [
+    40,
+    40
+   ]
+  },
+  "blutmond": {
+   "titel": "Blutmond am Himmel",
+   "bilder": 8,
+   "bild": [
+    64,
+    48
+   ]
+  },
+  "voellerei_oedland": {
+   "titel": "Ödland der Völlerei",
+   "bilder": 8,
+   "bild": [
+    80,
+    32
+   ]
+  },
+  "himmelswal": {
+   "titel": "Himmelswal",
+   "bilder": 8,
+   "bild": [
+    128,
+    52
+   ]
+  },
+  "himmelswal_schatten": {
+   "titel": "Himmelswal-Schatten",
+   "bilder": 8,
+   "bild": [
+    128,
+    24
+   ]
+  },
+  "dornen_tattoo": {
+   "titel": "Dornen-Tattoo leuchtet",
+   "bilder": 6,
+   "bild": [
+    26,
+    26
+   ]
+  }
+ },
+ "dorf": {
+  "haendler_ruft": {
+   "titel": "Händler ruft",
+   "bilder": 4,
+   "bild": [
+    32,
+    34
+   ]
+  },
+  "brunnen_eimer": {
+   "titel": "Brunnen mit Eimer",
+   "bilder": 8,
+   "bild": [
+    36,
+    44
+   ]
+  },
+  "schmiede_funken": {
+   "titel": "Schmiede: Hammer & Funken",
+   "bilder": 6,
+   "bild": [
+    40,
+    28
+   ]
+  },
+  "backofen": {
+   "titel": "Backofen",
+   "bilder": 8,
+   "bild": [
+    36,
+    36
+   ]
+  },
+  "rauch_wind": {
+   "titel": "Rauch im Wind",
+   "bilder": 8,
+   "bild": [
+    40,
+    40
+   ]
+  },
+  "waesche_wind": {
+   "titel": "Wäsche im Wind",
+   "bilder": 8,
+   "bild": [
+    56,
+    36
+   ]
+  },
+  "fensterladen_auf": {
+   "titel": "Fensterläden: auf",
+   "bilder": 4,
+   "bild": [
+    28,
+    22
+   ]
+  },
+  "fensterladen_zu": {
+   "titel": "Fensterläden: zu",
+   "bilder": 4,
+   "bild": [
+    28,
+    22
+   ]
+  },
+  "gildenbrett": {
+   "titel": "Gildenbrett",
+   "bilder": 8,
+   "bild": [
+    36,
+    36
+   ]
+  }
+ },
+ "natur": {
+  "regen": {
+   "titel": "Regen (Overlay)",
+   "bilder": 8,
+   "bild": [
+    64,
+    64
+   ]
+  },
+  "pfuetze": {
+   "titel": "Pfütze im Regen",
+   "bilder": 6,
+   "bild": [
+    24,
+    10
+   ]
+  },
+  "schnee": {
+   "titel": "Schnee (Overlay)",
+   "bilder": 8,
+   "bild": [
+    64,
+    64
+   ]
+  },
+  "gewitter": {
+   "titel": "Gewitter (Overlay)",
+   "bilder": 8,
+   "bild": [
+    64,
+    64
+   ]
+  },
+  "gras_wind": {
+   "titel": "Gras im Wind",
+   "bilder": 8,
+   "bild": [
+    20,
+    14
+   ]
+  },
+  "baum_wind": {
+   "titel": "Baum im Wind",
+   "bilder": 8,
+   "bild": [
+    50,
+    50
+   ]
+  },
+  "gluehwuermchen": {
+   "titel": "Glühwürmchen",
+   "bilder": 8,
+   "bild": [
+    40,
+    32
+   ]
+  },
+  "sternschnuppe": {
+   "titel": "Sternschnuppe",
+   "bilder": 6,
+   "bild": [
+    64,
+    32
+   ]
+  },
+  "voegel_auffliegen": {
+   "titel": "Vögel fliegen auf",
+   "bilder": 8,
+   "bild": [
+    48,
+    32
+   ]
+  },
+  "fisch_springt": {
+   "titel": "Fisch springt",
+   "bilder": 8,
+   "bild": [
+    28,
+    24
+   ]
+  },
+  "schmetterling": {
+   "titel": "Schmetterling",
+   "bilder": 4,
+   "bild": [
+    12,
+    12
+   ]
+  },
+  "muenze_brunnen": {
+   "titel": "Münze in den Brunnen",
+   "bilder": 8,
+   "bild": [
+    52,
+    48
+   ]
+  },
+  "baum_blaetter": {
+   "titel": "Baum verliert Blätter",
+   "bilder": 8,
+   "bild": [
+    56,
+    60
+   ]
+  },
+  "herbstbaum_blaetter": {
+   "titel": "Herbstbaum verliert Blätter",
+   "bilder": 8,
+   "bild": [
+    56,
+    60
+   ]
+  },
+  "baum_blitzschlag": {
+   "titel": "Blitz schlägt in Baum",
+   "bilder": 10,
+   "bild": [
+    56,
+    72
+   ]
+  },
+  "wuetender_baum_erwachen": {
+   "titel": "Wütender Baum: erwacht",
+   "bilder": 6,
+   "bild": [
+    56,
+    64
+   ]
+  },
+  "wuetender_baum_droht": {
+   "titel": "Wütender Baum: droht dem Himmel",
+   "bilder": 6,
+   "bild": [
+    56,
+    64
+   ]
+  },
+  "ufer_wellen": {
+   "titel": "Wellen am Ufer",
+   "bilder": 8,
+   "bild": [
+    40,
+    14
+   ]
+  },
+  "bach": {
+   "titel": "Bach",
+   "bilder": 6,
+   "bild": [
+    40,
+    16
+   ]
+  }
+ },
+ "hilfen": {
+  "funkeln": {
+   "titel": "Funkeln (Sammelobjekt)",
+   "bilder": 6,
+   "bild": [
+    12,
+    12
+   ]
+  },
+  "ausrufezeichen": {
+   "titel": "Ausrufezeichen",
+   "bilder": 6,
+   "bild": [
+    10,
+    18
+   ]
+  },
+  "sprechblase": {
+   "titel": "Sprechblase",
+   "bilder": 4,
+   "bild": [
+    20,
+    16
+   ]
+  },
+  "zzz": {
+   "titel": "Schlafen (Zzz)",
+   "bilder": 6,
+   "bild": [
+    16,
+    20
+   ]
+  }
+ },
+ "hinweis": "Alle Animationen laufen in Schleife, außer: dungeon_huelle_ausbruch, fristhalter_eintritt, teleportpost_*, manastau_entladung, fensterladen_*, voegel_auffliegen, sternschnuppe (einmal abspielen). Regen/Schnee/Gewitter sind kachelbare Overlays (64x64). Empfohlen: 110-150 ms pro Bild.",
+ "gags": {
+  "adliger_klopft": {
+   "titel": "Adliger klopft an die eigene Tür",
+   "bilder": 10,
+   "bild": [
+    56,
+    40
+   ],
+   "schleife": false
+  },
+  "goblin_schamane_rauch": {
+   "titel": "Goblin-Schamane wedelt mit Rauch",
+   "bilder": 11,
+   "bild": [
+    56,
+    44
+   ],
+   "schleife": false
+  },
+  "brief_aus_nebelhain": {
+   "titel": "Brief aus Nebelhain",
+   "bilder": 8,
+   "bild": [
+    56,
+    40
+   ],
+   "schleife": false
+  },
+  "vakanter_lehrstuhl": {
+   "titel": "Vakanter Lehrstuhl wird abgestaubt",
+   "bilder": 6,
+   "bild": [
+    48,
+    44
+   ],
+   "schleife": true
+  },
+  "skelett_niest": {
+   "titel": "Skelett niest und zerfällt",
+   "bilder": 11,
+   "bild": [
+    56,
+    44
+   ],
+   "schleife": false
+  },
+  "mimik_niest": {
+   "titel": "Mimik niest Münzen",
+   "bilder": 8,
+   "bild": [
+    64,
+    48
+   ],
+   "schleife": false
+  },
+  "holzweg": {
+   "titel": "Baum auf dem Holzweg",
+   "bilder": 12,
+   "bild": [
+    84,
+    48
+   ],
+   "schleife": false
+  },
+  "nicht_gnoll": {
+   "titel": "\"Gnoll?\" – beleidigter Hyänenmensch",
+   "bilder": 10,
+   "bild": [
+    48,
+    44
+   ],
+   "schleife": false
+  },
+  "fangauftrag": {
+   "titel": "Drachenmensch: Fangauftrag auf eigenen Namen",
+   "bilder": 10,
+   "bild": [
+    56,
+    44
+   ],
+   "schleife": false
+  },
+  "zwergenkoenig_schnee": {
+   "titel": "Der Zwergenkönig regiert den Schnee",
+   "bilder": 10,
+   "bild": [
+    56,
+    48
+   ],
+   "schleife": false
+  },
+  "elfen_batterie": {
+   "titel": "Elfen-Batterie geht im Kampf aus",
+   "bilder": 10,
+   "bild": [
+    72,
+    44
+   ],
+   "schleife": false
+  }
+ }
+}

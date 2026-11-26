@@ -89,6 +89,10 @@ static func populate(room: Node2D, def: RoomDef) -> void:
 				var lamp := Lamp.create(ent.id)
 				lamp.position = pos
 				room.add_child(lamp)
+			"auftragsbrett":
+				var qb := QuestBoard.new()
+				qb.position = pos
+				room.add_child(qb)
 			"sammeln":
 				var hs := HarvestSpot.new()
 				hs.kind = ent.id

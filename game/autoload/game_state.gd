@@ -12,6 +12,8 @@ var flags: Dictionary = {}
 var inventory: Array = []
 ## Vorrat: stapelbare Gegenstände (id → Anzahl); Ausrüstung liegt in inventory.
 var items: Dictionary = {}
+## Auftragsbrett: {offers, active, roll} (siehe Quests).
+var quests: Dictionary = {"offers": [], "active": [], "roll": 0}
 var equipped: Dictionary = {}
 var discovered_rooms: Dictionary = {}
 var owned_maps: Dictionary = {}
@@ -39,6 +41,7 @@ func reset() -> void:
 	flags = {}
 	inventory = []
 	items = {}
+	quests = {"offers": [], "active": [], "roll": 0}
 	equipped = {}
 	discovered_rooms = {}
 	owned_maps = {}
@@ -111,6 +114,7 @@ func rest() -> void:
 	for k in flags.keys():
 		if k.begins_with("geerntet:") or (k.begins_with("defeated:") and _field_enemy(k)):
 			flags.erase(k)
+	Quests.reroll()
 	rested.emit()
 
 
@@ -172,7 +176,7 @@ static func money_text(silver: int) -> String:
 func to_dict() -> Dictionary:
 	return {
 		"hero_id": hero_id, "companion_id": companion_id, "gold": gold, "xp": xp,
-		"abilities": abilities, "flags": flags, "inventory": inventory, "items": items, "equipped": equipped,
+		"abilities": abilities, "flags": flags, "inventory": inventory, "items": items, "quests": quests, "equipped": equipped,
 		"discovered_rooms": discovered_rooms, "owned_maps": owned_maps, "room_id": room_id,
 		"plaketten": plaketten.to_dict(),
 	}
@@ -190,6 +194,12 @@ func from_dict(d: Dictionary) -> void:
 	items = {}
 	for k in d.get("items", {}):
 		items[k] = int(d.items[k])
+	var dq: Dictionary = d.get("quests", {})
+	quests = {"offers": dq.get("offers", []), "active": dq.get("active", []), "roll": int(dq.get("roll", 0))}
+	for list in [quests.offers, quests.active]:
+		for qd in list:
+			for k in ["need", "reward", "progress"]:
+				qd[k] = int(qd.get(k, 0))
 	equipped = d.get("equipped", {})
 	discovered_rooms = d.get("discovered_rooms", {})
 	owned_maps = d.get("owned_maps", {})

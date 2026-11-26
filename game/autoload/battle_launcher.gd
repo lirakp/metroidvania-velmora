@@ -89,6 +89,7 @@ func finish(outcome: String, result: BattleResult) -> void:
 			GameState.xp += result.xp
 			for d in result.drops:
 				GameState.add_item(d)
+			Quests.on_defeated(last_enemy_ids)
 			enemies_defeated.emit(last_enemy_ids.duplicate())
 		"niederlage":
 			if GameState.has_method("on_death"):
