@@ -50,11 +50,21 @@ static func buys(shop_id: String, item: String) -> bool:
 	return item in d.buys
 
 
-static func is_equipped(item: String) -> bool:
+## Wie viele Stücke aus dem Inventar gerade getragen werden. Start-Ausrüstung (aus heroes.json) liegt nie im
+## Inventar und zählt daher nicht mit.
+static func worn_from_inventory(item: String) -> int:
+	var n := 0
 	for hid in GameState.equipped:
 		if item in GameState.equipped[hid]:
-			return true
-	return false
+			var h: Dictionary = DB.hero(hid)
+			if item != h.weapon and item != h.armor:
+				n += 1
+	return n
+
+
+## true, wenn kein freies Stück übrig ist (alle Exemplare im Inventar werden getragen).
+static func is_equipped(item: String) -> bool:
+	return GameState.inventory.count(item) <= worn_from_inventory(item)
 
 
 static func owned(item: String) -> int:

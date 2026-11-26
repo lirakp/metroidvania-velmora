@@ -14,6 +14,7 @@ var _index := 0
 var _scroll := 0
 var _message := ""
 var _box: Control
+var _busy := false  # während die Anlege-Abfrage offen ist
 
 
 static func open(parent: Node, p_shop: String) -> ShopMenu:
@@ -99,7 +100,8 @@ func _redraw() -> void:
 	var msg := _label(_message, Vector2(0, 14), Color("d6d9de"))
 	msg.size = Vector2(276, 24)
 	msg.autowrap_mode = TextServer.AUTOWRAP_WORD
-	var hint := {"kopf": "[W] wählen · [Esc] schließen", "kaufen": "[W] kaufen · [Esc] zurück", "verkaufen": "[W] verkaufen · [Esc] zurück"}
+	var hint := {"kopf": "[Leertaste] wählen · [Esc] schließen", "kaufen": "[Leertaste] kaufen · [Esc] zurück",
+		"verkaufen": "[Leertaste] verkaufen · [Esc] zurück"}
 	_label(hint[_level], Vector2(0, 168), Color("8b93a3"))
 	var y := 44
 	var entries := _entries()
@@ -127,6 +129,8 @@ func _redraw() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _busy:
+		return
 	var n := _entries().size()
 	if event.is_action_pressed("ui_down") and n > 0:
 		_index = posmod(_index + 1, n)
@@ -170,3 +174,15 @@ func _accept() -> void:
 	var id: String = entries[_index].id
 	_message = Shop.buy(shop_id, id) if _level == "kaufen" else Shop.sell(shop_id, id)
 	_index = clampi(_index, 0, maxi(0, _entries().size() - 1))
+	if _level == "kaufen" and DB.equip.has(id) and _message.begins_with("Gekauft"):
+		_offer_equip(id)
+
+
+## Gekaufte Ausrüstung gleich anlegen lassen (gleiche Abfrage wie bei gefundener Ausrüstung).
+func _offer_equip(id: String) -> void:
+	_busy = true
+	_redraw()
+	await Pickup._offer_equip(get_tree().root, id)
+	_busy = false
+	if not is_queued_for_deletion():
+		_redraw()

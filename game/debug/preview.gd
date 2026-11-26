@@ -28,6 +28,10 @@ func _ready() -> void:
 				RoomManager.go_to(room, "L1" if rd.exit_by_id("L1") else "")
 			else:
 				RoomManager.enter_door(room, doors[0].id)
+			if mode == "board":
+				Quests.reroll()
+				Quests.accept(0)
+				QuestMenu.open(w)
 			if mode == "shop":
 				GameState.add_item("weizen", 4)
 				GameState.add_item("beeren_rot", 2)

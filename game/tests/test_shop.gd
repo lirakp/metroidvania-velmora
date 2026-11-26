@@ -68,12 +68,13 @@ func test_market_pays_70_percent() -> void:
 
 func test_cannot_sell_equipped() -> void:
 	GameState.reset()
-	GameState.inventory.append("kurzschwert")
-	GameState.equip(GameState.hero_id, "kurzschwert")
+	# Streitkolben ist keine Start-Ausrüstung: das einzige Stück im Inventar wird getragen
+	GameState.inventory.append("streitkolben")
+	GameState.equip(GameState.hero_id, "streitkolben")
 	var before := GameState.gold
-	assert_eq(Shop.sell("waffen", "kurzschwert"), "Angelegte Ausrüstung kann nicht verkauft werden.")
+	assert_eq(Shop.sell("waffen", "streitkolben"), "Angelegte Ausrüstung kann nicht verkauft werden.")
 	assert_eq(GameState.gold, before)
-	assert_true(GameState.inventory.has("kurzschwert"))
+	assert_true(GameState.inventory.has("streitkolben"))
 
 
 func test_sell_spare_equipment_half_price() -> void:
@@ -173,3 +174,52 @@ func test_npc_with_shop_and_dialog_asks_first() -> void:
 		for m in menus:
 			m.close()
 	n.free()
+
+
+# ---------------------------------------------------------------- Befunde aus dem Review
+func test_buying_equipment_offers_to_equip() -> void:
+	GameState.reset()
+	GameState.pause_reset()
+	GameState.gold = 100
+	var parent := Node.new()
+	tree.root.add_child(parent)
+	var m := ShopMenu.open(parent, "waffen")
+	m._level = "kaufen"
+	m._index = ShopMenu.rows("waffen", "kaufen").map(func(r): return r.id).find("kurzschwert")
+	m._accept()
+	await tree.process_frame
+	var offers: Array = tree.root.get_children().filter(func(c): return c is ChoiceMenu and not c.is_queued_for_deletion())
+	assert_eq(offers.size(), 1, "Anlegen wird nicht angeboten")
+	if offers.size() == 1:
+		assert_eq(offers[0].title, "Kurzschwert anlegen für:")
+		offers[0].close(0)
+		await tree.process_frame
+		assert_true("kurzschwert" in GameState.equipped.get(GameState.hero_id, []))
+	m.close()
+	parent.free()
+	GameState.pause_reset()
+
+
+func test_shop_hint_names_working_key() -> void:
+	GameState.reset()
+	GameState.pause_reset()
+	var parent := Node.new()
+	tree.root.add_child(parent)
+	var m := ShopMenu.open(parent, "baeckerei")
+	var texts: Array = m._box.get_children().filter(func(c): return c is Label).map(func(l): return l.text)
+	assert_false(texts.any(func(t): return "[W]" in t), "Hinweis nennt [W], das im Laden nicht bestätigt")
+	assert_true(texts.any(func(t): return "[Leertaste]" in t))
+	m.close()
+	parent.free()
+
+
+func test_spare_copy_of_equipped_item_can_be_sold() -> void:
+	GameState.reset()
+	# Warschick trägt den Kriegshammer; damit steht seine Start-Rüstung in equipped
+	GameState.inventory.append("rostiger_kriegshammer")
+	GameState.equip("warschick", "rostiger_kriegshammer")
+	var armor: String = DB.hero("warschick").armor
+	GameState.inventory.append(armor)
+	assert_eq(Shop.sell("waffen", armor), "Verkauft: %s für %d Silber." % [DB.equipment(armor).name, Shop.price_sell("waffen", armor)])
+	assert_false(GameState.inventory.has(armor))
+	assert_eq(Shop.sell("waffen", "rostiger_kriegshammer"), "Angelegte Ausrüstung kann nicht verkauft werden.")
