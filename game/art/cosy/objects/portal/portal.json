@@ -1,0 +1,35 @@
+{
+ "zelle": [
+  56,
+  72
+ ],
+ "bodenpunkt": [
+  28,
+  70
+ ],
+ "zeilen": [
+  "oeffnen",
+  "offen",
+  "durchgang",
+  "schliessen"
+ ],
+ "frames": {
+  "oeffnen": 8,
+  "offen": 12,
+  "durchgang": 6,
+  "schliessen": 8
+ },
+ "fps": {
+  "oeffnen": 12,
+  "offen": 10,
+  "durchgang": 14,
+  "schliessen": 12
+ },
+ "hinweis": "oeffnen einmal → offen in Schleife → beim Betreten durchgang → schliessen einmal. Inneres ist halbtransparent.",
+ "farben": {
+  "violett": "portal_violett.png",
+  "blau": "portal_blau.png",
+  "gruen": "portal_gruen.png",
+  "rot": "portal_rot.png"
+ }
+}

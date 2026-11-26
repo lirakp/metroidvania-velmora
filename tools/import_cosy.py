@@ -28,6 +28,9 @@ FILES = [
     "objects/licht/standfackel_anim.png", "objects/licht/standfackel_lichtkreis.png",
     "objects/licht/lagerfeuer_anim.png", "objects/licht/lagerfeuer_lichtkreis.png",
     "objects/licht/haengelaterne_anim.png", "objects/licht/haengelaterne_lichtkreis.png",
+    # Portal (Dungeon-Eingänge)
+    "objects/portal/portal.json", "objects/portal/portal_rot.png", "objects/portal/portal_violett.png",
+    "objects/portal/portal_blau.png", "objects/portal/portal_gruen.png",
     # Level
     "level/level.json", "level/terrain_wiese.png", "level/terrain_dungeon_blut.png", "level/terrain_fels.png",
     "level/rueckwand_dungeon_blut.png", "level/plattformen.png", "level/stacheln.png", "level/leiter.png",

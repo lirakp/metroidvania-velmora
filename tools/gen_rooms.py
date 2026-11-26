@@ -146,9 +146,10 @@ def kornburg():
     r.ent("deco baum 4,14").ent("enemy goblin+goblin+gruenschleim 20,14 patrol=3").ent("enemy skelettkrieger 8,14 patrol=2")
     rooms.append(r)
     r = Room("kornfeld_08", "kornfeld", "kornburg")
-    r.box(25, 29, 0, 11, "B")
-    r.exit("L1", "kornfeld_07", "R2").exit("R2", "blutdungeon_eingang", "L1")
-    r.ent("dialog dungeon_tor 20,14").ent("deco kristall 26,11").ent("light kalt 26,10 radius=24")
+    # Dungeon-Eingang als Portal: davorstellen und [W] drücken; man kann auch daran vorbeilaufen
+    r.exit("L1", "kornfeld_07", "R2")
+    r.ent("dialog dungeon_tor 14,14").ent("door portal 20,14 to=blutdungeon_eingang:portal art=portal farbe=rot")
+    r.ent("deco zaun 27,14").ent("deco baum 8,14")
     rooms.append(r)
     return rooms
 
@@ -191,7 +192,7 @@ def dungeon_room(name):
 def lab_features(name, r):
     """Inhalt jedes Raums (Gegner, Belohnungen, Fallen, Deko)."""
     if name == "eingang":
-        r.ent("dialog dungeon_eingang 3,14").ent("enemy riesenspinne 20,14 patrol=3").ent("deco kette 12,2")
+        r.ent("dialog dungeon_eingang 7,14").ent("enemy riesenspinne 20,14 patrol=3").ent("deco kette 12,2")
     elif name == "ketten":
         r.box(9, 12, 12, 12, "-")
         r.ent("enemy ghul 24,14 patrol=2").ent("deco kette 6,2").ent("deco kette 22,2").ent("dialog labyrinth 11,14")
@@ -237,7 +238,7 @@ def lab_features(name, r):
 
 def dungeon():
     rooms = {name: dungeon_room(name) for name in LAB}
-    rooms["eingang"].exit("L1", "kornfeld_08", "R2")
+    rooms["eingang"].ent("door portal 3,14 to=kornfeld_08:portal art=portal farbe=rot")
     for west, east in LAB_SEITE:
         assert LAB[east][0] == LAB[west][0] + 1 and LAB[east][1] == LAB[west][1], (west, east)
         rooms[west].exit("R2", lab_id(east), "L1")

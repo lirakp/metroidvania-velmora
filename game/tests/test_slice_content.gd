@@ -185,6 +185,8 @@ func _dungeon_graph(skip_edge := []) -> Dictionary:
 		for e in defs[id].entities:
 			if e.type == "door":
 				var to: String = String(e.props.to).split(":")[0]
+				if not to.begins_with("blutdungeon"):
+					continue
 				if [id, to] != skip_edge and [to, id] != skip_edge:
 					g[id].append(to)
 	return g

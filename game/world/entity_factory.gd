@@ -82,6 +82,7 @@ static func populate(room: Node2D, def: RoomDef) -> void:
 				var door := Door.new()
 				door.door_id = ent.id
 				door.target = ent.props.get("to", "")
+				door.props = ent.props
 				door.position = pos
 				room.add_child(door)
 			"lampe":

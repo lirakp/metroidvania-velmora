@@ -37,6 +37,9 @@ func def_of(id: String) -> RoomDef:
 
 ## Wechselt in room_id. exit_id = Ausgang im Zielraum, an dem der Spieler erscheint; "" = Spawn „start“.
 func go_to(room_id: String, exit_id: String, spawn := "start", at_cell := Vector2i(-1, -1)) -> void:
+	# Verzögerte Wechsel (Tür-/Portal-Animation) können eintreffen, nachdem die Welt schon weg ist
+	if world_root == null or not is_instance_valid(world_root) or player == null or not is_instance_valid(player):
+		return
 	var def := def_of(room_id)
 	if def.error != "":
 		push_error(def.error)
@@ -99,7 +102,14 @@ func refresh_locks() -> void:
 
 
 func exit_locked(def: RoomDef, e: Dictionary) -> bool:
-	var target := def_of(e.target_room)
+	return passage_locked(def, e.target_room)
+
+
+## Einweg-Schwelle für jeden Übergang (Ausgang, Tür, Portal) von def nach target_room.
+func passage_locked(def: RoomDef, target_room: String) -> bool:
+	var target := def_of(target_room)
+	if target.error != "":
+		return true
 	if def.one_way_dungeon and not target.one_way_dungeon:
 		return GameState.get_flag("dungeon_locked:" + def.area) == true and GameState.get_flag("dungeon_cleared:" + def.area) != true
 	if not def.one_way_dungeon and target.one_way_dungeon:

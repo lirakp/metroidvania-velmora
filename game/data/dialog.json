@@ -94,13 +94,17 @@
   "dungeon_tor": [
     {
       "speaker": "{geschwister}",
-      "text": "Der Dungeon pulsiert wie ein Herz. Wer hineingeht, kommt nur durch den Sieg wieder heraus."
+      "text": "Da – ein Riss in der Luft, rot wie der Mond. Ein Dungeon-Portal."
+    },
+    {
+      "speaker": "Hinweis",
+      "text": "Stellt euch davor und drückt [W], um den Dungeon zu betreten. Hinaus kommt ihr erst nach dem Sieg."
     }
   ],
   "dungeon_eingang": [
     {
       "speaker": "{held}",
-      "text": "Der Eingang ist weg."
+      "text": "Das Portal hinter uns ist versiegelt."
     },
     {
       "speaker": "{geschwister}",

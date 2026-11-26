@@ -2,7 +2,7 @@ id: blutdungeon_eingang
 biome: dungeon_blut
 area: blutdungeon
 dungeon: true
-exits: L1=kornfeld_08:R2, R2=blutdungeon_ketten:L1
+exits: R2=blutdungeon_ketten:L1
 ---
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -18,10 +18,11 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
-1............................2
+.............................2
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-dialog dungeon_eingang 3,14
+door portal 3,14 to=kornfeld_08:portal art=portal farbe=rot
+dialog dungeon_eingang 7,14
 enemy riesenspinne 20,14 patrol=3
 deco kette 12,2
