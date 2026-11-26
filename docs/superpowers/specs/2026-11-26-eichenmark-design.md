@@ -24,17 +24,24 @@ Dämonenkönigs – ohne Kampf gegen ihn.
 2. **Wandsprung** (Entscheidung des Nutzers): neue Bewegungsfähigkeit als Belohnung des Dorn-Bosses. An Wänden
    rutschen und von ihnen abspringen; dadurch Wege nach oben.
 3. **Abschnitte, die erst mit Wandsprung aufgehen** (Nutzer: „Abschnitte, die man nur durch den Weg nach oben
-   freischaltet … versteckte Pfade“): in den neuen Gebieten und einige wenige in Kornburg und im Blut-Dungeon
-   (Beute, Abkürzungen), damit sich die Rückkehr lohnt.
-4. **Baumkronen-Dorf** (Entscheidung des Nutzers: Variante A): erreichbar über einen **versteckten Weg nach oben mit
-   Leitern und Seilen** – schwer zu finden, aber **ohne** Wandsprung. Es ist Rastplatz und Laden auf dem Weg.
+   freischaltet … versteckte Pfade“): auf Südweg, im Wald, in der Höhle und einige in Kornburg (Beute, Abkürzungen),
+   damit sich die Rückkehr lohnt. **Nicht** im Blut-Dungeon: gelöste Dungeons betritt man nach der Nutzer-Regel erst
+   mit dem Fee-Gegenstand wieder (Spielmitte). Im Dorn-Dungeon gibt es eine Wandsprung-Kammer auf dem Weg hinaus nach
+   dem Boss (meine Wahl).
+4. **Baumkronen-Dorf** (Entscheidung des Nutzers: Variante A): erreichbar über einen **Weg nach oben mit Leitern und
+   Seilen** – **ohne** Wandsprung. Es ist Rastplatz und Laden auf dem Weg. Meine Auslegung von „versteckt“: Der
+   Hauptweg führt am Fuß der Bäume vorbei, die Leiter nach oben ist im Laub halb verborgen, ein Wegweiser der
+   Holzfäller und ein Hinweis des Geschwisters zeigen sie. Wer sie übersieht, findet im Wald eine zweite Leiter.
    Mit Wandsprung kommen später eine Abkürzung und ein Geheimversteck im Dorf dazu.
+   Zusätzlich ein Rastort in der Wurzelhöhle, damit Wald und Höhle nicht nur einen Speicherpunkt haben.
 5. **Leitern und Seile** als neue Kletter-Kacheln (Grafik `level/leiter.png`: leiter, seil, kette).
 6. **Item-Benutz-Animationen** aus dem Grafik-Repo (`characters/held/items/`): Essen/Trinken beim Benutzen von
    Vorräten (Feld und Kampf), Pflücken/Sicheln/Aufheben beim Ernten. Im Kampf ersetzt die Animation die bisherige
    Angriffsanimation beim Gegenstand (offener Punkt aus dem letzten Review).
-7. **Innenräume aus dem Grafik-Repo** (`level/innenraeume/`) ersetzen die selbst gezeichneten Ladenräume, wo es ein
-   passendes Gegenstück gibt (CLAUDE.md: Grafik unverändert übernehmen); neue Innenräume (Dorf) nutzen sie ebenfalls.
+7. **Innenräume:** Die Innenräume aus dem Grafik-Repo (`level/innenraeume/`, 320×180) passen nicht ins Raumformat
+   (480×270) und dürften nach CLAUDE.md nicht hochgerechnet werden. Sie werden daher **nicht** übernommen; neue
+   Innenräume im Dorf zeichne ich wie bisher in `tools/art/` (meine Wahl; mit dem Nutzer zu klären, ob sein Freund
+   Fassungen in 480×270 liefern möchte).
 8. **Neue Gegner** aus dem Bestiarium der Bibel (Lebensraum Wald/Höhle/Hügel, Rang D–C), Sprites aus
    `monster/sprites/`; ein Dorn-Boss (Rang B, wie der Blutwolf-Alpha ein starker normaler Gegner mit Boss-Merkmal).
 
@@ -84,6 +91,11 @@ Dämonenkönigs – ohne Kampf gegen ihn.
   ca. 4 Kacheln über dem normalen Sprung. Genaue Werte legt der Bauende fest, der Erreichbarkeitstest bildet sie ab.
 - **Erreichbarkeitstest:** kennt Leitern/Seile und Wandsprung. Für jeden Raum gilt: Hauptpunkte ohne Wandsprung
   erreichbar; als „wandsprung“ markierte Punkte nur mit Wandsprung.
+- **Karte:** Räume werden so angeordnet, dass Ausgänge oben/unten und Türen nach hinten auf der Karte nie auf
+  dieselbe Zelle fallen; der vorhandene Prüfer der Karte deckt das per Test ab.
+- **Nach der Spur:** Zurück nach Kornburg zu Hadra; sie bucht den Bericht (Silber, kleiner Gildenrang-Text) und
+  setzt den Merker für den nächsten Abschnitt. Am Südende von Eichenmark bleibt ein Weg weiter nach Süden gesperrt
+  (eingestürzte Brücke, „später“), damit das nächste Kapitel dort ansetzen kann.
 - **Spur des Dämonenkönigs:** nach dem Dorn-Boss eine Szene (verbrannte Lichtung, Klauenspuren, ein sterbender Späher
   oder eine Botschaft) – Text im Ton der Bibel, Lust/Gewalt gedämpft.
 
