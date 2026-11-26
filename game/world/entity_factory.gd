@@ -93,6 +93,15 @@ static func populate(room: Node2D, def: RoomDef) -> void:
 				var qb := QuestBoard.new()
 				qb.position = pos
 				room.add_child(qb)
+			"prop":
+				# Requisit aus dem Grafik-Repo (props/<name>_nacht.png), doppelt groß wie die Gebäude, hinter den Figuren
+				var pr := Sprite2D.new()
+				pr.texture = load(CosyArt.BASE + "props/%s_nacht.png" % ent.id)
+				pr.centered = false
+				pr.scale = Vector2(2, 2)
+				pr.position = pos - Vector2(pr.texture.get_width(), pr.texture.get_height() * 2)
+				pr.flip_h = ent.props.get("flip", "false") == "true"
+				room.add_child(pr)
 			"sammeln":
 				var hs := HarvestSpot.new()
 				hs.kind = ent.id

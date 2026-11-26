@@ -1,7 +1,7 @@
 id: kornfeld_08
 biome: kornfeld
 area: kornburg
-exits: L1=kornfeld_07:R2
+exits: L1=kornfeld_07:R2, R2=wald_01:L1
 ---
 ..............................
 ..............................
@@ -17,11 +17,12 @@ exits: L1=kornfeld_07:R2
 ..............................
 ..............................
 ..............................
-1.............................
+1............................2
 ==============================
 ##############################
 ---
 dialog dungeon_tor 14,14
 door portal 20,14 to=blutdungeon_eingang:portal art=portal farbe=rot
-deco zaun 27,14
+deco wegweiser 26,14
 deco baum 8,14
+sammeln weizen 11,14 anzahl=3

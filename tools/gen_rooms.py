@@ -57,6 +57,11 @@ def lamp(r, x):
     r.ent(f"lampe strassenlaterne {x},14")
 
 
+def weizen(r, x):
+    """Weizenbündel auf dem Kornfeld (3 Halme je Ernte)."""
+    r.ent(f"sammeln weizen {x},14 anzahl=3")
+
+
 def villager(r, name, job, x):
     """Dorfbewohner bei der Arbeit, ansprechbar mit [W]."""
     r.ent(f"npc {name} {x},14 arbeit={job} dialog=dorf_{name}")
@@ -162,12 +167,15 @@ def kornburg():
     r = Room("kornfeld_01", "kornfeld", "kornburg")
     r.exit("L1", "stadt_03", "R2").exit("R2", "kornfeld_02", "L1")
     r.ent("deco wegweiser 6,14").ent("dialog tut_schlag 4,14").ent("enemy goblin 18,14 patrol=3")
+    weizen(r, 11)
     rooms.append(r)
     r = Room("kornfeld_02", "kornfeld", "kornburg")
     r.box(10, 13, 14, 14, "#").box(10, 13, 13, 13, "=")
     r.box(20, 24, 11, 11, "-")
     r.exit("L1", "kornfeld_01", "R2").exit("R2", "kornfeld_03", "L1")
     r.ent("deco baum 4,14").ent("enemy gruenschleim 6,14 patrol=2").ent("enemy goblin+gruenschleim 25,14 patrol=2")
+    weizen(r, 16)
+    r.ent("sammeln apfel 20,14 anzahl=2")
     rooms.append(r)
     # Doppelplatten-Rätsel: Tor nur offen, wenn beide Platten belegt sind
     r = Room("kornfeld_03", "kornfeld", "kornburg")
@@ -177,16 +185,20 @@ def kornburg():
     r.exit("L1", "kornfeld_02", "R2").exit("R2", "kornfeld_04", "L1")
     r.ent("plate a 8,14 opens=tor1").ent("plate b 16,14 opens=tor1").ent("gate tor1 22,14").ent("gate tor1 23,14")
     r.ent("sibling_point b 16,14").ent("dialog tut_befehl 12,14")
+    weizen(r, 4)
     rooms.append(r)
     r = Room("kornfeld_04", "kornfeld", "kornburg")
     r.box(8, 11, 12, 12, "-").box(15, 18, 10, 10, "-").box(22, 25, 12, 12, "-")
     r.exit("L1", "kornfeld_03", "R2").exit("R2", "kornfeld_05", "L1")
     r.ent("deco zaun 4,14").ent("enemy skelettkrieger 20,14 patrol=3")
+    weizen(r, 12)
     rooms.append(r)
     r = Room("kornfeld_05", "kornfeld", "kornburg")
     r.box(6, 7, 14, 14, "#").box(6, 7, 13, 13, "=").box(18, 19, 14, 14, "#").box(18, 19, 13, 13, "=")
     r.exit("L1", "kornfeld_04", "R2").exit("R2", "muehle_01", "L1")
     r.ent("deco baum 25,14").ent("enemy goblin+goblin 12,14 patrol=3")
+    weizen(r, 3)
+    weizen(r, 22)
     rooms.append(r)
     # Die verfallene Mühle (außen) – drinnen liegt der tote Abenteurer
     r = Room("muehle_01", "kornfeld", "kornburg")
@@ -203,17 +215,52 @@ def kornburg():
     r.box(20, 25, 11, 11, "=")
     r.exit("L1", "muehle_01", "R2").exit("R2", "kornfeld_07", "L1")
     r.ent("pickup item:rostiger_kriegshammer 23,10").ent("enemy skelettkrieger 10,14 patrol=3")
+    weizen(r, 5)
     rooms.append(r)
     r = Room("kornfeld_07", "kornfeld", "kornburg")
     r.box(12, 16, 12, 12, "-")
     r.exit("L1", "kornfeld_06", "R2").exit("R2", "kornfeld_08", "L1")
     r.ent("deco baum 4,14").ent("enemy goblin+goblin+gruenschleim 20,14 patrol=3").ent("enemy skelettkrieger 8,14 patrol=2")
+    weizen(r, 25)
     rooms.append(r)
     r = Room("kornfeld_08", "kornfeld", "kornburg")
     # Dungeon-Eingang als Portal: davorstellen und [W] drücken; man kann auch daran vorbeilaufen
-    r.exit("L1", "kornfeld_07", "R2")
+    r.exit("L1", "kornfeld_07", "R2").exit("R2", "wald_01", "L1")
     r.ent("dialog dungeon_tor 14,14").ent("door portal 20,14 to=blutdungeon_eingang:portal art=portal farbe=rot")
-    r.ent("deco zaun 27,14").ent("deco baum 8,14")
+    r.ent("deco wegweiser 26,14").ent("deco baum 8,14")
+    weizen(r, 11)
+    rooms.append(r)
+    rooms += wald()
+    return rooms
+
+
+def wald():
+    """Waldstück rechts vom Portal: Beeren, Pilze, Kräuter; endet an einer Lichtung."""
+    rooms = []
+    r = Room("wald_01", "wald", "kornburg")
+    r.box(8, 11, 11, 11, "-").box(19, 22, 11, 11, "-")
+    r.exit("L1", "kornfeld_08", "R2").exit("R2", "wald_02", "L1")
+    r.ent("prop tanne 3,14").ent("prop baum 14,14").ent("prop busch 24,14").ent("prop tanne 27,14")
+    r.ent("dialog wald_ankunft 4,14")
+    r.ent("enemy gruenschleim+gruenschleim 16,14 patrol=3")
+    r.ent("sammeln beeren_rot 6,14 anzahl=2").ent("sammeln heilkraut 12,14").ent("sammeln pilz 21,14")
+    rooms.append(r)
+    r = Room("wald_02", "wald", "kornburg")
+    r.box(12, 17, 14, 14, "#").box(12, 17, 13, 13, "=")
+    r.box(21, 24, 10, 10, "-")
+    r.exit("L1", "wald_01", "R2").exit("R2", "wald_03", "L1")
+    r.ent("prop baum 2,14").ent("prop tanne 9,14").ent("prop busch 19,14").ent("prop baum 27,14")
+    r.ent("enemy riesenspinne 7,14 patrol=2").ent("enemy goblin+goblin 21,14 patrol=3")
+    r.ent("sammeln blaubeeren 4,14 anzahl=2").ent("sammeln heilkraut 14,12").ent("sammeln pilz 25,14")
+    rooms.append(r)
+    r = Room("wald_03", "wald", "kornburg")
+    r.box(29, 29, 0, 14, "#")
+    r.exit("L1", "wald_02", "R2")
+    r.ent("prop tanne 2,14").ent("prop tanne 6,14").ent("prop busch 16,14").ent("prop baum 27,14")
+    r.ent("dialog wald_lichtung 8,14")
+    r.ent("enemy riesenspinne+riesenspinne 11,14 patrol=2")
+    r.ent("sammeln beeren_rot 14,14 anzahl=2").ent("sammeln leuchtpilz 18,14").ent("sammeln manablume 21,14")
+    r.ent("sammeln heilkraut 24,14").ent("pickup silber:40 26,14")
     rooms.append(r)
     return rooms
 

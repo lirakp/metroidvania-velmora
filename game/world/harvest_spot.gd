@@ -26,17 +26,18 @@ func _ready() -> void:
 	sprite = AnimatedSprite2D.new()
 	sprite.sprite_frames = CosyArt.harvest_frames(kind)
 	sprite.offset = CosyArt.harvest_offset()
+	sprite.scale = Vector2(2, 2)
 	add_child(sprite)
 	var info: Dictionary = CosyArt.meta("welt/sammeln/sammeln.json").items.get(kind, {})
 	if info.get("leuchtet", false):
 		var l := Stimmung.light("lampe")
 		l.texture_scale *= 0.35
 		l.energy *= 0.6
-		l.position = Vector2(0, -10)
+		l.position = Vector2(0, -20)
 		add_child(l)
 	_hint = Label.new()
 	_hint.text = "[W]"
-	_hint.position = Vector2(-8, -44)
+	_hint.position = Vector2(-8, -72)
 	_hint.visible = false
 	BattleScene._style_label(_hint, Color("d9a441"))
 	add_child(_hint)

@@ -58,6 +58,7 @@ func test_fresh_spot_idles() -> void:
 	GameState.reset()
 	var h := _spot()
 	assert_eq(h.sprite.animation, &"idle")
+	assert_eq(h.sprite.scale, Vector2(2, 2), "doppelt groß wie Gebäude und Requisiten")
 	assert_true(h.sprite.is_playing())
 	h.free()
 

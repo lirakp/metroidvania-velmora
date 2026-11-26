@@ -23,3 +23,4 @@ exits: L1=muehle_01:R2, R2=kornfeld_07:L1
 ---
 pickup item:rostiger_kriegshammer 23,10
 enemy skelettkrieger 10,14 patrol=3
+sammeln weizen 5,14 anzahl=3

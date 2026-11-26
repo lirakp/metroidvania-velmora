@@ -37,6 +37,7 @@ FILES = [
     # Gegenstands-Icons und Sammelstellen (Ernte-/Nachwachs-Animation)
     "icons/icons.json", *[f"icons/{g}.png" for g in ("essen_kraeuter", "traenke", "beute", "waffen", "ruestung")],
     "welt/welt.json", "welt/dorf/gildenbrett.png",
+    "props/baum_nacht.png", "props/tanne_nacht.png", "props/busch_nacht.png",
     "welt/sammeln/sammeln.json", "welt/sammeln/icons_sammeln.png",
     *[f"welt/sammeln/{a}.png" for a in SAMMELN],
     # Licht

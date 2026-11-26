@@ -240,3 +240,68 @@ func test_path_alternates_straight_and_back() -> void:
 		if id.begins_with("blutdungeon"):
 			back += defs[id].entities.filter(func(e): return e.type == "door" and e.props.get("richtung") == "hinten").size()
 	assert_true(back >= 4, "Öffnungen nach hinten: %d" % back)
+
+
+# ---------------------------------------------------------------- Waldstück und Sammelstellen
+const WALD := ["wald_01", "wald_02", "wald_03"]
+const WALD_ARTEN := ["beeren_rot", "blaubeeren", "pilz", "heilkraut", "leuchtpilz", "manablume"]
+
+
+func _harvest(id: String) -> Array:
+	return RoomDef.load_room(id).entities.filter(func(e): return e.type == "sammeln")
+
+
+func test_forest_right_of_portal() -> void:
+	var k8 := RoomDef.load_room("kornfeld_08")
+	var r := k8.exits.filter(func(e): return e.id == "R2")
+	assert_eq(r.size(), 1, "kornfeld_08 ohne Ausgang rechts")
+	if r.size() == 1:
+		assert_eq(r[0].target_room, "wald_01")
+	for id in WALD:
+		var d := RoomDef.load_room(id)
+		assert_eq(d.error, "", id)
+		assert_eq(d.biome, "wald", id)
+		assert_eq(d.area, "kornburg", id)
+	assert_false(RoomDef.load_room("wald_03").exits.any(func(e): return e.edge == "R"), "Lichtung ist Sackgasse")
+
+
+func test_forest_has_enemies_and_chest() -> void:
+	var w3 := RoomDef.load_room("wald_03")
+	assert_true(w3.entities.any(func(e): return e.type == "enemy" and e.id == "riesenspinne+riesenspinne"))
+	assert_true(w3.entities.any(func(e): return e.type == "pickup" and String(e.id).begins_with("silber:")))
+	assert_false(w3.entities.any(func(e): return e.type == "boss"))
+
+
+func test_harvest_spots_placed() -> void:
+	var weizen := 0
+	for i in range(1, 8):
+		weizen += _harvest("kornfeld_0%d" % i).filter(func(e): return e.id == "weizen").size()
+	assert_true(weizen >= 7, "zu wenig Weizen: %d" % weizen)
+	assert_true(_harvest("kornfeld_02").any(func(e): return e.id == "apfel"))
+	var kinds := {}
+	for id in WALD:
+		var spots := _harvest(id)
+		assert_true(spots.size() >= 2 and spots.size() <= 6, "%s: %d Sammelstellen" % [id, spots.size()])
+		for e in spots:
+			kinds[e.id] = true
+	for k in WALD_ARTEN:
+		assert_true(kinds.has(k), "Waldart fehlt: " + k)
+	for k in ["leuchtpilz", "manablume"]:
+		assert_false(_harvest("wald_01").any(func(e): return e.id == k) or _harvest("wald_02").any(func(e): return e.id == k), k + " nur auf der Lichtung")
+
+
+func test_no_harvest_in_dungeons_and_known_kinds() -> void:
+	var defs := WorldMap.load_defs("res://data/rooms")
+	for id in defs:
+		for e in defs[id].entities:
+			if e.type == "sammeln":
+				assert_false(defs[id].one_way_dungeon, id)
+				assert_true(DB.items.has(e.id), "%s: unbekannt %s" % [id, e.id])
+			if e.type == "prop":
+				assert_true(ResourceLoader.exists(CosyArt.BASE + "props/%s_nacht.png" % e.id), "%s: Requisit %s" % [id, e.id])
+
+
+func test_forest_mood() -> void:
+	assert_true(Stimmung.has_tint("wald"))
+	assert_true(Backdrop.cosy_layers("wald").size() > 0)
+	assert_true(RoomBuilder.terrain_tiles("wald").size() > 0)

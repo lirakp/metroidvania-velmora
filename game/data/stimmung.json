@@ -2,6 +2,7 @@
   "hinweis": "Farbtönung pro Gebiet (wird im Spiel über alles gelegt; Grafikdateien bleiben unverändert). Weiß = keine Tönung. Sichere Orte bleiben heller.",
   "toenung": {
     "kornfeld": "#a8a4c4",
+    "wald": "#8c9cb0",
     "stadt": "#c4bed8",
     "dungeon_blut": "#8c6870",
     "innen_muehle": "#c0c0d0"

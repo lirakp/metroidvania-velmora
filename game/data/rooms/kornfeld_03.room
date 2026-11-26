@@ -27,3 +27,4 @@ gate tor1 22,14
 gate tor1 23,14
 sibling_point b 16,14
 dialog tut_befehl 12,14
+sammeln weizen 4,14 anzahl=3

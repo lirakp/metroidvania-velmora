@@ -312,5 +312,25 @@
       "speaker": "Geselle Tamm",
       "text": "Er nennt das Ausbildung. Ich nenne es Hämmern."
     }
+  ],
+  "wald_ankunft": [
+    {
+      "speaker": "{geschwister}",
+      "text": "Der Wald hinter dem Portal. Hier sammeln die Dorfleute Beeren und Kräuter, wenn sie sich trauen."
+    },
+    {
+      "speaker": "Hinweis",
+      "text": "Vor eine Pflanze stellen und [W] drücken erntet sie. Beim Rasten am Schrein wächst alles nach."
+    }
+  ],
+  "wald_lichtung": [
+    {
+      "speaker": "{geschwister}",
+      "text": "Eine Lichtung. Die Pilze leuchten blau, obwohl der Mond rot ist."
+    },
+    {
+      "speaker": "{held}",
+      "text": "Wenigstens etwas, das sich der Blutmond nicht geholt hat."
+    }
   ]
 }

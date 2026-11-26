@@ -24,3 +24,5 @@ exits: L1=kornfeld_01:R2, R2=kornfeld_03:L1
 deco baum 4,14
 enemy gruenschleim 6,14 patrol=2
 enemy goblin+gruenschleim 25,14 patrol=2
+sammeln weizen 16,14 anzahl=3
+sammeln apfel 20,14 anzahl=2

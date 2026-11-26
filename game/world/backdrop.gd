@@ -4,7 +4,7 @@ extends RefCounted
 
 const SCROLL := [0.1, 0.3, 0.6]
 ## Biome mit Hintergründen aus dem Grafik-Repo (320x180, waagrecht kachelbar, Unterkante auf Bodenhöhe)
-const COSY := {"kornfeld": "dorf_nacht", "stadt": "dorf_nacht", "dungeon_blut": "dungeon_blut"}
+const COSY := {"kornfeld": "dorf_nacht", "wald": "dorf_nacht", "stadt": "dorf_nacht", "dungeon_blut": "dungeon_blut"}
 const COSY_SCROLL := [0.0, 0.2, 0.4, 0.65]
 const COSY_SIZE := Vector2(320, 180)
 const GROUND_Y := 240.0

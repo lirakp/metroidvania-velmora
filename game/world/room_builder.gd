@@ -15,7 +15,7 @@ const SRC_PLATFORM := 1
 const SRC_SPIKES := 2
 ## Terrain-Quellen ab 10: Biom → Terrain-Datei im Grafik-Repo
 const TERRAINS := {"wiese": 10, "fels": 11, "dungeon_blut": 12}
-const BIOME_TERRAIN := {"kornfeld": "wiese", "stadt": "fels", "dungeon_blut": "dungeon_blut", "innen_kammer": "dungeon_blut"}
+const BIOME_TERRAIN := {"kornfeld": "wiese", "wald": "wiese", "stadt": "fels", "dungeon_blut": "dungeon_blut", "innen_kammer": "dungeon_blut"}
 ## Welche eigenen Kachel-IDs pro Terrain als „fest“ gezeichnet werden
 const TERRAIN_TILES := {"wiese": [1, 2], "fels": [1, 2, 4], "dungeon_blut": [4, 5]}
 
@@ -102,7 +102,10 @@ static func build(def: RoomDef) -> Node2D:
 			if t == ONE_WAY:
 				var left := def.tile_at(c - Vector2i(1, 0)) == ONE_WAY
 				var right := def.tile_at(c + Vector2i(1, 0)) == ONE_WAY
-				visual.set_cell(c, SRC_PLATFORM, Vector2i(1 if left and right else (2 if left else 0), 0))
+				if def.biome == "wald":
+					visual.set_cell(c, SRC_PLATFORM, Vector2i(7, 0))  # Ast
+				else:
+					visual.set_cell(c, SRC_PLATFORM, Vector2i(1 if left and right else (2 if left else 0), 0))
 			elif t == HAZARD:
 				visual.set_cell(c, SRC_SPIKES, Vector2i(1 if def.biome.begins_with("dungeon") else 0, 0))
 			else:
