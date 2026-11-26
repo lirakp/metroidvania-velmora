@@ -45,3 +45,11 @@ func test_save_spot_actions() -> void:
 	spot.choose("rasten")
 	assert_true(GameState.hp.is_empty())
 	spot.free()
+
+
+
+func test_silver_chest_pickup() -> void:
+	GameState.reset()
+	var before := GameState.gold
+	Pickup.collect("silber:40")
+	assert_eq(GameState.gold, before + 40)

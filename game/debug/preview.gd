@@ -38,6 +38,6 @@ func _ready() -> void:
 			if mode == "map":
 				GameState.owned_maps[RoomManager.current_def.area] = true
 				for id in WorldMap.layout(RoomManager.current_def.area):
-					if randf() < 0.6:
+					if randf() < 0.85:
 						GameState.discovered_rooms[id] = true
 				MapView.toggle(w)

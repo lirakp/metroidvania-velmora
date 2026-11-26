@@ -1,8 +1,8 @@
-id: blutdungeon_08
+id: blutdungeon_irrweg
 biome: dungeon_blut
 area: blutdungeon
 dungeon: true
-exits: L1=blutdungeon_07:R2, R2=blutdungeon_09:L1
+exits: L1=blutdungeon_schaedel:R2
 ---
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -16,11 +16,12 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
-..............----............
 ..............................
-1............................2
-SSSSSSSSSS^^SSSSSSSS^^SSSSSSSS
+..............................
+1.............................
+SSSSSSSSSS^^SSSSSS^^SSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-enemy skelett_bogner+skelett_bogner 26,14 patrol=1
-deco kette 16,2
+enemy skelett_bogner+skelettkrieger 14,14 patrol=1
+deco kiste 26,14
+pickup silber:60 26,14

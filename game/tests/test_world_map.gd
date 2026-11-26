@@ -64,3 +64,24 @@ func test_layout_real_kornburg_starts_outside() -> void:
 	var lay := WorldMap.layout("kornburg")
 	assert_true(lay.has("stadt_01") and lay.has("kornfeld_08"), "Außenräume auf der Karte")
 	assert_false(lay.has("kornburg_gilde") or lay.has("kartograf_haus") or lay.has("muehle_innen"), "keine Innenräume")
+
+
+
+func test_birds_eye_layout_of_dungeon() -> void:
+	var lay := WorldMap.layout("blutdungeon")
+	var at := func(id): return lay[id].position
+	assert_eq(at.call("blutdungeon_ketten") - at.call("blutdungeon_eingang"), Vector2i(1, 0), "Osten = rechts")
+	assert_eq(at.call("blutdungeon_kreuzgang") - at.call("blutdungeon_ketten"), Vector2i(0, -1), "hinten = oben")
+	assert_eq(at.call("blutdungeon_rast") - at.call("blutdungeon_kreuzgang"), Vector2i(0, -1))
+	assert_eq(at.call("blutdungeon_boss") - at.call("blutdungeon_vorkammer"), Vector2i(1, 0))
+	assert_eq(lay.size(), 15, "alle Dungeon-Räume auf der Karte")
+
+
+func test_validate_door_directions_must_be_opposite() -> void:
+	var a := _room("a", "x", "", "..............................")
+	a.entities.append({"type": "door", "id": "h", "pos": Vector2i(3, 14), "props": {"to": "b:v", "richtung": "hinten"}})
+	var b := _room("b", "x", "", "..............................")
+	b.entities.append({"type": "door", "id": "v", "pos": Vector2i(3, 14), "props": {"to": "a:h", "richtung": "hinten"}})
+	assert_eq(WorldMap.validate_defs({"a": a, "b": b}).size(), 2)
+	b.entities[0].props.richtung = "vorne"
+	assert_eq(WorldMap.validate_defs({"a": a, "b": b}), [])

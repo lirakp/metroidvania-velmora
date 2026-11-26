@@ -1,8 +1,8 @@
-id: blutdungeon_09
+id: blutdungeon_bluthalle
 biome: dungeon_blut
 area: blutdungeon
 dungeon: true
-exits: L1=blutdungeon_08:R2
+exits: L1=blutdungeon_karte:R2, R2=blutdungeon_schaedel:L1
 ---
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -18,11 +18,12 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
-1.............................
+1............................2
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-dialog boss_intro 8,14
-boss blutwolf_alpha 21,14
-deco kristall 4,10
-light kalt 4,9 radius=32
+deco bogen 6,14
+door vorne 6,14 to=blutdungeon_wand:hinten richtung=vorne
+enemy ghul+riesenspinne 18,14 patrol=2
+deco kristall 26,10
+light kalt 26,10 radius=24

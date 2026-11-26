@@ -1,8 +1,8 @@
-id: blutdungeon_04
+id: blutdungeon_vorkammer
 biome: dungeon_blut
 area: blutdungeon
 dungeon: true
-exits: L1=blutdungeon_03:R2, R2=blutdungeon_05:L1
+exits: R2=blutdungeon_boss:L1
 ---
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -18,10 +18,13 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
-1............................2
+.............................2
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-deco bogen_warm 15,14
-door rast 15,14 to=blutdungeon_rast:gang
-dialog rastort 10,14
+deco bogen 6,14
+door vorne 6,14 to=blutdungeon_schaedel:hinten richtung=vorne
+deco kette 12,2
+deco kette 20,2
+deco kristall 14,10
+light kalt 14,10 radius=24

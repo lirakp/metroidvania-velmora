@@ -1,8 +1,8 @@
-id: blutdungeon_05
+id: blutdungeon_boss
 biome: dungeon_blut
 area: blutdungeon
 dungeon: true
-exits: L1=blutdungeon_04:R2, R2=blutdungeon_06:L1
+exits: L1=blutdungeon_vorkammer:R2
 ---
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -17,10 +17,12 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
-..............-----...........
-1............................2
+..............................
+1.............................
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-pickup federfall 16,12
-enemy riesenspinne 24,14 patrol=2
+dialog boss_intro 8,14
+boss blutwolf_alpha 21,14
+deco kristall 4,10
+light kalt 4,10 radius=32

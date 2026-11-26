@@ -56,6 +56,12 @@ static func collect(k: String, ctx: Node = null) -> void:
 	elif k == "plakette":
 		GameState.plaketten.add_spare()
 		dialog = "plakette"
+	elif k.begins_with("silber:"):
+		var amount := int(k.substr(7))
+		GameState.gold += amount
+		if ctx and ctx.is_inside_tree():
+			ChoiceMenu.toast(ctx, "Truhe: %d Silber" % amount)
+		return
 	elif k.begins_with("map:"):
 		GameState.owned_maps[k.substr(4)] = true
 		dialog = "karte_gefunden"

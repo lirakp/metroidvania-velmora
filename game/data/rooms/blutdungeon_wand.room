@@ -1,8 +1,8 @@
-id: blutdungeon_03
+id: blutdungeon_wand
 biome: dungeon_blut
 area: blutdungeon
 dungeon: true
-exits: L1=blutdungeon_02:R2, R2=blutdungeon_04:L1
+exits: L1=blutdungeon_federfall:R2
 ---
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -15,12 +15,15 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
-..............................
-..............................
-..............................
-1...........SS...............2
+..............SSSSSSSSSSSSSSSS
+..............SSSSSSSSSSSSSSSS
+..............SSSSSSSSSSSSSSSS
+1.............SSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-enemy skelett_bogner+skelettkrieger 20,14 patrol=2
-enemy skelettkrieger 7,14 patrol=2
+deco bogen 8,14
+door vorne 8,14 to=blutdungeon_rundweg:hinten richtung=vorne
+deco bogen 24,10
+door hinten 24,10 to=blutdungeon_bluthalle:vorne richtung=hinten
+dialog federfall_wand 11,14

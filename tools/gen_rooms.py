@@ -147,75 +147,111 @@ def kornburg():
     rooms.append(r)
     r = Room("kornfeld_08", "kornfeld", "kornburg")
     r.box(25, 29, 0, 11, "B")
-    r.exit("L1", "kornfeld_07", "R2").exit("R2", "blutdungeon_01", "L1")
+    r.exit("L1", "kornfeld_07", "R2").exit("R2", "blutdungeon_eingang", "L1")
     r.ent("dialog dungeon_tor 20,14").ent("deco kristall 26,11").ent("light kalt 26,10 radius=24")
     rooms.append(r)
     return rooms
 
 
+# ---------------------------------------------------------------- Blut-Dungeon als Labyrinth
+# Grundriss aus der Vogelperspektive (x = Osten, y = hinten/Norden). Siehe
+# docs/superpowers/specs/2026-11-26-labyrinth-design.md
+LAB = {
+    "eingang": (0, 0), "ketten": (1, 0), "hinterhalt": (2, 0), "rundweg": (3, 0),
+    "stacheln": (0, 1), "kreuzgang": (1, 1), "federfall": (2, 1), "wand": (3, 1),
+    "rast": (1, 2), "karte": (2, 2), "bluthalle": (3, 2), "schaedel": (4, 2), "irrweg": (5, 2),
+    "vorkammer": (4, 3), "boss": (5, 3),
+}
+# Seitliche Ausgänge (West → Ost)
+LAB_SEITE = [("eingang", "ketten"), ("ketten", "hinterhalt"), ("hinterhalt", "rundweg"),
+             ("stacheln", "kreuzgang"), ("kreuzgang", "federfall"), ("federfall", "wand"),
+             ("karte", "bluthalle"), ("bluthalle", "schaedel"), ("schaedel", "irrweg"), ("vorkammer", "boss")]
+# Öffnungen in der Wand (vorderer Raum, hinterer Raum)
+LAB_HINTEN = [("ketten", "kreuzgang"), ("kreuzgang", "rast"), ("rundweg", "wand"),
+              ("wand", "bluthalle"), ("schaedel", "vorkammer")]
+# Lage der Öffnungen (Spalte, Zeile) je Raum und Richtung
+LAB_TUER = {("ketten", "hinten"): (15, 14), ("kreuzgang", "vorne"): (8, 14), ("kreuzgang", "hinten"): (22, 14),
+            ("rast", "vorne"): (8, 14), ("rundweg", "hinten"): (20, 14), ("wand", "vorne"): (8, 14),
+            ("wand", "hinten"): (24, 10), ("bluthalle", "vorne"): (6, 14), ("schaedel", "hinten"): (15, 14),
+            ("vorkammer", "vorne"): (6, 14)}
+
+
+def lab_id(name):
+    return f"blutdungeon_{name}"
+
+
+def dungeon_room(name):
+    if name == "rast":
+        return interior(lab_id(name), "innen_kammer", "blutdungeon", floor="S", wall="S", dungeon=True)
+    r = Room(lab_id(name), "dungeon_blut", "blutdungeon", dungeon=True, ground="S", fill="B")
+    r.box(0, W - 1, 0, 1, "B")
+    return r
+
+
+def lab_features(name, r):
+    """Inhalt jedes Raums (Gegner, Belohnungen, Fallen, Deko)."""
+    if name == "eingang":
+        r.ent("dialog dungeon_eingang 3,14").ent("enemy riesenspinne 20,14 patrol=3").ent("deco kette 12,2")
+    elif name == "ketten":
+        r.box(9, 12, 12, 12, "-")
+        r.ent("enemy ghul 24,14 patrol=2").ent("deco kette 6,2").ent("deco kette 22,2").ent("dialog labyrinth 11,14")
+    elif name == "hinterhalt":
+        r.ent("deco kiste 15,14").ent("pickup silber:40 15,14")
+        r.ent("enemy skelettkrieger+skelett_bogner 21,14 patrol=2").ent("enemy skelettkrieger 9,14 patrol=2")
+    elif name == "rundweg":
+        r.box(12, 13, 14, 14, "S")
+        r.ent("enemy ghul+riesenspinne 6,14 patrol=2")
+    elif name == "stacheln":
+        for x in (7, 13, 19):
+            r.box(x, x + 1, 15, 15, "^")
+        r.ent("deco kiste 3,14").ent("pickup plakette 3,14").ent("deco kristall 25,10").ent("light kalt 25,10 radius=24")
+    elif name == "kreuzgang":
+        r.ent("dialog rastort 17,14").ent("deco kette 14,2")
+    elif name == "rast":
+        r.ent("deco altar 17,14").ent("save altar 17,14 kind=rastort")
+        r.ent("lampe standfackel 12,14").ent("lampe standfackel 22,14")
+    elif name == "federfall":
+        r.box(14, 18, 13, 13, "-")
+        r.ent("pickup federfall 16,12").ent("enemy riesenspinne 24,14 patrol=2")
+    elif name == "wand":
+        r.box(14, 29, 11, 14, "S")
+        r.ent("dialog federfall_wand 11,14")
+    elif name == "karte":
+        r.box(14, 17, 13, 13, "-")
+        r.ent("deco kiste 16,12").ent("pickup map:blutdungeon 16,12")
+        r.ent("deco kristall 24,10").ent("light kalt 24,10 radius=24")
+    elif name == "bluthalle":
+        r.ent("enemy ghul+riesenspinne 18,14 patrol=2").ent("deco kristall 26,10").ent("light kalt 26,10 radius=24")
+    elif name == "schaedel":
+        r.box(8, 9, 15, 15, "^")
+        r.ent("enemy skelett_bogner+skelett_bogner 22,14 patrol=1")
+    elif name == "irrweg":
+        r.box(10, 11, 15, 15, "^").box(18, 19, 15, 15, "^")
+        r.ent("enemy skelett_bogner+skelettkrieger 14,14 patrol=1")
+        r.ent("deco kiste 26,14").ent("pickup silber:60 26,14")
+    elif name == "vorkammer":
+        r.ent("deco kette 12,2").ent("deco kette 20,2").ent("deco kristall 14,10").ent("light kalt 14,10 radius=24")
+    elif name == "boss":
+        r.ent("dialog boss_intro 8,14").ent("boss blutwolf_alpha 21,14").ent("deco kristall 4,10").ent("light kalt 4,10 radius=32")
+
+
 def dungeon():
-    rooms = []
-
-    def d(n):
-        r = Room(f"blutdungeon_0{n}", "dungeon_blut", "blutdungeon", dungeon=True, ground="S", fill="B")
-        r.box(0, W - 1, 0, 1, "B")
-        return r
-
-    r = d(1)
-    r.exit("L1", "kornfeld_08", "R2").exit("R2", "blutdungeon_02", "L1")
-    r.ent("dialog dungeon_eingang 3,14").ent("enemy riesenspinne 20,14 patrol=3").ent("deco kette 12,2")
-    rooms.append(r)
-    r = d(2)
-    r.box(9, 13, 12, 12, "-").box(17, 20, 10, 10, "-")
-    r.exit("L1", "blutdungeon_01", "R2").exit("R2", "blutdungeon_03", "L1")
-    r.ent("enemy ghul 24,14 patrol=2").ent("deco kristall 15,8").ent("light kalt 15,7 radius=24")
-    rooms.append(r)
-    r = d(3)
-    r.box(12, 13, 14, 14, "S")
-    r.exit("L1", "blutdungeon_02", "R2").exit("R2", "blutdungeon_04", "L1")
-    r.ent("enemy skelett_bogner+skelettkrieger 20,14 patrol=2").ent("enemy skelettkrieger 7,14 patrol=2")
-    rooms.append(r)
-    # Öffnung in der Wand: dahinter die Rast-Kammer (einziger warmer Ort im Dungeon)
-    r = d(4)
-    r.exit("L1", "blutdungeon_03", "R2").exit("R2", "blutdungeon_05", "L1")
-    r.ent("deco bogen_warm 15,14").ent("door rast 15,14 to=blutdungeon_rast:gang").ent("dialog rastort 10,14")
-    rooms.append(r)
-    r = interior("blutdungeon_rast", "innen_kammer", "blutdungeon", floor="S", wall="S", dungeon=True)
-    r.ent("deco bogen 8,14").ent("door gang 8,14 to=blutdungeon_04:rast")
-    r.ent("deco altar 17,14").ent("save altar 17,14 kind=rastort").ent("lampe standfackel 12,14").ent("lampe standfackel 22,14")
-    rooms.append(r)
-    r = d(5)
-    r.box(14, 18, 13, 13, "-")
-    r.exit("L1", "blutdungeon_04", "R2").exit("R2", "blutdungeon_06", "L1")
-    r.ent("pickup federfall 16,12").ent("enemy riesenspinne 24,14 patrol=2")
-    rooms.append(r)
-    # Wand von 4 Kacheln: nur mit Federfall weiter
-    r = d(6)
-    r.box(14, 29, 11, 14, "S")
-    r.exit("L1", "blutdungeon_05", "R2").exit("R2", "blutdungeon_07", "L1", y=10)
-    r.ent("dialog federfall_wand 8,14")
-    rooms.append(r)
-    r = d(7)
-    r.box(0, 3, 11, 14, "S").box(10, 14, 12, 12, "-")
-    r.exit("L1", "blutdungeon_06", "R2", y=10).exit("R2", "blutdungeon_08", "L1")
-    r.ent("enemy ghul+riesenspinne 18,14 patrol=2").ent("deco bogen 25,14").ent("door kammer 25,14 to=blutdungeon_kammer:gang")
-    rooms.append(r)
-    # Geheime Nebenkammer mit der Dungeon-Karte (kalt)
-    r = interior("blutdungeon_kammer", "dungeon_blut", "blutdungeon", floor="S", wall="B", dungeon=True)
-    r.box(14, 17, 11, 11, "-")
-    r.ent("deco bogen 6,14").ent("door gang 6,14 to=blutdungeon_07:kammer")
-    r.ent("deco kiste 16,10").ent("pickup map:blutdungeon 16,10").ent("deco kristall 24,10").ent("light kalt 24,9 radius=24")
-    rooms.append(r)
-    r = d(8)
-    r.box(10, 11, 15, 15, "^").box(20, 21, 15, 15, "^").box(14, 17, 12, 12, "-")
-    r.exit("L1", "blutdungeon_07", "R2").exit("R2", "blutdungeon_09", "L1")
-    r.ent("enemy skelett_bogner+skelett_bogner 26,14 patrol=1").ent("deco kette 16,2")
-    rooms.append(r)
-    r = d(9)
-    r.exit("L1", "blutdungeon_08", "R2")
-    r.ent("dialog boss_intro 8,14").ent("boss blutwolf_alpha 21,14").ent("deco kristall 4,10").ent("light kalt 4,9 radius=32")
-    rooms.append(r)
-    return rooms
+    rooms = {name: dungeon_room(name) for name in LAB}
+    rooms["eingang"].exit("L1", "kornfeld_08", "R2")
+    for west, east in LAB_SEITE:
+        assert LAB[east][0] == LAB[west][0] + 1 and LAB[east][1] == LAB[west][1], (west, east)
+        rooms[west].exit("R2", lab_id(east), "L1")
+        rooms[east].exit("L1", lab_id(west), "R2")
+    for front, back in LAB_HINTEN:
+        assert LAB[back] == (LAB[front][0], LAB[front][1] + 1), (front, back)
+        for name, here, there, other in ((front, "hinten", back, "vorne"), (back, "vorne", front, "hinten")):
+            x, y = LAB_TUER[(name, here)]
+            arch = "bogen_warm" if there == "rast" else "bogen"
+            rooms[name].ent(f"deco {arch} {x},{y}")
+            rooms[name].ent(f"door {here} {x},{y} to={lab_id(there)}:{other} richtung={here}")
+    for name, r in rooms.items():
+        lab_features(name, r)
+    return list(rooms.values())
 
 
 def main():

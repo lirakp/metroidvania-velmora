@@ -116,8 +116,8 @@ func test_resolve_respawn_missing_room() -> void:
 
 func test_resolve_respawn_valid() -> void:
 	GameState.reset()
-	GameState.plaketten.place("blutdungeon_04", Vector2i(15, 14))
-	assert_eq(GameState.resolve_respawn(), {"room": "blutdungeon_04", "cell": Vector2i(15, 14)})
+	GameState.plaketten.place("blutdungeon_rast", Vector2i(17, 14))
+	assert_eq(GameState.resolve_respawn(), {"room": "blutdungeon_rast", "cell": Vector2i(17, 14)})
 	GameState.clear_dungeon("blutdungeon")
 	assert_eq(GameState.resolve_respawn().room, "kornburg_gilde")
 

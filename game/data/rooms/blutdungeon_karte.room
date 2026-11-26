@@ -1,8 +1,8 @@
-id: blutdungeon_06
+id: blutdungeon_karte
 biome: dungeon_blut
 area: blutdungeon
 dungeon: true
-exits: L1=blutdungeon_05:R2, R2=blutdungeon_07:L1
+exits: R2=blutdungeon_bluthalle:L1
 ---
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -14,12 +14,15 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
+..............................
+..............................
+..............................
+..............----............
 .............................2
-..............SSSSSSSSSSSSSSSS
-..............SSSSSSSSSSSSSSSS
-..............SSSSSSSSSSSSSSSS
-1.............SSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-dialog federfall_wand 8,14
+deco kiste 16,12
+pickup map:blutdungeon 16,12
+deco kristall 24,10
+light kalt 24,10 radius=24
