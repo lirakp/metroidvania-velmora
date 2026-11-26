@@ -89,6 +89,13 @@ static func populate(room: Node2D, def: RoomDef) -> void:
 				var lamp := Lamp.create(ent.id)
 				lamp.position = pos
 				room.add_child(lamp)
+			"sammeln":
+				var hs := HarvestSpot.new()
+				hs.kind = ent.id
+				hs.amount = int(ent.props.get("anzahl", "1"))
+				hs.flag = "geerntet:%s:%d" % [def.id, i]
+				hs.position = pos
+				room.add_child(hs)
 			"gebaeude":
 				var bld := Building.create(ent.id)
 				bld.position = pos

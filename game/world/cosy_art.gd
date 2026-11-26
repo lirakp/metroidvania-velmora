@@ -171,3 +171,35 @@ static func item_icon(id: String) -> AtlasTexture:
 	at.region = Rect2(index * size, 0, size, size)
 	_frames_cache[key] = at
 	return at
+
+
+## Sammelstelle: Zeilen idle (Schleife), ernten, leer, nachwachsen aus welt/sammeln/<art>.png.
+static func harvest_frames(kind: String) -> SpriteFrames:
+	var key := "s:" + kind
+	if _frames_cache.has(key):
+		return _frames_cache[key]
+	var m := meta("welt/sammeln/sammeln.json")
+	var tex: Texture2D = load(BASE + "welt/sammeln/%s.png" % kind)
+	var w := int(m.zelle[0])
+	var h := int(m.zelle[1])
+	var sf := SpriteFrames.new()
+	sf.remove_animation("default")
+	var row := 0
+	for anim in ["idle", "ernten", "leer", "nachwachsen"]:
+		sf.add_animation(anim)
+		sf.set_animation_speed(anim, float(m.fps))
+		sf.set_animation_loop(anim, anim == "idle")
+		for f in int(m.zeilen[anim]):
+			var at := AtlasTexture.new()
+			at.atlas = tex
+			at.region = Rect2(f * w, row * h, w, h)
+			sf.add_frame(anim, at)
+		row += 1
+	_frames_cache[key] = sf
+	return sf
+
+
+## Versatz für das zentrierte Sammel-Sprite: Bodenzeile (boden_y) am Knoten-Ursprung.
+static func harvest_offset() -> Vector2:
+	var m := meta("welt/sammeln/sammeln.json")
+	return Vector2(0, float(m.zelle[1]) / 2.0 - float(m.boden_y) - 1.0)
