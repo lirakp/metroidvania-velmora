@@ -194,5 +194,103 @@
       "speaker": "Hinweis",
       "text": "Öffnungen in der Wand führen nach hinten [W]. Nicht jeder Weg führt weiter – manche enden in einer Sackgasse."
     }
+  ],
+  "dorf_ankunft": [
+    {
+      "speaker": "{geschwister}",
+      "text": "Das Unterdorf. Hier wohnen die, die Kornburg am Laufen halten, während der Kornkönig oben das Korn zählt."
+    },
+    {
+      "speaker": "{geschwister}",
+      "text": "Die Läden haben unter dem Blutmond nur auf, wenn es sich lohnt. Ohne Silber lohnt es sich nicht."
+    }
+  ],
+  "dorf_schmied": [
+    {
+      "speaker": "Schmied Borin",
+      "text": "Klingen bis Rang B, ehrlich geschmiedet. Kein Tribut, kein Fluch, keine Kirche, die mitverdient."
+    },
+    {
+      "speaker": "Schmied Borin",
+      "text": "Wer mehr will, holt es sich aus einem Dungeon. Und zahlt dann mit Blut statt mit Silber."
+    },
+    {
+      "speaker": "Schmied Borin",
+      "text": "Das Erz kommt aus dem Erzwall. Seit der Mond rot bleibt, kommen die Karren seltener."
+    }
+  ],
+  "dorf_wache": [
+    {
+      "speaker": "Wache Rufus",
+      "text": "Halt! Wer da? … Ach, Gilde. Eisenplaketten. Geht nur."
+    },
+    {
+      "speaker": "Wache Rufus",
+      "text": "Der Kornkönig zahlt mich fürs Wachen. Vom Wachbleiben stand nichts im Vertrag."
+    }
+  ],
+  "dorf_haendler": [
+    {
+      "speaker": "Händlerin Szissa",
+      "text": "Alles hat seinen Preis. Fragt nur nicht, woher die Ware kommt."
+    },
+    {
+      "speaker": "Händlerin Szissa",
+      "text": "Der Stand gehört mir, die Waage dem Konsortium. Kommt wieder, wenn ihr Silber habt."
+    }
+  ],
+  "dorf_kehrer": [
+    {
+      "speaker": "Fegerin Mira",
+      "text": "Früher habe ich jeden Morgen gefegt. Seit drei Monden gibt es keinen Morgen mehr."
+    },
+    {
+      "speaker": "Fegerin Mira",
+      "text": "Also fege ich, wenn ich müde bin. Ich bin sehr oft müde."
+    }
+  ],
+  "dorf_baecker": [
+    {
+      "speaker": "Bäcker Jonte",
+      "text": "Hohenmark füttert halb Velmora. Wir selbst essen, was übrig bleibt."
+    },
+    {
+      "speaker": "Bäcker Jonte",
+      "text": "Das Korn wird rot, wenn es zu lange unter dem Mond liegt. Ich backe trotzdem. Hunger fragt nicht nach der Farbe."
+    }
+  ],
+  "dorf_gaertner": [
+    {
+      "speaker": "Gärtnerin Ilwen",
+      "text": "Die Kräuter für die Alchemistin muss man nachts gießen. Und nachts ist jetzt immer."
+    },
+    {
+      "speaker": "Gärtnerin Ilwen",
+      "text": "Die Hälfte blüht trotzdem rot. Die Alchemistin sagt, das macht die Tränke stärker. Und bitterer."
+    }
+  ],
+  "dorf_wirt": [
+    {
+      "speaker": "Wirt Fennick",
+      "text": "Die Taverne hat zu, bis die Gilde wieder Löhne zahlt. Polieren kann man die Krüge trotzdem."
+    },
+    {
+      "speaker": "Wirt Fennick",
+      "text": "Ein Gerücht gibt es umsonst: Die Fähre nach Ascheron fährt noch. Wer Gold hat, kommt rüber."
+    },
+    {
+      "speaker": "Wirt Fennick",
+      "text": "Sturmkap verlangt Fährzoll, als gehöre ihnen das Meer. Der Kornkönig flucht jeden Monat darüber."
+    }
+  ],
+  "dorf_holzfaeller": [
+    {
+      "speaker": "Holzfäller Grau",
+      "text": "Holz für die Schmiede, Holz für die Taverne, Holz für die Särge."
+    },
+    {
+      "speaker": "Holzfäller Grau",
+      "text": "Rate, was davon am meisten geht."
+    }
   ]
 }

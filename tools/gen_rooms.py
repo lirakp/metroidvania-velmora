@@ -57,6 +57,45 @@ def lamp(r, x):
     r.ent(f"lampe strassenlaterne {x},14")
 
 
+def villager(r, name, job, x):
+    """Dorfbewohner bei der Arbeit, ansprechbar mit [W]."""
+    r.ent(f"npc {name} {x},14 arbeit={job} dialog=dorf_{name}")
+
+
+def dorf():
+    """Unterdorf links vom Gildenhaus: Schmieden, Markt, Taverne. Läden noch ohne Betreten."""
+    rooms = []
+    # Schmiedegasse (grenzt ans Gildenhaus)
+    r = Room("dorf_01", "stadt", "kornburg", ground="S", fill="S")
+    r.exit("L1", "dorf_02", "R2").exit("R2", "stadt_01", "L1")
+    r.ent("gebaeude schmiede 6,14").ent("gebaeude schmiede_waffen 20,14")
+    villager(r, "schmied", "schmied", 15)
+    villager(r, "wache", "wache", 28)
+    lamp(r, 12)
+    r.ent("dialog dorf_ankunft 26,14")
+    rooms.append(r)
+    # Marktplatz mit Brunnen
+    r = Room("dorf_02", "stadt", "kornburg", ground="S", fill="S")
+    r.exit("L1", "dorf_03", "R2").exit("R2", "dorf_01", "L1")
+    r.ent("gebaeude brunnen 4,14").ent("gebaeude marktstand 11,14").ent("gebaeude baeckerei 22,14")
+    villager(r, "haendler", "haendler", 8)
+    villager(r, "kehrer", "kehrer", 14)
+    villager(r, "baecker", "baecker", 26)
+    lamp(r, 1)
+    rooms.append(r)
+    # Westende: Alchemie und Taverne, dahinter die Stadtmauer
+    r = Room("dorf_03", "stadt", "kornburg", ground="S", fill="S")
+    r.box(0, 0, 0, 14, "S")
+    r.exit("R2", "dorf_02", "L1")
+    r.ent("gebaeude laden_alchemie 7,14").ent("gebaeude taverne 19,14")
+    villager(r, "gaertner", "gaertner", 10)
+    villager(r, "wirt", "wirt", 23)
+    villager(r, "holzfaeller", "holzfaeller", 27)
+    lamp(r, 13)
+    rooms.append(r)
+    return rooms
+
+
 def kornburg():
     rooms = []
     # Gildenhalle Kornburg (Innenraum): Start, Schrein, Gildenmeisterin hinter dem Tresen, Kamin
@@ -69,13 +108,13 @@ def kornburg():
     rooms.append(r)
     # Stadt
     r = Room("stadt_01", "stadt", "kornburg", ground="S", fill="S")
-    r.box(0, 0, 0, 14, "S")
     r.box(20, 24, 12, 12, "-")
-    r.exit("R2", "stadt_02", "L1")
+    r.exit("L1", "dorf_01", "R2").exit("R2", "stadt_02", "L1")
     r.ent("gebaeude gilde_abenteuer 8,14").ent("door gilde 8,14 to=kornburg_gilde:aussen")
     lamp(r, 16)
     r.ent("dialog tut_bewegung 13,14")
     rooms.append(r)
+    rooms += dorf()
     r = Room("stadt_02", "stadt", "kornburg", ground="S", fill="S")
     r.box(3, 7, 11, 11, "-")
     r.exit("L1", "stadt_01", "R2").exit("R2", "stadt_03", "L1")

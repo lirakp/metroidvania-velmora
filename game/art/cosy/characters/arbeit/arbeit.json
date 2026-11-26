@@ -1,0 +1,24 @@
+{
+ "zelle": [
+  48,
+  34
+ ],
+ "frames": 8,
+ "fps": 8,
+ "figur_offset": [
+  12,
+  8
+ ],
+ "jobs": {
+  "schmied": "Zwerg hämmert auf dem Amboss",
+  "baecker": "Mensch knetet Teig",
+  "holzfaeller": "Wolf spaltet Holz",
+  "bauer": "Hase hackt das Feld",
+  "kehrer": "Katze fegt",
+  "wirt": "Fuchs poliert einen Krug",
+  "fischer": "Frosch angelt und fängt einen Fisch",
+  "haendler": "Echse wirft eine Münze",
+  "wache": "Hund in Rüstung hält Wache und döst",
+  "gaertner": "Elf gießt Blumen"
+ }
+}

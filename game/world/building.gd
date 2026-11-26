@@ -3,6 +3,7 @@ extends Node2D
 ## Gebäude aus dem Grafik-Repo (Nachtversion), doppelt so groß dargestellt, damit die Türen
 ## höher sind als die Figuren. Die Bilddatei bleibt unverändert.
 ## Der Knoten-Ursprung ist die Unterkante der Türmitte – so liegt die Tür genau auf der Tür-Entität.
+## Gebäude ohne Tür-Eintrag stehen mit der Mitte ihrer Unterkante auf dem Ursprung.
 
 const SCALE := 2
 
@@ -18,13 +19,18 @@ static func create(p_kind: String) -> Building:
 	var b := Building.new()
 	b.kind = p_kind
 	b.scale = Vector2(SCALE, SCALE)
-	b.door = CosyArt.meta("buildings/doors/tueren.json")[p_kind]
+	b.door = CosyArt.meta("buildings/doors/tueren.json").get(p_kind, {})
 	b.sprite = Sprite2D.new()
 	b.sprite.texture = load(CosyArt.BASE + "buildings/%s_nacht.png" % p_kind)
 	b.sprite.centered = false
-	b.sprite.position = -Vector2(b.door.x + b.door.w / 2.0, b.door.y + b.door.h)
 	b.add_child(b.sprite)
-	b._add_door_anim()
+	if b.door.is_empty():
+		# Ohne Tür (Marktstand, Brunnen, offene Schmiede): Ursprung ist die Mitte der Unterkante
+		var size := b.sprite.texture.get_size()
+		b.sprite.position = -Vector2(size.x / 2.0, size.y)
+	else:
+		b.sprite.position = -Vector2(b.door.x + b.door.w / 2.0, b.door.y + b.door.h)
+		b._add_door_anim()
 	var light := Stimmung.light("gebaeude")
 	light.position = b.sprite.position + b.sprite.texture.get_size() * Vector2(0.5, 0.6)
 	b.add_child(light)
@@ -55,12 +61,13 @@ func _add_door_anim() -> void:
 
 
 func open_door() -> void:
-	door_anim.play("auf")
+	if door_anim:
+		door_anim.play("auf")
 
 
 ## Dauer der Öffnungsanimation in Sekunden.
 func door_open_time() -> float:
-	return float(door.bilder) / DOOR_FPS
+	return float(door.get("bilder", 0)) / DOOR_FPS
 
 
 func door_height_px() -> int:

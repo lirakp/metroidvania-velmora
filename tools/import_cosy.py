@@ -12,6 +12,11 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT.parent / "aniamtion"
 DST = ROOT / "game" / "art" / "cosy"
 
+DORF_TUEREN = ["baeckerei", "taverne", "schmiede_waffen", "schmiede_ruestung", "laden_alchemie",
+               "laden_ruestung_waffen", "laden_dungeon", "kirche"]
+DORF_GEBAEUDE = DORF_TUEREN + ["schmiede", "marktstand", "brunnen", "scheune"]
+DORF_ARBEIT = ["schmied", "baecker", "holzfaeller", "bauer", "kehrer", "wirt", "fischer", "haendler", "wache", "gaertner"]
+
 FILES = [
     # Spielfigur und Figuren (48er Zellen, 17 Animationen)
     "characters/held/held.json", "characters/held/elf_tunika.png", "characters/held/elf_ruestung.png",
@@ -22,6 +27,10 @@ FILES = [
     "buildings/gilde_abenteuer_nacht.png", "buildings/cottage_nacht.png", "buildings/windmuehle_nacht.png",
     "buildings/doors/tueren.json", "buildings/doors/gilde_abenteuer_nacht_tuer_overlay.png",
     "buildings/doors/cottage_nacht_tuer_overlay.png", "buildings/doors/windmuehle_nacht_tuer_overlay.png",
+    # Dorf: Läden, Schmieden, Taverne, Markt (Nacht) + Türen, arbeitende Dorfbewohner
+    *[f"buildings/{b}_nacht.png" for b in DORF_GEBAEUDE],
+    *[f"buildings/doors/{b}_nacht_tuer_overlay.png" for b in DORF_TUEREN],
+    "characters/arbeit/arbeit.json", *[f"characters/arbeit/{j}.png" for j in DORF_ARBEIT],
     # Licht
     "objects/licht/licht.json", "objects/licht/strassenlaterne_anim.png", "objects/licht/strassenlaterne_lichtkreis.png",
     "objects/licht/wandfackel_anim.png", "objects/licht/wandfackel_lichtkreis.png",

@@ -1,12 +1,14 @@
 class_name Npc
 extends Area2D
 ## Figur in der Welt: Kartograf (verkauft Gebietskarten) oder Gesprächspartner (Dialog).
+## Mit props.arbeit=<job> ein Dorfbewohner, der vor seinem Haus arbeitet.
 
 var npc_id := ""
 var props: Dictionary = {}
 var _inside := false
 var _hint: Label
 var _blocked_until := 0.0
+var _hint_y := -52.0
 
 const COOLDOWN := 0.35
 
@@ -21,13 +23,19 @@ func _ready() -> void:
 	s.position = Vector2(0, -14)
 	add_child(s)
 	var sheet: String = CosyArt.NPC_SHEETS.get(props.get("art", npc_id), "")
-	if sheet != "":
+	if props.has("arbeit"):
+		var work := CosyArt.work_sprite(props.arbeit)
+		# Versetzt starten, damit nicht alle im Gleichtakt arbeiten
+		work.frame = absi(npc_id.hash()) % 8
+		add_child(work)
+		_hint_y = -64.0
+	elif sheet != "":
 		var sp := CosyArt.character_sprite(sheet)
 		sp.flip_h = true
 		add_child(sp)
 	_hint = Label.new()
 	_hint.text = "[W]"
-	_hint.position = Vector2(-8, -52)
+	_hint.position = Vector2(-8, _hint_y)
 	_hint.visible = false
 	BattleScene._style_label(_hint, Color("d9a441"))
 	add_child(_hint)

@@ -104,3 +104,41 @@ static func monster_sprite(enemy_id: String) -> AnimatedSprite2D:
 
 
 const NPC_SHEETS := {"kartograf": "mensch_tunika", "gildenmeisterin": "zwerg_tunika"}
+
+
+## Arbeitsschleife eines Dorfbewohners (characters/arbeit, 8 Bilder in einer Reihe).
+static func work_frames(job: String) -> SpriteFrames:
+	var key := "w:" + job
+	if _frames_cache.has(key):
+		return _frames_cache[key]
+	var m := meta("characters/arbeit/arbeit.json")
+	var tex: Texture2D = load(BASE + "characters/arbeit/%s.png" % job)
+	var w := int(m.zelle[0])
+	var h := int(m.zelle[1])
+	var sf := SpriteFrames.new()
+	sf.rename_animation("default", "arbeit")
+	sf.set_animation_speed("arbeit", float(m.fps))
+	sf.set_animation_loop("arbeit", true)
+	for f in int(m.frames):
+		var at := AtlasTexture.new()
+		at.atlas = tex
+		at.region = Rect2(f * w, 0, w, h)
+		sf.add_frame("arbeit", at)
+	_frames_cache[key] = sf
+	return sf
+
+
+## Dorfbewohner bei der Arbeit: doppelt groß wie die Gebäude (sonst halb so groß wie der Held),
+## Füße am Ursprung, Figur etwa mittig darüber.
+const WORK_SCALE := 2.0
+
+
+static func work_sprite(job: String) -> AnimatedSprite2D:
+	var m := meta("characters/arbeit/arbeit.json")
+	var sp := AnimatedSprite2D.new()
+	sp.sprite_frames = work_frames(job)
+	sp.centered = false
+	sp.scale = Vector2(WORK_SCALE, WORK_SCALE)
+	sp.position = Vector2(-float(m.figur_offset[0]) - 6.0, -float(m.zelle[1])) * WORK_SCALE
+	sp.play("arbeit")
+	return sp
