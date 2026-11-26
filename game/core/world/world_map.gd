@@ -55,6 +55,33 @@ static func layout(area: String, dir := "res://data/rooms") -> Dictionary:
 					origin.y = r.position.y - tu.y
 			out[e.target_room] = Rect2i(origin, tu)
 			queue.append(e.target_room)
+		# Öffnungen in der Wand: Vogelperspektive, „hinten“ = oben auf der Karte
+		for e in d.entities:
+			if e.type != "door" or not e.props.has("richtung"):
+				continue
+			var target: String = String(e.props.to).split(":")[0]
+			if out.has(target) or not defs.has(target) or defs[target].area != area:
+				continue
+			var dy := -r.size.y if e.props.richtung == "hinten" else r.size.y
+			out[target] = Rect2i(r.position + Vector2i(0, dy), units(defs[target]))
+			queue.append(target)
+	return out
+
+
+## Verbindungen zwischen Räumen eines Layouts (für die Kartenansicht): [[von, nach, "seite"|"tuer"], …]
+static func connections(lay: Dictionary, dir := "res://data/rooms") -> Array:
+	var defs := load_defs(dir)
+	var out := []
+	for id in lay:
+		var d: RoomDef = defs[id]
+		for e in d.exits:
+			if lay.has(e.target_room) and id < e.target_room:
+				out.append([id, e.target_room, "seite"])
+		for e in d.entities:
+			if e.type == "door" and e.props.get("richtung") == "hinten":
+				var t: String = String(e.props.to).split(":")[0]
+				if lay.has(t):
+					out.append([id, t, "tuer"])
 	return out
 
 
@@ -84,6 +111,10 @@ static func validate_defs(defs: Dictionary) -> Array[String]:
 			var td: Dictionary = defs[to[0]].door_by_id(to[1])
 			if td.is_empty() or td.props.get("to", "") != "%s:%s" % [id, e.id]:
 				errs.append("%s: Tür %s → %s zeigt nicht zurück" % [id, e.id, e.props.to])
+			elif e.props.has("richtung") or td.props.has("richtung"):
+				var pair := [e.props.get("richtung", ""), td.props.get("richtung", "")]
+				if not (pair == ["hinten", "vorne"] or pair == ["vorne", "hinten"]):
+					errs.append("%s: Tür %s und Gegentür brauchen die Richtungen hinten/vorne" % [id, e.id])
 	return errs
 
 

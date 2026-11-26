@@ -1,11 +1,8 @@
-id: blutdungeon_03
+id: t_pit
 biome: dungeon_blut
-area: blutdungeon
-dungeon: true
-exits: L1=blutdungeon_02:R2, R2=blutdungeon_04:L1
+area: tp
+exits: 
 ---
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
@@ -18,9 +15,9 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
-1...........SS...............2
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+..............................
+..............................
+..............................
+##########^^##################
+##############################
 ---
-enemy skelett_bogner+skelettkrieger 20,14 patrol=2
-enemy skelettkrieger 7,14 patrol=2

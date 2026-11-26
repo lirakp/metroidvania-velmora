@@ -1,8 +1,8 @@
-id: blutdungeon_08
+id: blutdungeon_bluthalle
 biome: dungeon_blut
 area: blutdungeon
 dungeon: true
-exits: L1=blutdungeon_07:R2, R2=blutdungeon_09:L1
+exits: L1=blutdungeon_karte:R2, R2=blutdungeon_schaedel:L1
 ---
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -16,11 +16,14 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
-..............----............
+..............................
 ..............................
 1............................2
-SSSSSSSSSS^^SSSSSSSS^^SSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-enemy skelett_bogner+skelett_bogner 26,14 patrol=1
-deco kette 16,2
+deco bogen 6,14
+door vorne 6,14 to=blutdungeon_wand:hinten richtung=vorne
+enemy ghul+riesenspinne 18,14 patrol=2
+deco kristall 26,10
+light kalt 26,10 radius=24

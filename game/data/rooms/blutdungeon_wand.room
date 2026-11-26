@@ -1,8 +1,8 @@
-id: blutdungeon_09
+id: blutdungeon_wand
 biome: dungeon_blut
 area: blutdungeon
 dungeon: true
-exits: L1=blutdungeon_08:R2
+exits: L1=blutdungeon_federfall:R2
 ---
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -15,14 +15,15 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
-..............................
-..............................
-..............................
-1.............................
+..............SSSSSSSSSSSSSSSS
+..............SSSSSSSSSSSSSSSS
+..............SSSSSSSSSSSSSSSS
+1.............SSSSSSSSSSSSSSSS
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-dialog boss_intro 8,14
-boss blutwolf_alpha 21,14
-deco kristall 4,10
-light kalt 4,9 radius=32
+deco bogen 8,14
+door vorne 8,14 to=blutdungeon_rundweg:hinten richtung=vorne
+deco bogen 24,10
+door hinten 24,10 to=blutdungeon_bluthalle:vorne richtung=hinten
+dialog federfall_wand 11,14

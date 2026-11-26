@@ -1,8 +1,8 @@
-id: blutdungeon_05
+id: blutdungeon_irrweg
 biome: dungeon_blut
 area: blutdungeon
 dungeon: true
-exits: L1=blutdungeon_04:R2, R2=blutdungeon_06:L1
+exits: L1=blutdungeon_schaedel:R2
 ---
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -17,10 +17,11 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
-..............-----...........
-1............................2
-SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+..............................
+1.............................
+SSSSSSSSSS^^SSSSSS^^SSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-pickup federfall 16,12
-enemy riesenspinne 24,14 patrol=2
+enemy skelett_bogner+skelettkrieger 14,14 patrol=1
+deco kiste 26,14
+pickup silber:60 26,14

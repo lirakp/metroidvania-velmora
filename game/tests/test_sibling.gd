@@ -152,3 +152,62 @@ func test_gate_open_from_flag() -> void:
 	assert_true(g.is_open)
 	root.queue_free()
 	GameState.reset()
+
+
+func _pit_world() -> Dictionary:
+	GameState.reset()
+	RoomManager.room_dir = "res://tests/rooms"
+	var world := Node2D.new()
+	tree.root.add_child(world)
+	var p: Player = load("res://world/player.tscn").instantiate()
+	p.test_control = true
+	RoomManager.attach(world, p)
+	RoomManager.go_to("t_pit", "", "start", Vector2i(4, 14))
+	var s := Sibling.new()
+	s.player = p
+	world.add_child(s)
+	return {"world": world, "player": p, "sibling": s}
+
+
+func _in_spikes(s: Sibling) -> bool:
+	var feet := Vector2i(floori(s.position.x / 16.0), floori((s.position.y - 1) / 16.0))
+	return RoomManager.current_def.tile_at(feet) == RoomBuilder.HAZARD
+
+
+func test_sibling_jumps_over_spike_pit() -> void:
+	var w := _pit_world()
+	# Abstand 144 px (< 160): kein Hinterherbeamen, das Geschwister muss selbst laufen
+	w.sibling.position = RoomBuilder.cell_to_pos(Vector2i(5, 14))
+	w.player.position = RoomBuilder.cell_to_pos(Vector2i(14, 14))
+	var touched := false
+	for i in 150:
+		await tree.physics_frame
+		touched = touched or _in_spikes(w.sibling)
+	assert_false(touched, "nie in den Stacheln")
+	assert_true(w.sibling.position.x > 12 * 16, "über die Grube hinweg: %s" % w.sibling.position.x)
+	w.world.queue_free()
+	RoomManager.room_dir = "res://data/rooms"
+
+
+func test_sibling_does_not_wait_inside_pit() -> void:
+	var w := _pit_world()
+	# Spieler steht direkt hinter der Grube: der Platz 24 px hinter ihm läge in den Stacheln
+	w.player.position = RoomBuilder.cell_to_pos(Vector2i(12, 14))
+	w.player.facing = 1
+	w.sibling.position = RoomBuilder.cell_to_pos(Vector2i(6, 14))
+	for i in 120:
+		await tree.physics_frame
+	assert_false(_in_spikes(w.sibling), "wartet neben der Grube, nicht darin")
+	w.world.queue_free()
+	RoomManager.room_dir = "res://data/rooms"
+
+
+func test_sibling_rescued_from_spikes() -> void:
+	var w := _pit_world()
+	w.player.position = RoomBuilder.cell_to_pos(Vector2i(16, 14))
+	w.sibling.position = RoomBuilder.cell_to_pos(Vector2i(10, 15))
+	for i in 4:
+		await tree.physics_frame
+	assert_false(_in_spikes(w.sibling), "sofort aus den Stacheln geholt")
+	w.world.queue_free()
+	RoomManager.room_dir = "res://data/rooms"

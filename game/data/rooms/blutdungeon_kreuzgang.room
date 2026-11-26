@@ -1,8 +1,8 @@
-id: blutdungeon_01
+id: blutdungeon_kreuzgang
 biome: dungeon_blut
 area: blutdungeon
 dungeon: true
-exits: L1=kornfeld_08:R2, R2=blutdungeon_02:L1
+exits: L1=blutdungeon_stacheln:R2, R2=blutdungeon_federfall:L1
 ---
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -22,6 +22,9 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-dialog dungeon_eingang 3,14
-enemy riesenspinne 20,14 patrol=3
-deco kette 12,2
+deco bogen 8,14
+door vorne 8,14 to=blutdungeon_ketten:hinten richtung=vorne
+deco bogen_warm 22,14
+door hinten 22,14 to=blutdungeon_rast:vorne richtung=hinten
+dialog rastort 17,14
+deco kette 14,2

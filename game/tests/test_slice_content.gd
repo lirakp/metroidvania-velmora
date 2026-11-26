@@ -6,7 +6,7 @@ const DOUBLE_JUMP_TILES := 4
 
 func test_all_rooms_parse() -> void:
 	var defs := WorldMap.load_defs("res://data/rooms")
-	assert_true(defs.size() >= 26, "Anzahl Räume: %d" % defs.size())
+	assert_true(defs.size() >= 30, "Anzahl Räume: %d" % defs.size())
 	for id in defs:
 		assert_eq(defs[id].error, "", id)
 
@@ -92,7 +92,7 @@ func _reachable(d: RoomDef, start: Vector2i, target: Vector2i, jump: int) -> boo
 	return false
 
 
-func test_federfall_gate_reachable() -> void:
+func test_federfall_gate_reachable_kornfeld() -> void:
 	var d := RoomDef.load_room("kornfeld_06")
 	var start := d.arrival_cell("L1")
 	var hammer: Dictionary = d.entities.filter(func(e): return e.id == "item:rostiger_kriegshammer")[0]
@@ -101,15 +101,15 @@ func test_federfall_gate_reachable() -> void:
 
 
 func test_dungeon_needs_federfall() -> void:
-	var d := RoomDef.load_room("blutdungeon_06")
+	var d := RoomDef.load_room("blutdungeon_wand")
 	var start := d.arrival_cell("L1")
-	var goal := d.arrival_cell("R2")
+	var goal: Vector2i = d.entities.filter(func(e): return e.type == "door" and e.props.get("richtung") == "hinten")[0].pos
 	assert_false(_reachable(d, start, goal, SINGLE_JUMP_TILES))
 	assert_true(_reachable(d, start, goal, DOUBLE_JUMP_TILES))
 
 
 func test_federfall_reachable_without_federfall() -> void:
-	var d := RoomDef.load_room("blutdungeon_05")
+	var d := RoomDef.load_room("blutdungeon_federfall")
 	var start := d.arrival_cell("L1")
 	var f: Dictionary = d.entities.filter(func(e): return e.id == "federfall")[0]
 	assert_true(_reachable(d, start, f.pos, SINGLE_JUMP_TILES))
@@ -140,7 +140,7 @@ func test_rooms_traversable() -> void:
 				points["%s %s" % [e.type, e.id]] = e.pos
 		if d.spawns.has("start"):
 			points["Start"] = d.spawns.start
-		var jump := DOUBLE_JUMP_TILES if id in ["blutdungeon_06", "blutdungeon_07", "blutdungeon_08", "blutdungeon_09", "blutdungeon_kammer"] else SINGLE_JUMP_TILES
+		var jump := DOUBLE_JUMP_TILES if id in ["blutdungeon_wand"] else SINGLE_JUMP_TILES
 		var names := points.keys()
 		for a in names:
 			for b in names:
@@ -164,6 +164,77 @@ func test_dungeon_rooms_have_no_warm_light_except_rast() -> void:
 
 
 func test_interiors_reached_by_doors() -> void:
-	for pair in [["stadt_01", "kornburg_gilde"], ["stadt_02", "kartograf_haus"], ["muehle_01", "muehle_innen"], ["blutdungeon_04", "blutdungeon_rast"], ["blutdungeon_07", "blutdungeon_kammer"]]:
+	for pair in [["stadt_01", "kornburg_gilde"], ["stadt_02", "kartograf_haus"], ["muehle_01", "muehle_innen"], ["blutdungeon_kreuzgang", "blutdungeon_rast"], ["blutdungeon_rundweg", "blutdungeon_wand"]]:
 		var outer := RoomDef.load_room(pair[0])
 		assert_true(outer.entities.any(func(e): return e.type == "door" and String(e.props.get("to", "")).begins_with(pair[1] + ":")), "%s → %s" % pair)
+
+
+
+# ---------------------------------------------------------------- Labyrinth
+## Verbindungen im Dungeon (Ausgänge + Türen) als Graph: Raum → [Nachbarn]
+func _dungeon_graph(skip_edge := []) -> Dictionary:
+	var defs := WorldMap.load_defs("res://data/rooms")
+	var g := {}
+	for id in defs:
+		if not id.begins_with("blutdungeon"):
+			continue
+		g[id] = []
+		for e in defs[id].exits:
+			if e.target_room.begins_with("blutdungeon"):
+				g[id].append(e.target_room)
+		for e in defs[id].entities:
+			if e.type == "door":
+				var to: String = String(e.props.to).split(":")[0]
+				if [id, to] != skip_edge and [to, id] != skip_edge:
+					g[id].append(to)
+	return g
+
+
+func _reach(g: Dictionary, start: String) -> Dictionary:
+	var seen := {start: true}
+	var q := [start]
+	while not q.is_empty():
+		var r: String = q.pop_front()
+		for n in g[r]:
+			if not seen.has(n):
+				seen[n] = true
+				q.append(n)
+	return seen
+
+
+func test_labyrinth_size_and_reachability() -> void:
+	var g := _dungeon_graph()
+	assert_true(g.size() >= 15, "mindestens 15 Räume: %d" % g.size())
+	assert_eq(_reach(g, "blutdungeon_eingang").size(), g.size(), "alle Räume erreichbar")
+
+
+func test_labyrinth_has_dead_ends_with_purpose() -> void:
+	var g := _dungeon_graph()
+	var dead := g.keys().filter(func(r): return g[r].size() == 1 and not r in ["blutdungeon_boss", "blutdungeon_rast", "blutdungeon_eingang"])
+	assert_true(dead.size() >= 3, "Sackgassen: %s" % [dead])
+	for r in dead:
+		var d := RoomDef.load_room(r)
+		assert_true(d.entities.any(func(e): return e.type == "pickup"), "%s: Sackgasse ohne Belohnung" % r)
+
+
+func test_labyrinth_has_loop() -> void:
+	var g := _dungeon_graph()
+	var edges := 0
+	for r in g:
+		edges += g[r].size()
+	assert_true(edges / 2 >= g.size(), "Rundweg vorhanden (Kanten %d, Räume %d)" % [edges / 2, g.size()])
+
+
+func test_boss_only_through_federfall_wall() -> void:
+	var g := _dungeon_graph(["blutdungeon_wand", "blutdungeon_bluthalle"])
+	assert_false(_reach(g, "blutdungeon_eingang").has("blutdungeon_boss"), "ohne Federfall-Wand kein Weg zum Boss")
+
+
+func test_path_alternates_straight_and_back() -> void:
+	# Hauptweg nutzt mindestens drei Öffnungen nach hinten
+	var defs := WorldMap.load_defs("res://data/rooms")
+	var back := 0
+	for id in defs:
+		if id.begins_with("blutdungeon"):
+			back += defs[id].entities.filter(func(e): return e.type == "door" and e.props.get("richtung") == "hinten").size()
+	assert_true(back >= 4, "Öffnungen nach hinten: %d" % back)

@@ -1,7 +1,7 @@
 id: kornfeld_08
 biome: kornfeld
 area: kornburg
-exits: L1=kornfeld_07:R2, R2=blutdungeon_01:L1
+exits: L1=kornfeld_07:R2, R2=blutdungeon_eingang:L1
 ---
 .........................BBBBB
 .........................BBBBB

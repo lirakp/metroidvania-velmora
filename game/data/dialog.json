@@ -110,11 +110,11 @@
   "rastort": [
     {
       "speaker": "{held}",
-      "text": "Da hinten – Kerzenlicht. Mitten in diesem Loch."
+      "text": "Da hinten in der Wand – Kerzenlicht. Mitten in diesem Loch."
     },
     {
       "speaker": "Hinweis",
-      "text": "Öffnungen in der Wand führen in Räume dahinter: [W] betritt sie. Am Altar könnt ihr eine Plakette ablegen, speichern und rasten."
+      "text": "Hinter der warmen Öffnung liegt eine Rast-Kammer: Plakette ablegen, speichern, rasten."
     }
   ],
   "federfall": [
@@ -179,6 +179,16 @@
     {
       "speaker": "{geschwister}",
       "text": "Die alte Mühle. Die Tür steht offen, und drinnen riecht es nach altem Blut."
+    }
+  ],
+  "labyrinth": [
+    {
+      "speaker": "{geschwister}",
+      "text": "Gänge nach allen Seiten – und Öffnungen in den Wänden. Das ist kein Gang, das ist ein Labyrinth."
+    },
+    {
+      "speaker": "Hinweis",
+      "text": "Öffnungen in der Wand führen nach hinten [W]. Nicht jeder Weg führt weiter – manche enden in einer Sackgasse."
     }
   ]
 }

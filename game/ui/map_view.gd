@@ -2,7 +2,7 @@ class_name MapView
 extends CanvasLayer
 ## Kartenansicht: nur mit gekaufter/gefundener Gebietskarte. Besuchte Räume gefüllt, aktueller Raum markiert.
 
-const CELL := Vector2(24, 14)
+const CELL := Vector2(40, 24)
 
 var area := ""
 var _layout := {}
@@ -40,7 +40,7 @@ func _ready() -> void:
 	add_child(title)
 	var hint := Label.new()
 	hint.position = Vector2(8, 254)
-	hint.text = "[M] schließen   ■ besucht   □ unbekannt   ◆ Plakette"
+	hint.text = "[M] schließen   ■ besucht   □ unbekannt   ◆ Plakette   gold: Öffnung nach hinten (oben)"
 	BattleScene._style_label(hint, Color("8b93a3"))
 	add_child(hint)
 
@@ -61,7 +61,8 @@ func _draw_map() -> void:
 	var origin := (Vector2(480, 270) - total) / 2.0
 	for id in _layout:
 		var r: Rect2i = _layout[id]
-		var rect := Rect2(origin + Vector2(r.position - minp) * CELL, Vector2(r.size) * CELL).grow(-1)
+		var rect := Rect2(origin + Vector2(r.position - minp) * CELL, Vector2(r.size) * CELL).grow(-4)
+		_canvas.draw_rect(rect, Color("14161d"))
 		if GameState.discovered_rooms.has(id):
 			_canvas.draw_rect(rect, Color("3a4a63"))
 		_canvas.draw_rect(rect, Color("8b93a3"), false, 1.0)
@@ -70,6 +71,22 @@ func _draw_map() -> void:
 		for p in GameState.plaketten.placed:
 			if p.room == id:
 				_canvas.draw_rect(Rect2(rect.position + Vector2(2, 2), Vector2(4, 4)), Color("d9a441"))
+	_draw_connections(origin, minp)
+
+
+func _draw_connections(origin: Vector2, minp: Vector2i) -> void:
+	for c in WorldMap.connections(_layout, RoomManager.room_dir):
+		if not (GameState.discovered_rooms.has(c[0]) or GameState.discovered_rooms.has(c[1])):
+			continue
+		var a: Rect2i = _layout[c[0]]
+		var b: Rect2i = _layout[c[1]]
+		var ca := origin + (Vector2(a.position - minp) + Vector2(a.size) / 2.0) * CELL
+		var cb := origin + (Vector2(b.position - minp) + Vector2(b.size) / 2.0) * CELL
+		var mid := (ca + cb) / 2.0
+		if c[2] == "seite":
+			_canvas.draw_rect(Rect2(mid - Vector2(5, 2), Vector2(10, 4)), Color("8b93a3"))
+		else:
+			_canvas.draw_rect(Rect2(mid - Vector2(2, 5), Vector2(4, 10)), Color("d9a441"))
 
 
 func _unhandled_input(event: InputEvent) -> void:

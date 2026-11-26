@@ -1,8 +1,8 @@
-id: blutdungeon_06
+id: blutdungeon_rundweg
 biome: dungeon_blut
 area: blutdungeon
 dungeon: true
-exits: L1=blutdungeon_05:R2, R2=blutdungeon_07:L1
+exits: L1=blutdungeon_hinterhalt:R2
 ---
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -14,12 +14,14 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ..............................
 ..............................
 ..............................
-.............................2
-..............SSSSSSSSSSSSSSSS
-..............SSSSSSSSSSSSSSSS
-..............SSSSSSSSSSSSSSSS
-1.............SSSSSSSSSSSSSSSS
+..............................
+..............................
+..............................
+..............................
+1...........SS................
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ---
-dialog federfall_wand 8,14
+deco bogen 20,14
+door hinten 20,14 to=blutdungeon_wand:vorne richtung=hinten
+enemy ghul+riesenspinne 6,14 patrol=2
